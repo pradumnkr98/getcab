@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/current_duty"
+        android:icon="@drawable/current_duty"
+        android:title="Current Duty"></item>
+    <item
+        android:id="@+id/available_booking"
+        android:icon="@drawable/available_booking"
+        android:title="Available Booking"></item>
+    <item
+        android:id="@+id/future_duties"
+        android:icon="@drawable/future_booking"
+        android:title="Future Duties" />
+    <item
+        android:id="@+id/recharge"
+        android:icon="@drawable/recharge"
+        android:title="Recharge" />
+    <item
+        android:id="@+id/account_details"
+        android:icon="@drawable/account_details"
+        android:title="Account Details" />
+    <item
+        android:id="@+id/driver_incentives"
+        android:icon="@drawable/driver_incentives"
+        android:title="Driver Incentives" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
+    <item
+        android:id="@+id/log_out"
+        android:icon="@drawable/log_out"
+        android:title="LOG OUT" />
+</menu>
