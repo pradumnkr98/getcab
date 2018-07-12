@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mini"
+        android:icon="@drawable/mini"
+        android:title="Mini"></item>
+    <item
+        android:id="@+id/micro"
+        android:icon="@drawable/micro"
+        android:title="Micro" />
+    <item
+        android:id="@+id/prime"
+        android:icon="@drawable/prime"
+        android:title="Prime" />
+
+
+</menu>

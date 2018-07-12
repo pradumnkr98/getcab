@@ -12,4 +12,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="MyToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/colorPrimary
+        </item>                  <!--set the color of text in toolbar-->
+        <item name="android:textColorSecondary">@color/colorPrimaryDark
+        </item>            <!-- set the color of overflow menu in toolbar-->
+    </style>
+
 </resources>
