@@ -28,7 +28,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/number"
+                android:id="@+id/your_name"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_margin="30dp"
@@ -48,36 +48,6 @@
                 android:hint="Password"
                 android:inputType="textPassword" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="70dp"
-                    android:text="Forget Password"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="|"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Register Here"
-                    android:textColor="@color/colorPrimaryDark" />
-
-            </LinearLayout>
-
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="90dp"
@@ -87,6 +57,34 @@
                 android:background="@drawable/button_style"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:text="log in" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/forget_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:hint="Forget Password"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/register_here"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:hint="Register Here"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
