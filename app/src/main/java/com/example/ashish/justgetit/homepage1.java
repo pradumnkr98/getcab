@@ -1,40 +1,43 @@
 package com.example.ashish.justgetit;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
-public class homepage1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class homepage1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
+    public GoogleMap mMap;
+    Button bt1;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-    private static final String TAG = "homepage1";
-    private static final int ERROR_DIALOG_REQUEST = 9001;
-    BottomNavigationView bottomNavigationView;
-    Button bt1;
+    private Boolean locatonpermissiongranted = false;
 
+    BottomNavigationView bottomNavigationView;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage1);
+
+        //SETTING UP NAVIGATION DRAWER
+
         drawerLayout = findViewById(R.id.drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
@@ -45,8 +48,12 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //click listener for items in bottom_navigation view
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -64,12 +71,10 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
             }
         });
-        if (isServicesOk()) {
-            init();
-        }
-
+        getLocationPermission();
     }
 
+    //Method to close drawer by back key pressing
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -78,6 +83,7 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
             super.onBackPressed();
         }
     }
+//making the navigation icon workable
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -93,35 +99,54 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
         return false;
     }
 
+//THE CODE FOR GOOGLE MAPS
+
     public void init() {
-        bt1 = findViewById(R.id.btn_chk);
-        bt1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(homepage1.this, login_page.class);
-                startActivity(intent);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(homepage1.this);
+    }
+
+    //requesting permission from user to access device location
+    private void getLocationPermission() {
+        String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locatonpermissiongranted = true;
+            } else {
+                ActivityCompat.requestPermissions(this, permission, 1234);
             }
-        });
-
-    }
-
-
-    public boolean isServicesOk() {
-        Log.d(TAG, "isServicesOk :checking google version");
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-        if (available == ConnectionResult.SUCCESS) {
-            Log.d(TAG, "isServicesOk:google play services is working");
-            return true;
-
-        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
-            Log.d(TAG, "isServicesOk: an error occured which can be resolved");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(homepage1.this, available, ERROR_DIALOG_REQUEST);
-            dialog.show();
         } else {
-            Toast.makeText(homepage1.this, "we can't make map reader", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, permission, 1234);
         }
-        return false;
     }
 
+    //code for checking the granted permission is true or false
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        locatonpermissiongranted = false;
+        switch (requestCode) {
+            case 1234: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                    }
+                    locatonpermissiongranted = true;
+                    init();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+       /* LatLng sydney= new LatLng(-31,151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("marked to sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
+
+
+    }
 }

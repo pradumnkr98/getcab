@@ -37,11 +37,11 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyDLTjecXyBP56lhqPpTIdxFtPeHoVAZvjE" />
 
         <activity android:name=".homepage1" />
         <activity android:name=".registerhere" />
-        <activity android:name=".forgetpassword"></activity>
+        <activity android:name=".forgetpassword" />
     </application>
 
 </manifest>

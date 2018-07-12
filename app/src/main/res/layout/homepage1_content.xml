@@ -30,14 +30,6 @@
         android:scrollbars="horizontal"
         app:menu="@menu/bottom_navigaionview_menu" />
 
-    <Button
-        android:id="@+id/btn_chk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="162dp"
-        android:text="Button" />
 
 
 </RelativeLayout>
