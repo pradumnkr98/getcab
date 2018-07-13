@@ -3,11 +3,15 @@
     <item
         android:id="@+id/current_duty"
         android:icon="@drawable/current_duty"
-        android:title="Current Duty"></item>
+        android:title="Current Duty">
+
+    </item>
     <item
         android:id="@+id/available_booking"
         android:icon="@drawable/available_booking"
-        android:title="Available Booking"></item>
+        android:title="Available Booking">
+
+    </item>
     <item
         android:id="@+id/future_duties"
         android:icon="@drawable/future_booking"

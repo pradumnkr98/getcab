@@ -2,6 +2,7 @@ package com.example.ashish.justgetit;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -113,7 +114,46 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        switch (item.getItemId()) {
+            case R.id.current_duty:
+                Intent intent1 = new Intent(homepage1.this, current_duty.class);
+                startActivity(intent1);
+                return true;
+
+            case R.id.available_booking:
+                Intent intent2 = new Intent(homepage1.this, available_booking.class);
+                startActivity(intent2);
+                return true;
+
+            case R.id.future_duties:
+                Intent intent3 = new Intent(homepage1.this, future_duties.class);
+                startActivity(intent3);
+
+            case R.id.recharge://to be completed by aadil
+                Intent intent4 = new Intent(homepage1.this, recharge.class);
+                startActivity(intent4);
+                return true;
+
+            case R.id.account_details:
+                Intent intent5 = new Intent(homepage1.this, account_details.class);
+                startActivity(intent5);
+                return true;
+
+            case R.id.driver_incentives:
+                Intent intent6 = new Intent(homepage1.this, driver_incentives.class);
+                startActivity(intent6);
+                return true;
+
+            case R.id.prime:
+                Intent intent7 = new Intent(homepage1.this, profile.class);
+                startActivity(intent7);
+                return true;
+
+            default:
+                return false;
+        }
+
+        //  return false;
     }
 
 //THE CODE FOR GOOGLE MAPS

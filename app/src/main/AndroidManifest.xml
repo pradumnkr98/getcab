@@ -42,6 +42,13 @@
         <activity android:name=".homepage1" />
         <activity android:name=".registerhere" />
         <activity android:name=".forgetpassword" />
+        <activity android:name=".current_duty" />
+        <activity android:name=".available_booking" />
+        <activity android:name=".future_duties" />
+        <activity android:name=".account_details" />
+        <activity android:name=".driver_incentives" />
+        <activity android:name=".profile" />
+        <activity android:name=".recharge"></activity>
     </application>
 
 </manifest>
