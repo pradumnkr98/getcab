@@ -9,7 +9,6 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -37,7 +36,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDLTjecXyBP56lhqPpTIdxFtPeHoVAZvjE" />
+            android:value="@string/google_maps_apikey" />
 
         <activity android:name=".homepage1" />
         <activity android:name=".registerhere" />
