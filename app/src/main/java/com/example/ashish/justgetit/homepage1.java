@@ -39,7 +39,7 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
     private ActionBarDrawerToggle toggle;
     private Boolean locatonpermissiongranted = false;
     public static final float DEFAULT_ZOOM = 15f;
-    private FusedLocationProviderClient mfusedlocationproviderclient;
+    public FusedLocationProviderClient mfusedlocationproviderclient;
     BottomNavigationView bottomNavigationView;
 
     @SuppressLint("RestrictedApi")
