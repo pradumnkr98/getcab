@@ -3,6 +3,7 @@ package com.example.ashish.justgetit;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,12 +15,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class homepage1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
@@ -28,8 +37,10 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private Boolean locatonpermissiongranted = false;
-
+    public static final float DEFAULT_ZOOM = 15f;
+    private FusedLocationProviderClient mfusedlocationproviderclient;
     BottomNavigationView bottomNavigationView;
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +82,12 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
             }
         });
+        getLocationPermission();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         getLocationPermission();
     }
 
@@ -143,10 +160,50 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-       /* LatLng sydney= new LatLng(-31,151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("marked to sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
+        if (locatonpermissiongranted) {
+            getDeviceLocation();
 
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+
+        }
+    }
+
+    public void getDeviceLocation() {
+        mfusedlocationproviderclient = LocationServices.getFusedLocationProviderClient(this);
+        try {
+            if (locatonpermissiongranted) {
+                final Task location = mfusedlocationproviderclient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            Location currentLocation = (Location) task.getResult();
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                        } else {
+                            Toast.makeText(homepage1.this, "unable to get current location", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+            }
+        } catch (SecurityException e) {
+            Log.d("homepage1", "getDevicelocation: SecurityException:" + e.getMessage());
+        }
 
     }
+
+    private void moveCamera(LatLng latLng, float zoom) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+
 }
