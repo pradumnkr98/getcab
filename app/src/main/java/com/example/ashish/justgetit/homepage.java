@@ -1,7 +1,12 @@
 package com.example.ashish.justgetit;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,8 +31,14 @@ public class homepage extends AppCompatActivity {
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(homepage.this, login_page.class);
-                startActivity(intent);
+                if (!isConnected(homepage.this))
+                    buildDialog(homepage.this).show();
+                else {
+                    Toast.makeText(homepage.this, "Welcome", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(homepage.this, login_page.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -37,18 +48,6 @@ public class homepage extends AppCompatActivity {
             Toast.makeText(this, "google working", Toast.LENGTH_LONG).show();
         }
     }
-
-   /*public void init() {
-        bt1 = findViewById(R.id.btn_chk);
-        bt1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(homepage.this, login_page.class);
-                startActivity(intent);
-            }
-        });
-
-    }*/
 
     public boolean isServicesOk() {
         Log.d(TAG, "isServicesOk :checking google version");
@@ -66,5 +65,38 @@ public class homepage extends AppCompatActivity {
         }
         return false;
     }
+
+    public boolean isConnected(Context context) {
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            return (mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting());
+        } else
+            return false;
+    }
+
+    public AlertDialog.Builder buildDialog(Context c) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle("No Internet Connection");
+        builder.setMessage("You need to have Mobile Data or wifi to access this. Press ok to Exit");
+
+        AlertDialog.Builder ok = builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                finish();
+            }
+        });
+
+        return builder;
+    }
+
 
 }
