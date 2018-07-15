@@ -66,14 +66,16 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
     private Boolean locatonpermissiongranted = false;
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
+    private static final LatLngBounds LAT_LNG_BOUNDS1 = new LatLngBounds(new LatLng(-60, -190), new LatLng(80, 145));
     public FusedLocationProviderClient mfusedlocationproviderclient;
     public GoogleMap mMap;
     BottomNavigationView bottomNavigationView;
     AutoCompleteTextView search;
     ImageView mgps;
     private PlacesAutocompleteAdapter placesAutocompleteAdapter;
-    private GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient, googleApiClient;
     private PlacesInfo mplace;
+    private AutoCompleteTextView drop_location;
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(@NonNull PlaceBuffer places) {
@@ -106,8 +108,6 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
         }
     };
-
-
     //Method to close drawer by back key pressing
     @Override
     public void onBackPressed() {
@@ -172,38 +172,62 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
         //  return false;
     }
 
-//THE CODE FOR GOOGLE MAPS
+
+    public void updateLocationUI() {
+        if (mMap == null) {
+            return;
+        }
+        try {
+            if (locatonpermissiongranted) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                mMap.setMyLocationEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                Location currentLocation = null;
+                getLocationPermission();
+            }
+
+        } catch (SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    //THE CODE FOR GOOGLE MAPS
     /*
 
     ---------------------------------google places API autocomplete suggestion-----------------------
 
      */
-private AdapterView.OnItemClickListener mAutocompleteclicklistener = new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final AutocompletePrediction item = placesAutocompleteAdapter.getItem(position);
-        final String placeId = item.getPlaceId();
-        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
-        placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
-    }
-};
-
-    //code for checking the granted permission is true or false
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        locatonpermissiongranted = false;
-        switch (requestCode) {
-            case 1234: {
-                //If request is cancelled the result arrays are empty
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locatonpermissiongranted = true;
-
-                }
-                locatonpermissiongranted = true;
-            }
+    private AdapterView.OnItemClickListener mAutocompleteclicklistener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final AutocompletePrediction item = placesAutocompleteAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
         }
-        updateLocationUI();
+    };
+
+
+    //requesting permission from user to access device location
+    private void getLocationPermission() {
+        String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locatonpermissiongranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this, permission, 1234);
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -254,62 +278,9 @@ private AdapterView.OnItemClickListener mAutocompleteclicklistener = new Adapter
 
         search = findViewById(R.id.map_search);
         mgps = findViewById(R.id.ic_gps);
+        drop_location = findViewById(R.id.drop_location);
 
 
-    }
-
-    public void updateLocationUI() {
-        if (mMap == null) {
-            return;
-        }
-        try {
-            if (locatonpermissiongranted) {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            }else{
-                mMap.setMyLocationEnabled(false);
-                mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                Location currentLocation=null;
-                getLocationPermission();
-            }
-
-        }catch (SecurityException e){
-            Log.e("Exception: %s",e.getMessage());
-        }
-    }
-
-    //requesting permission from user to access device location
-    private void getLocationPermission() {
-        String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locatonpermissiongranted = true;
-        } else {
-            ActivityCompat.requestPermissions(this, permission, 1234);
-        }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        getLocationPermission();
-        //turn on the my location layer and the related control on the map
-        updateLocationUI();
-        if (locatonpermissiongranted) {
-            getDeviceLocation();
-
-        }
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        init();
     }
 
     //Code To Set The Marker And Search The Place Entered in Search Bar
@@ -347,36 +318,20 @@ private AdapterView.OnItemClickListener mAutocompleteclicklistener = new Adapter
 
     }
 
-    private void init() {
-        Log.d("homepage1", "init: initializing");
-        mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build();
-        search.setOnItemClickListener(mAutocompleteclicklistener);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        locatonpermissiongranted = false;
+        switch (requestCode) {
+            case 1234: {
+                //If request is cancelled the result arrays are empty
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    locatonpermissiongranted = true;
 
-        placesAutocompleteAdapter = new PlacesAutocompleteAdapter(this, mGoogleApiClient, LAT_LNG_BOUNDS, null);
-        search.setAdapter(placesAutocompleteAdapter);
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
-
-                    //execute method for searching
-                    geolocate();
                 }
-                return false;
+                locatonpermissiongranted = true;
             }
-        });
-        mgps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDeviceLocation();
-
-            }
-        });
+        }
+        updateLocationUI();
     }
 
     private void geolocate() {
@@ -398,6 +353,68 @@ private AdapterView.OnItemClickListener mAutocompleteclicklistener = new Adapter
             search.setText(address.getAddressLine(0));
         }
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        getLocationPermission();
+        //turn on the my location layer and the related control on the map
+        updateLocationUI();
+        if (locatonpermissiongranted) {
+            getDeviceLocation();
+
+        }
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        init();
+    }
+
+    //code for checking the granted permission is true or false
+
+    private void init() {
+        Log.d("homepage1", "init: initializing");
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
+        search.setOnItemClickListener(mAutocompleteclicklistener);
+        drop_location.setOnItemClickListener(mAutocompleteclicklistener);
+
+        placesAutocompleteAdapter = new PlacesAutocompleteAdapter(this, mGoogleApiClient, LAT_LNG_BOUNDS, null);
+        search.setAdapter(placesAutocompleteAdapter);
+        drop_location.setAdapter(placesAutocompleteAdapter);
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
+
+                    //execute method for searching
+                    geolocate();
+                }
+                return false;
+            }
+        });
+        drop_location.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
+
+                    //execute method for searching
+                    geolocate();
+                }
+                return false;
+            }
+        });
+        mgps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDeviceLocation();
+
+            }
+        });
     }
 
     @Override
