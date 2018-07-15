@@ -10,7 +10,7 @@ public class splash extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        // setContentView(R.layout.activity_splash);
 
         //   ImageView imageView = findViewById(R.id.imageView);
         //    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade);
@@ -23,7 +23,7 @@ public class splash extends AppCompatActivity {
             public void run() {
 
                 try {
-                    sleep(2000);
+                    sleep(3000);
                     Intent intent = new Intent(getApplicationContext(), homepage.class);
                     startActivity(intent);
                     finish();

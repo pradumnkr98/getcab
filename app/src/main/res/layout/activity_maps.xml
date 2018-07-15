@@ -13,4 +13,65 @@
         android:layout_height="match_parent"
         tools:context=".homepage1" />
 
+    <RelativeLayout
+        android:id="@+id/rellayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/autocompletetextview"
+        android:elevation="10dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/map_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/autocompletetextview"
+            android:drawableLeft="@drawable/search_icon"
+            android:hint="Pickup Location"
+            android:imeOptions="actionSearch"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rellayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/rellayout"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/autocompletetextview"
+        android:elevation="10dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/drop_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/autocompletetextview"
+            android:drawableLeft="@drawable/search_icon"
+            android:hint="Drop Location"
+            android:imeOptions="actionSearch"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+    7
+
+    <ImageView
+        android:id="@+id/ic_gps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rellayout1"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_gps" />
+
+
 </RelativeLayout>
