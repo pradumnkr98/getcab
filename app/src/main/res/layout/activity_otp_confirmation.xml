@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".forgetpassword">
+    tools:context=".OTP_confirmation">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="Retrieve Password"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:background="@color/colorPrimary"
+        android:textAlignment="center"
+        app:title="OTP Confirmation"></android.support.v7.widget.Toolbar>
+
 
     <android.support.v4.widget.Space
         android:layout_width="300dp"
@@ -25,7 +25,7 @@
         />
 
     <EditText
-        android:id="@+id/enterednumber"
+        android:id="@+id/enterOTP"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="30dp"
@@ -35,12 +35,12 @@
         android:layout_marginTop="8dp"
         android:background="@color/transparent"
         android:drawableLeft="@drawable/mobile"
-        android:hint="Mobile Number"
+        android:hint="Enter OTP"
         android:inputType="phone" />
 
 
     <Button
-        android:id="@+id/OTP"
+        android:id="@+id/next"
         android:layout_width="129dp"
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
@@ -50,6 +50,6 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Request OTP" />
+        android:text="Next" />
 
 </LinearLayout>

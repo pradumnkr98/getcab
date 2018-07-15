@@ -18,8 +18,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,10 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".homepage"></activity>
-
-
+        <activity android:name=".homepage" />
         <activity android:name=".login_page" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -54,7 +49,8 @@
         <activity android:name=".driver_incentives" />
         <activity android:name=".profile" />
         <activity android:name=".recharge" />
-
+        <activity android:name=".OTP_confirmation" />
+        <activity android:name=".create_newpassword"></activity>
     </application>
 
 </manifest>
