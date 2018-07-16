@@ -34,9 +34,9 @@ public class splash extends AppCompatActivity {
 
                 try {
                     sleep(5000);
-                    if (!isConnected(splash.this))
-                        buildDialog(splash.this).show();
-                    else {
+                    if (!isConnected(splash.this)){}
+                       // buildDialog(splash.this).show();
+                    else{
                         Intent intent = new Intent(getApplicationContext(), login_page.class);
                         startActivity(intent);
                         finish();
