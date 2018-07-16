@@ -55,7 +55,7 @@
         <activity
             android:name=".outstation"
             android:label="@string/title_activity_outstation"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

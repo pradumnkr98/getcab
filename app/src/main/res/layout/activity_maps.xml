@@ -61,7 +61,7 @@
             android:textSize="15sp" />
 
     </RelativeLayout>
-    7
+
 
     <ImageView
         android:id="@+id/ic_gps"

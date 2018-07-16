@@ -13,4 +13,5 @@
     <string name="google_maps_apikey">AIzaSyDLTjecXyBP56lhqPpTIdxFtPeHoVAZvjE</string>
     <string name="title_activity_outstation">outstation</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_o_utstation">o_utstation</string>
 </resources>
