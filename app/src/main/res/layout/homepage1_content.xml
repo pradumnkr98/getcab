@@ -49,17 +49,21 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:scrollbars="horizontal"
-        app:menu="@menu/bottom_navigaionview_menu" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp">
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:scrollbars="horizontal"
+            app:menu="@menu/bottom_navigaionview_menu" />
 
 
+    </LinearLayout>
 
 </RelativeLayout>
