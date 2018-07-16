@@ -57,7 +57,7 @@ import java.util.List;
 public class homepage1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
 
 
-    Button bt1;
+    Button bt1, locals, outstation;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     public static final int DEFAULT_ZOOM = 10;
@@ -204,20 +204,7 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
     }
 
     //THE CODE FOR GOOGLE MAPS
-    /*
 
-    ---------------------------------google places API autocomplete suggestion-----------------------
-
-     */
-    private AdapterView.OnItemClickListener mAutocompleteclicklistener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final AutocompletePrediction item = placesAutocompleteAdapter.getItem(position);
-            final String placeId = item.getPlaceId();
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
-            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
-        }
-    };
 
 
     //requesting permission from user to access device location
@@ -228,59 +215,6 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
         } else {
             ActivityCompat.requestPermissions(this, permission, 1234);
         }
-    }
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage1);
-
-        //SETTING UP NAVIGATION DRAWER
-
-        drawerLayout = findViewById(R.id.drawer);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        bottomNavigationView = findViewById(R.id.bottom_nav_view);
-        setSupportActionBar(toolbar);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        //click listener for items in bottom_navigation view
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.mini:
-                        return true;
-                    case R.id.micro:
-                        return true;
-                    case R.id.prime:
-                        return true;
-                    default:
-                        return false;
-                }
-
-
-            }
-        });
-        //setting fragment for a map to be shown on layout
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(homepage1.this);
-
-        search = findViewById(R.id.map_search);
-        mgps = findViewById(R.id.ic_gps);
-        drop_location = findViewById(R.id.drop_location);
-
-
     }
 
     //Code To Set The Marker And Search The Place Entered in Search Bar
@@ -318,21 +252,7 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        locatonpermissiongranted = false;
-        switch (requestCode) {
-            case 1234: {
-                //If request is cancelled the result arrays are empty
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locatonpermissiongranted = true;
 
-                }
-                locatonpermissiongranted = true;
-            }
-        }
-        updateLocationUI();
-    }
 
     private void geolocate() {
         Log.d("homepage1", "geolocate: geolocating");
@@ -370,7 +290,88 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
         init();
     }
 
-    //code for checking the granted permission is true or false
+    /*
+
+   ---------------------------------google places API autocomplete suggestion-----------------------
+
+    */
+    private AdapterView.OnItemClickListener mAutocompleteclicklistener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final AutocompletePrediction item = placesAutocompleteAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+        }
+    };
+
+
+    /*
+      -----------------------------code for displaying list of places matching with keyword------------------
+      */
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_homepage1);
+
+        //SETTING UP NAVIGATION DRAWER
+
+        drawerLayout = findViewById(R.id.drawer);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        setSupportActionBar(toolbar);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //click listener for items in bottom_navigation view
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.mini:
+                        return true;
+                    case R.id.micro:
+                        return true;
+                    case R.id.prime:
+                        return true;
+                    default:
+                        return false;
+                }
+
+
+            }
+        });
+        //setting fragment for a map to be shown on layout
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(homepage1.this);
+
+        search = findViewById(R.id.map_search);
+        mgps = findViewById(R.id.ic_gps);
+        drop_location = findViewById(R.id.drop_location);
+        locals = findViewById(R.id.locals);
+        outstation = findViewById(R.id.outstation);
+        outstation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(homepage1.this, outstation.class);
+                startActivity(intent);
+            }
+        });
+
+
+    }
 
     private void init() {
         Log.d("homepage1", "init: initializing");
@@ -415,6 +416,23 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
             }
         });
+    }
+
+    //code for checking the granted permission is true or false
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        locatonpermissiongranted = false;
+        switch (requestCode) {
+            case 1234: {
+                //If request is cancelled the result arrays are empty
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    locatonpermissiongranted = true;
+
+                }
+                locatonpermissiongranted = true;
+            }
+        }
+        updateLocationUI();
     }
 
     @Override
