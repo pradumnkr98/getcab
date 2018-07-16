@@ -49,21 +49,53 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!-- <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="450dp">
+         <android.support.design.widget.BottomNavigationView
+             android:id="@+id/bottom_nav_view"
+             android:layout_width="match_parent"
+             android:layout_height="70dp"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentStart="true"
+             android:scrollbars="horizontal"
+             app:menu="@menu/bottom_navigaionview_menu" />
+
+
+     </LinearLayout>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="515dp">
+
+    </android.support.v7.widget.RecyclerView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp">
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:scrollbars="horizontal"
-            app:menu="@menu/bottom_navigaionview_menu" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal">
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:background="@color/colorAccent"
+            android:text="Ride later" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="110dp"
+            android:background="@color/colorAccent"
+            android:text="RIDE NOW" />
     </LinearLayout>
+
 
 </RelativeLayout>

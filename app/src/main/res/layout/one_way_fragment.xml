@@ -23,7 +23,7 @@
         android:layout_marginRight="30dp"
         android:background="@color/transparent"
         android:hint="  Your Name"
-        android:inputType="phone" />
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/one_number"
@@ -45,7 +45,7 @@
         android:layout_marginRight="30dp"
         android:background="@color/transparent"
         android:hint="  From Destination"
-        android:inputType="phone" />
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/t_destination"
@@ -56,7 +56,7 @@
         android:layout_marginRight="30dp"
         android:background="@color/transparent"
         android:hint="  To Destination"
-        android:inputType="phone" />
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/travellers_number"

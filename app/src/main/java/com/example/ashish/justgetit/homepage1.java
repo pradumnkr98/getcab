@@ -9,7 +9,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +16,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,13 +71,19 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
     private static final LatLngBounds LAT_LNG_BOUNDS1 = new LatLngBounds(new LatLng(-60, -190), new LatLng(80, 145));
     public FusedLocationProviderClient mfusedlocationproviderclient;
     public GoogleMap mMap;
-    BottomNavigationView bottomNavigationView;
+    // BottomNavigationView bottomNavigationView;
     AutoCompleteTextView search;
     ImageView mgps;
     private PlacesAutocompleteAdapter placesAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient, googleApiClient;
     private PlacesInfo mplace;
     private AutoCompleteTextView drop_location;
+    List<car_services_types> services_types;
+
+
+
+
+
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(@NonNull PlaceBuffer places) {
@@ -320,7 +328,7 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
         drawerLayout = findViewById(R.id.drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        //   bottomNavigationView = findViewById(R.id.bottom_nav_view);
         setSupportActionBar(toolbar);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
@@ -335,7 +343,7 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
         //click listener for items in bottom_navigation view
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+     /*   bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -351,7 +359,7 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
 
 
             }
-        });
+        });*/
         //setting fragment for a map to be shown on layout
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -369,6 +377,21 @@ public class homepage1 extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(intent);
             }
         });
+
+        /*
+        ------------------------Recycler view-------------------------------------
+         */
+        services_types = new ArrayList<>();
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false));
+
+
+        services_types.add(new car_services_types(R.drawable.mini, "Mini"));
+        services_types.add(new car_services_types(R.drawable.micro, "Micro"));
+        services_types.add(new car_services_types(R.drawable.sedan, "Prime"));
+        services_types.add(new car_services_types(R.drawable.suv, "SUV"));
+        recyclerView.setAdapter(new programmingadapter(homepage1.this, services_types));
+
 
 
     }
