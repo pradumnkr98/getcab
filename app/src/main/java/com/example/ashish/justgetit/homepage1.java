@@ -79,6 +79,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
     // Paytm Main Activity
 /*
+    The following code is commented until we get merchant details and payment layout.
+
     private void generateCheckSum() {
 
         //getting the tax amount first.
