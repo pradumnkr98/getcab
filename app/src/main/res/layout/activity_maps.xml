@@ -62,16 +62,38 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="168dp"
+        android:lines="1"
+        android:text="*Select Your Type of Ride Here"
+        android:textColor="#000"
+        android:textStyle="bold" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="21dp">
+
+    </android.support.v7.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/ic_gps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/rellayout1"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_alignEnd="@+id/rellayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/rellayout"
+        android:layout_marginTop="123dp"
         android:src="@drawable/ic_gps" />
-
 
 </RelativeLayout>
