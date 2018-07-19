@@ -16,8 +16,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,21 +48,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.paytm.pgsdk.PaytmOrder;
-import com.paytm.pgsdk.PaytmPGService;
-import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransactionCallback,*/ NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
 
@@ -75,7 +61,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private ActionBarDrawerToggle toggle;
     public static final int DEFAULT_ZOOM = 10;
 
-/* --------------------------------------------------------------------------------------------------------------------- */
+    /* --------------------------------------------------------------------------------------------------------------------- */
 
     // Paytm Main Activity
 /*
@@ -206,7 +192,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 }
 */
 
-/* ------------------------------------------------------------------------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------------------------------- */
 
     //Google maps utils
 
@@ -222,7 +208,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private GoogleApiClient mGoogleApiClient, googleApiClient;
     private PlacesInfo mplace;
     private AutoCompleteTextView drop_location;
-    List<car_services_types> services_types;
+    private Button confirm_booking;
+
 
 
 
@@ -484,6 +471,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+        confirm_booking = findViewById(R.id.confirm_booking);
 
         //click listener for items in bottom_navigation view
 
@@ -521,20 +509,15 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 startActivity(intent);
             }
         });
+        confirm_booking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(homepage1.this, final_booking.class);
+                startActivity(intent);
+            }
+        });
 
-        /*
-        ------------------------Recycler view-------------------------------------
-         */
-        services_types = new ArrayList<>();
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false));
 
-
-        services_types.add(new car_services_types(R.drawable.imini, "Mini"));
-        services_types.add(new car_services_types(R.drawable.imicro, "Micro"));
-        services_types.add(new car_services_types(R.drawable.iprime, "Prime"));
-        services_types.add(new car_services_types(R.drawable.isuv, "SUV"));
-        recyclerView.setAdapter(new programmingadapter(homepage1.this, services_types));
 
 
 

@@ -16,6 +16,7 @@
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
         android:textStyle="bold" />
+
     <EditText
         android:id="@+id/signup_name"
         android:layout_width="match_parent"
@@ -27,7 +28,20 @@
         android:background="@color/transparent"
         android:drawableLeft="@drawable/profile"
         android:hint="  Your Name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/phone_no"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/transparent"
+        android:drawableLeft="@drawable/phone"
+        android:hint="  Phone No."
         android:inputType="phone" />
+
 
     <EditText
         android:id="@+id/signup_email"
@@ -39,7 +53,7 @@
         android:drawableLeft="@drawable/email"
         android:background="@color/transparent"
         android:hint="  Email ID"
-        android:inputType="phone" />
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/signup_password"
@@ -51,7 +65,7 @@
         android:drawableLeft="@drawable/password"
         android:background="@color/transparent"
         android:hint="  Password"
-        android:inputType="phone" />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/signup"

@@ -15,4 +15,10 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_o_utstation">o_utstation</string>
     <string name="Select_Your_Type_Of_Ride_Here">This is an <u>underline</u>.</string>
+    <string name="tour_type">Choose a Tour Tyoe</string>
+    <string-array name="tour_arrays">
+        <item>Choose a Tour Type</item>
+        <item>One Way</item>
+        <item>Two Way</item>
+    </string-array>
 </resources>

@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:background="@drawable/autocompletetextview"
-            android:drawableLeft="@drawable/search_icon"
+            android:drawableLeft="@drawable/greendot"
             android:hint="Pickup Location"
             android:imeOptions="actionSearch"
             android:textColor="#000"
@@ -54,37 +54,13 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:background="@drawable/autocompletetextview"
-            android:drawableLeft="@drawable/search_icon"
+            android:drawableLeft="@drawable/reddot"
             android:hint="Drop Location"
             android:imeOptions="actionSearch"
             android:textColor="#000"
             android:textSize="15sp" />
 
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="168dp"
-        android:lines="1"
-        android:text="*Select Your Type of Ride Here"
-        android:textColor="#000"
-        android:textStyle="bold" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="21dp">
-
-    </android.support.v7.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/ic_gps"
@@ -95,5 +71,14 @@
         android:layout_alignRight="@+id/rellayout"
         android:layout_marginTop="123dp"
         android:src="@drawable/ic_gps" />
+
+    <Button
+        android:id="@+id/confirm_booking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#000"
+        android:text="Proceed to Booking"
+        android:textColor="@color/green" />
 
 </RelativeLayout>
