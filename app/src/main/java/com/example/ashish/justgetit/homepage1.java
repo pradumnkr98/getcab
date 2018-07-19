@@ -39,6 +39,7 @@ import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -59,7 +60,23 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     Button bt1, locals, outstation;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-    public static final int DEFAULT_ZOOM = 10;
+
+    //Google maps utils
+
+    public static final int DEFAULT_ZOOM = 100;
+    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
+    private static final LatLngBounds LAT_LNG_BOUNDS1 = new LatLngBounds(new LatLng(-60, -190), new LatLng(80, 145));
+    public FusedLocationProviderClient mfusedlocationproviderclient;
+    public GoogleMap mMap;
+    // BottomNavigationView bottomNavigationView;
+    AutoCompleteTextView search;
+    ImageView mgps;
+    private Boolean locatonpermissiongranted = false;
+    private PlacesAutocompleteAdapter placesAutocompleteAdapter;
+    private GoogleApiClient mGoogleApiClient, googleApiClient;
+    private PlacesInfo mplace;
+    private AutoCompleteTextView drop_location;
+    private Button confirm_booking;
 
     /* --------------------------------------------------------------------------------------------------------------------- */
 
@@ -193,26 +210,6 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 */
 
     /* ------------------------------------------------------------------------------------------------------------------- */
-
-    //Google maps utils
-
-    private Boolean locatonpermissiongranted = false;
-    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
-    private static final LatLngBounds LAT_LNG_BOUNDS1 = new LatLngBounds(new LatLng(-60, -190), new LatLng(80, 145));
-    public FusedLocationProviderClient mfusedlocationproviderclient;
-    public GoogleMap mMap;
-    // BottomNavigationView bottomNavigationView;
-    AutoCompleteTextView search;
-    ImageView mgps;
-    private PlacesAutocompleteAdapter placesAutocompleteAdapter;
-    private GoogleApiClient mGoogleApiClient, googleApiClient;
-    private PlacesInfo mplace;
-    private AutoCompleteTextView drop_location;
-    private Button confirm_booking;
-
-
-
-
 
 
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
@@ -388,6 +385,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
       /*  MarkerOptions options=new MarkerOptions().position(latLng).title(title);
         mMap.addMarker(options);*/
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+        mMap.animateCamera(cameraUpdate);
 
     }
 
