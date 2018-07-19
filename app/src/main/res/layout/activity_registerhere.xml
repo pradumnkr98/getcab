@@ -31,7 +31,7 @@
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/phone_no"
+        android:id="@+id/signup_phone_no"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginBottom="15dp"

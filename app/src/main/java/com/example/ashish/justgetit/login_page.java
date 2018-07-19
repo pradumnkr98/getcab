@@ -7,14 +7,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class login_page extends AppCompatActivity {
     private Button login;
-    private EditText number;
-    private EditText password;
+    FirebaseFirestore db;
+    DocumentReference documentReference;
     private TextView forget_password;
     private TextView register_here;
-
+    private EditText log_number;
+    private EditText log_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,26 +31,48 @@ public class login_page extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
 
 
-        number = findViewById(R.id.number);
-        password = findViewById(R.id.password);
+        log_number = findViewById(R.id.number);
+        log_password = findViewById(R.id.password);
         login = findViewById(R.id.login_button);
         forget_password = findViewById(R.id.forget_password);
         register_here = findViewById(R.id.register_here);
 
-        number.getText().toString().trim();
-        password.getText().toString().trim();
+        db = FirebaseFirestore.getInstance();
+        documentReference = db.collection("Users").document();
 
+        // log_number.getText().toString().trim();
+        //  log_password.getText().toString().trim();
 
+        db = FirebaseFirestore.getInstance();
 
 
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(login_page.this, homepage1.class);
-                startActivity(intent);
+
+
+                db.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(QuerySnapshot documentsSnapshots, FirebaseFirestoreException e) {
+                        for (DocumentSnapshot ds : documentsSnapshots) {
+
+                            String number, password;
+                            number = ds.getString("Number");
+                            password = ds.getString("Password");
+                            if (number.contentEquals(log_number.getText().toString().trim()) && password.contentEquals(log_password.getText().toString().trim())) {
+                                Intent intent = new Intent(login_page.this, homepage1.class);
+                                startActivity(intent);
+                            } else
+                                Toast.makeText(login_page.this, "invalid username or password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
             }
         });
+
 
         forget_password.setOnClickListener(new View.OnClickListener() {
             @Override
