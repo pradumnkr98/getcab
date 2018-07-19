@@ -28,6 +28,12 @@ public class login_page extends AppCompatActivity {
         forget_password = findViewById(R.id.forget_password);
         register_here = findViewById(R.id.register_here);
 
+        number.getText().toString().trim();
+        password.getText().toString().trim();
+
+
+
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
