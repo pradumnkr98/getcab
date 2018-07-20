@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -55,11 +56,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransactionCallback,*/ NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
-
-
     Button bt1, locals, outstation;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
+    ImageView user_img;
+    Uri imageuri;
+    private int PICK_IMAGE = 100;
 
     //Google maps utils
 
@@ -77,6 +79,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private PlacesInfo mplace;
     private AutoCompleteTextView drop_location;
     private Button confirm_booking;
+
+
 
     /* --------------------------------------------------------------------------------------------------------------------- */
 
@@ -263,7 +267,6 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -300,6 +303,10 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 Intent intent7 = new Intent(homepage1.this, profile.class);
                 startActivity(intent7);
                 return true;
+            case R.id.log_out:
+                Intent intent8 = new Intent(homepage1.this, login_page.class);
+                startActivity(intent8);
+                Toast.makeText(homepage1.this, "logout successfully", Toast.LENGTH_SHORT).show();
 
             default:
                 return false;
@@ -515,12 +522,27 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 startActivity(intent);
             }
         });
+       /* user_img=findViewById(R.id.user_img);
+        user_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(intent,PICK_IMAGE);
 
-
-
-
+            }
+        });*/
 
     }
+
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK && requestCode==PICK_IMAGE){
+            imageuri=data.getData();
+            user_img.setImageURI(imageuri);
+
+        }
+    }*/
 
     private void init() {
         Log.d("homepage1", "init: initializing");
