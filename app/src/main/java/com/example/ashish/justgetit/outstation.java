@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,7 +23,6 @@ import java.util.Calendar;
 
 public class outstation extends AppCompatActivity {
 
-    private SectionPageAdapter mSectionpageAdapter;
     private ViewPager viewPager;
     Calendar current_date;
     int day, month, year;
@@ -30,6 +30,8 @@ public class outstation extends AppCompatActivity {
     FirebaseFirestore db;
     private Button confirmBooking;
     private EditText one_name, one_number, t_destination, f_destination, travellers_number;
+    private Spinner spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +44,13 @@ public class outstation extends AppCompatActivity {
         f_destination = findViewById(R.id.f_destination);
         t_destination = findViewById(R.id.t_destination);
         travellers_number = findViewById(R.id.travellers_number);
+        spinner = findViewById(R.id.spinner);
 
         db = FirebaseFirestore.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         date = findViewById(R.id.date);
-        //viewPager = findViewById(R.id.container);
-        // setupViewPager(viewPager);
-        // TabLayout tabLayout = findViewById(R.id.tabs);
-        //  tabLayout.setupWithViewPager(viewPager);
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +91,7 @@ public class outstation extends AppCompatActivity {
                 dbOustationDetails.add(outstationDetails).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(outstation.this,"Saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(outstation.this, "Saved", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -106,13 +105,6 @@ public class outstation extends AppCompatActivity {
 
     }
 
-  /*  private void setupViewPager(ViewPager viewPager) {
-        SectionPageAdapter adapter = new SectionPageAdapter(getSupportFragmentManager());
-        adapter.addfragment(new one_way_fragment(), "One Way");
-        adapter.addfragment(new round_way_fragment(), "ROund way");
-        viewPager.setAdapter(adapter);
-
-    }*/
 }
 
 

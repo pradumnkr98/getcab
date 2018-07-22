@@ -45,33 +45,41 @@ public class login_page extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        if (sharedpreferences.getUserName(login_page.this).length() == 0) {
 
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    db.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(QuerySnapshot documentsSnapshots, FirebaseFirestoreException e) {
+                            for (DocumentSnapshot ds : documentsSnapshots) {
 
+                                String number, password;
+                                number = ds.getString("Number");
+                                password = ds.getString("Password");
+                                if (number.contentEquals(log_number.getText().toString().trim()) && password.contentEquals(log_password.getText().toString().trim())) {
+                                    Intent intent = new Intent(login_page.this, homepage1.class);
+                                    startActivity(intent);
 
-                db.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(QuerySnapshot documentsSnapshots, FirebaseFirestoreException e) {
-                        for (DocumentSnapshot ds : documentsSnapshots) {
-
-                            String number, password;
-                            number = ds.getString("Number");
-                            password = ds.getString("Password");
-                            if (number.contentEquals(log_number.getText().toString().trim()) && password.contentEquals(log_password.getText().toString().trim())) {
-                                Intent intent = new Intent(login_page.this, homepage1.class);
-                                startActivity(intent);
-                            } else
-                                Toast.makeText(login_page.this, "invalid username or password", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(login_page.this, "invalid username or password", Toast.LENGTH_SHORT).show();
+                                }
+                            }
                         }
-                    }
-                });
+                    });
 
+                    sharedpreferences.setUserName(login_page.this, log_number.toString());
+                }
 
-            }
-        });
+            });
+
+        } else {
+            Intent intent = new Intent(login_page.this, homepage1.class);
+            startActivity(intent);
+
+        }
 
 
         forget_password.setOnClickListener(new View.OnClickListener() {

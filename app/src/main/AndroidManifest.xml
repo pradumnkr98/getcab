@@ -57,7 +57,9 @@
             android:label="@string/title_activity_outstation"
             android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".final_booking"></activity>
+        <activity android:name=".final_booking" />
+        <activity android:name=".profile_page" />
+        <activity android:name=".booking_summary"></activity>
     </application>
 
 </manifest>

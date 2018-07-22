@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/current_duty"
+        android:id="@+id/current_ride"
         android:icon="@drawable/current_duty"
-        android:title="Current Duty">
-
+        android:title="Current Ride">
     </item>
     <item
-        android:id="@+id/available_booking"
+        android:id="@+id/future_ride"
         android:icon="@drawable/available_booking"
-        android:title="Available Booking">
-
+        android:title="Future Ride">
     </item>
+
     <item
-        android:id="@+id/future_duties"
-        android:icon="@drawable/future_booking"
-        android:title="Future Duties" />
-    <item
-        android:id="@+id/recharge"
+        android:id="@+id/completed_ride"
         android:icon="@drawable/recharge"
-        android:title="Recharge" />
+        android:title="Completed Ride" />
     <item
-        android:id="@+id/account_details"
+        android:id="@+id/wallet"
         android:icon="@drawable/account_details"
-        android:title="Account Details" />
-    <item
-        android:id="@+id/driver_incentives"
-        android:icon="@drawable/driver_incentives"
-        android:title="Driver Incentives" />
+        android:title="Wallet" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/profile"
         android:title="Profile" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/driver_incentives"
+        android:title="Settings" />
     <item
         android:id="@+id/log_out"
         android:icon="@drawable/log_out"

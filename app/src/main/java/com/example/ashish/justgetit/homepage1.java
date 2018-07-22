@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -59,9 +58,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     Button bt1, locals, outstation;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-    ImageView user_img;
-    Uri imageuri;
-    private int PICK_IMAGE = 100;
+
 
     //Google maps utils
 
@@ -70,6 +67,9 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private static final LatLngBounds LAT_LNG_BOUNDS1 = new LatLngBounds(new LatLng(-60, -190), new LatLng(80, 145));
     public FusedLocationProviderClient mfusedlocationproviderclient;
     public GoogleMap mMap;
+    LatLng pickup_location, drop_location2;
+    // private List<Polyline> polylines;
+    // private static final int[] COLORS = new int[]{R.color.colorPrimary,R.color.colorPrimaryDark,R.color.colorAccent,R.color.primary_dark_material_light};
     // BottomNavigationView bottomNavigationView;
     AutoCompleteTextView search;
     ImageView mgps;
@@ -79,6 +79,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private PlacesInfo mplace;
     private AutoCompleteTextView drop_location;
     private Button confirm_booking;
+    private TextView total_distance, total_time;
 
 
 
@@ -215,6 +216,9 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
     /* ------------------------------------------------------------------------------------------------------------------- */
 
+    /*
+      -----------------------------code for displaying list of places matching with keyword------------------
+      */
 
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
@@ -248,7 +252,10 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
         }
     };
+
+
     //Method to close drawer by back key pressing
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -257,7 +264,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             super.onBackPressed();
         }
     }
-//making the navigation icon workable
+
+    //making the navigation icon workable
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -267,43 +275,41 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.current_duty:
+            case R.id.current_ride:
                 Intent intent1 = new Intent(homepage1.this, current_duty.class);
                 startActivity(intent1);
                 return true;
 
-            case R.id.available_booking:
+            case R.id.future_ride:
                 Intent intent2 = new Intent(homepage1.this, available_booking.class);
                 startActivity(intent2);
                 return true;
 
-            case R.id.future_duties:
-                Intent intent3 = new Intent(homepage1.this, future_duties.class);
-                startActivity(intent3);
-
-            case R.id.recharge://to be completed by aadil
+            case R.id.wallet://to be completed by aadil
                 Intent intent4 = new Intent(homepage1.this, recharge.class);
                 startActivity(intent4);
                 return true;
 
-            case R.id.account_details:
+            case R.id.completed_ride:
                 Intent intent5 = new Intent(homepage1.this, account_details.class);
                 startActivity(intent5);
                 return true;
 
-            case R.id.driver_incentives:
+            case R.id.settings:
                 Intent intent6 = new Intent(homepage1.this, driver_incentives.class);
                 startActivity(intent6);
                 return true;
 
-            case R.id.prime:
-                Intent intent7 = new Intent(homepage1.this, profile.class);
+            case R.id.profile:
+                Intent intent7 = new Intent(homepage1.this, profile_page.class);
                 startActivity(intent7);
                 return true;
             case R.id.log_out:
+                sharedpreferences.clearUserName(homepage1.this);
                 Intent intent8 = new Intent(homepage1.this, login_page.class);
                 startActivity(intent8);
                 Toast.makeText(homepage1.this, "logout successfully", Toast.LENGTH_SHORT).show();
@@ -315,6 +321,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         //  return false;
     }
 
+
+    //THE CODE FOR GOOGLE MAPS
 
     public void updateLocationUI() {
         if (mMap == null) {
@@ -346,11 +354,10 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         }
     }
 
-    //THE CODE FOR GOOGLE MAPS
-
 
 
     //requesting permission from user to access device location
+
     private void getLocationPermission() {
         String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -372,7 +379,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful() && task.getResult() != null) {
                             Location currentLocation = (Location) task.getResult();
-                            search.setText("Pinned Location");
+                            search.setHint("Pinned Location");
+                            // pickup_location=new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
                         } else {
                             Toast.makeText(homepage1.this, "Unable to Detect Location! \n Make sure your GPS is ON", Toast.LENGTH_LONG).show();
@@ -384,7 +392,6 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         } catch (SecurityException e) {
             Log.d("homepage1", "getDevicelocation: SecurityException:" + e.getMessage());
         }
-
 
     }
 
@@ -398,8 +405,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     }
 
 
-
-    private void geolocate() {
+    private LatLng geolocate() {
         Log.d("homepage1", "geolocate: geolocating");
         String searchstring = search.getText().toString();
 
@@ -414,10 +420,13 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         if (list.size() > 0) {
             Address address = list.get(0);
             Log.d("homepage1", "geolocate: found a location:" + address.toString());
+            //  location=new LatLng(address.getLatitude(),address.getLongitude());
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
             search.setText(address.getAddressLine(0));
-        }
 
+        }
+        Address address = list.get(0);
+        return new LatLng(address.getLatitude(), address.getLongitude());
     }
 
     @Override
@@ -428,11 +437,11 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         updateLocationUI();
         if (locatonpermissiongranted) {
             getDeviceLocation();
-
         }
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         init();
+
     }
 
     /*
@@ -451,9 +460,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     };
 
 
-    /*
-      -----------------------------code for displaying list of places matching with keyword------------------
-      */
+    //ON CREATE METHOD
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -478,26 +485,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
         confirm_booking = findViewById(R.id.confirm_booking);
+        // polylines = new ArrayList<>();
 
-        //click listener for items in bottom_navigation view
-
-     /*   bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.mini:
-                        return true;
-                    case R.id.micro:
-                        return true;
-                    case R.id.prime:
-                        return true;
-                    default:
-                        return false;
-                }
-
-
-            }
-        });*/
         //setting fragment for a map to be shown on layout
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -522,27 +511,25 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 startActivity(intent);
             }
         });
-       /* user_img=findViewById(R.id.user_img);
-        user_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(intent,PICK_IMAGE);
 
-            }
-        });*/
+       /* String str_from,end_to;
+        str_from=search.getText().toString();
+        end_to=drop_location.getText().toString();
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str_from + "&destinations=" + end_to + "&mode=driving&language=fr-FR&avoid=tolls&key=YOUR_API_KEY";
+        new GeoTask(homepage1.this).execute(url);*/
+
 
     }
+   /* @Override
+    public void setDouble(String result) {
+        String res[]=result.split(",");
+        Double min=Double.parseDouble(res[0])/60;
+        int dist=Integer.parseInt(res[1])/1000;
+        total_distance.setText("Duration= " + (int) (min / 60) + " hr " + (int) (min % 60) + " mins");
+        total_time.setText("Distance= " + dist + " kilometers");
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK && requestCode==PICK_IMAGE){
-            imageuri=data.getData();
-            user_img.setImageURI(imageuri);
-
-        }
     }*/
+
 
     private void init() {
         Log.d("homepage1", "init: initializing");
@@ -564,7 +551,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
                     //execute method for searching
-                    geolocate();
+                    pickup_location = geolocate();
                 }
                 return false;
             }
@@ -575,7 +562,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
                     //execute method for searching
-                    geolocate();
+                    drop_location2 = geolocate();
+
                 }
                 return false;
             }
@@ -587,6 +575,13 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
             }
         });
+       /* Routing routing = new Routing.Builder()
+                .travelMode(AbstractRouting.TravelMode.DRIVING)
+                .withListener(this)
+                .alternativeRoutes(true)
+                .waypoints(pickup_location,drop_location2)
+                .build();
+        routing.execute();*/
     }
 
     //code for checking the granted permission is true or false
@@ -608,6 +603,63 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        
+    }
+
+   /* @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+        if(e != null) {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void onRoutingStart() {
+
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> route, int starting_index) {
+        if(polylines.size()>0) {
+            for (Polyline poly : polylines) {
+                poly.remove();
+            }
+        }
+
+        polylines = new ArrayList<>();
+        //add route(s) to the map.
+        for (int i = 0; i <route.size(); i++) {
+
+            //In case of more than 5 alternative routes
+            int colorIndex = i % COLORS.length;
+
+            PolylineOptions polyOptions = new PolylineOptions();
+            polyOptions.color(getResources().getColor(COLORS[colorIndex]));
+            polyOptions.width(10 + i * 3);
+            polyOptions.addAll(route.get(i).getPoints());
+            Polyline polyline = mMap.addPolyline(polyOptions);
+            polylines.add(polyline);
+
+            Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+
+    }
+    public void erasepolylines(){
+        for (Polyline line:polylines){
+            line.remove();
+        }
+        polylines.clear();
+    }*/
 }

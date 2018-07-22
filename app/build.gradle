@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.ashish.justgetit"
         minSdkVersion 14
         targetSdkVersion 27
@@ -38,6 +39,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.2.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
     implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.jd-alexander:library:1.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
