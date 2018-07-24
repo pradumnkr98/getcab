@@ -10,11 +10,10 @@ public class user_registration_details {
 
     }
 
-    public user_registration_details(String name, String phone_no, String email, String password) {
+    public user_registration_details(String name, String phone_no, String email) {
         this.name = name;
         this.phone_no = phone_no;
         this.email = email;
-        this.password = password;
     }
 
     public String getName() {
@@ -29,7 +28,5 @@ public class user_registration_details {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
+
 }

@@ -21,4 +21,5 @@
         <item>One Way</item>
         <item>Two Way</item>
     </string-array>
+    <string name="title_activity_customer_map">Map</string>
 </resources>

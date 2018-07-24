@@ -405,7 +405,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     }
 
 
-    private LatLng geolocate() {
+    private void geolocate() {
         Log.d("homepage1", "geolocate: geolocating");
         String searchstring = search.getText().toString();
 
@@ -425,8 +425,6 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             search.setText(address.getAddressLine(0));
 
         }
-        Address address = list.get(0);
-        return new LatLng(address.getLatitude(), address.getLongitude());
     }
 
     @Override
@@ -512,11 +510,20 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             }
         });
 
+
        /* String str_from,end_to;
         str_from=search.getText().toString();
         end_to=drop_location.getText().toString();
         String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str_from + "&destinations=" + end_to + "&mode=driving&language=fr-FR&avoid=tolls&key=YOUR_API_KEY";
         new GeoTask(homepage1.this).execute(url);*/
+
+
+      /* String pickup_location1;
+       pickup_location1=search.getText().toString();
+       Intent intent=new Intent(homepage1.this,customer_map.class);
+       intent.putExtra("pickup",pickup_location1);
+       startActivity(intent);*/
+
 
 
     }
@@ -551,8 +558,12 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
                     //execute method for searching
-                    pickup_location = geolocate();
+                    geolocate();
                 }
+              /*  Intent intent=new Intent(homepage1.this,customer_map.class);
+                intent.putExtra( "pickup_location_latitude",pickup_location.latitude);
+                intent.putExtra("pick_up_location_longitude",pickup_location.longitude);
+                startActivity(intent);*/
                 return false;
             }
         });
@@ -562,7 +573,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
                     //execute method for searching
-                    drop_location2 = geolocate();
+                    geolocate();
 
                 }
                 return false;
@@ -603,7 +614,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        
+
     }
 
    /* @Override

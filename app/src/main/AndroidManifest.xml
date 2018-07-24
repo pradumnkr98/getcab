@@ -8,6 +8,7 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -59,7 +60,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".final_booking" />
         <activity android:name=".profile_page" />
-        <activity android:name=".booking_summary"></activity>
+        <activity android:name=".booking_summary" />
+        <activity android:name=".getting_nearby_driver"></activity>
     </application>
 
 </manifest>
