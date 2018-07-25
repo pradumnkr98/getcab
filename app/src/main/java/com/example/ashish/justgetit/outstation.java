@@ -1,23 +1,11 @@
 package com.example.ashish.justgetit;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
@@ -27,7 +15,7 @@ public class outstation extends AppCompatActivity {
     Calendar current_date;
     int day, month, year;
     private EditText date;
-    FirebaseFirestore db;
+    //  FirebaseFirestore db;
     private Button confirmBooking;
     private EditText one_name, one_number, t_destination, f_destination, travellers_number;
     private Spinner spinner;
@@ -46,9 +34,9 @@ public class outstation extends AppCompatActivity {
         travellers_number = findViewById(R.id.travellers_number);
         spinner = findViewById(R.id.spinner);
 
-        db = FirebaseFirestore.getInstance();
+        //   db = FirebaseFirestore.getInstance();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+    /*    Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         date = findViewById(R.id.date);
         date.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +90,7 @@ public class outstation extends AppCompatActivity {
 
             }
         });
-
+*/
     }
 
 }

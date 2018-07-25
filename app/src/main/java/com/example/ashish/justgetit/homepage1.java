@@ -55,7 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransactionCallback,*/ NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
-    Button bt1, locals, outstation;
+    Button bt1, locals, outstation, round_way;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
 
@@ -494,6 +494,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         mgps = findViewById(R.id.ic_gps);
         drop_location = findViewById(R.id.drop_location);
         locals = findViewById(R.id.locals);
+        round_way = findViewById(R.id.round_way);
         outstation = findViewById(R.id.outstation);
         outstation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -507,6 +508,15 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             public void onClick(View v) {
                 Intent intent = new Intent(homepage1.this, final_booking.class);
                 startActivity(intent);
+            }
+        });
+
+        round_way.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(homepage1.this, outstation_roundway.class);
+                startActivity(intent);
+
             }
         });
 
