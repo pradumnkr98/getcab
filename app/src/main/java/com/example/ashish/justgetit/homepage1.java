@@ -49,6 +49,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,6 +74,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     // BottomNavigationView bottomNavigationView;
     AutoCompleteTextView search;
     ImageView mgps;
+    FirebaseAuth mAuth;
     private Boolean locatonpermissiongranted = false;
     private PlacesAutocompleteAdapter placesAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient, googleApiClient;
@@ -309,7 +311,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 startActivity(intent7);
                 return true;
             case R.id.log_out:
-                sharedpreferences.clearUserName(homepage1.this);
+                mAuth.signOut();
                 Intent intent8 = new Intent(homepage1.this, login_page.class);
                 startActivity(intent8);
                 Toast.makeText(homepage1.this, "logout successfully", Toast.LENGTH_SHORT).show();
@@ -465,6 +467,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage1);
+        mAuth = FirebaseAuth.getInstance();
 
         //SETTING UP NAVIGATION DRAWER
 

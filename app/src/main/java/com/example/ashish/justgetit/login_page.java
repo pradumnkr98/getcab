@@ -52,8 +52,10 @@ public class login_page extends AppCompatActivity {
                 progressDialog.show();
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(login_page.this, "Enter your email ID", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(login_page.this, "Enter Password", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 } else {
                     mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(login_page.this, new OnCompleteListener<AuthResult>() {
@@ -71,6 +73,7 @@ public class login_page extends AppCompatActivity {
                                         Log.w("login_page", "signInWithEmail:failure", task.getException());
                                         Toast.makeText(login_page.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
                                     }
                                 }
                             });

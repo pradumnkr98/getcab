@@ -1,27 +1,41 @@
 package com.example.ashish.justgetit;
 
 public class car_services_types {
-    int carimage;
-    String car_type;
+    // String car_image;
+    String car_name;
+    String fare;
 
-    public car_services_types(int carimage, String car_type) {
-        this.carimage = carimage;
-        this.car_type = car_type;
+    public car_services_types(String car_name, String fare) {
+        //this.car_image = car_image;
+        this.car_name = car_name;
+        this.fare = fare;
     }
 
-    public int getCarimage() {
-        return carimage;
+    public car_services_types() {
+
     }
 
-    public void setCarimage(int carimage) {
-        this.carimage = carimage;
+  /*  public String getCar_image() {
+        return car_image;
     }
 
-    public String getCar_type() {
-        return car_type;
+    public void setCar_image(String car_image) {
+        this.car_image = car_image;
+    }*/
+
+    public String getCar_name() {
+        return car_name;
     }
 
-    public void setCar_type(String car_type) {
-        this.car_type = car_type;
+    public void setCar_name(String car_name) {
+        this.car_name = car_name;
+    }
+
+    public String getFare() {
+        return fare;
+    }
+
+    public void setFare(String fare) {
+        this.fare = fare;
     }
 }

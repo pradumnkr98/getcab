@@ -1,4 +1,4 @@
-package com.example.ashish.justgetit;
+/*package com.example.ashish.justgetit;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -21,7 +21,7 @@ public class programmingadapter extends RecyclerView.Adapter<programmingadapter.
         this.data = data;
     }
 
-    @NonNull
+   /* @NonNull
     @Override
     public programmingadapter.ProgrammingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -67,5 +67,5 @@ public class programmingadapter extends RecyclerView.Adapter<programmingadapter.
             parent = this.itemView;
 
         }
-    }
-}
+    }*/
+

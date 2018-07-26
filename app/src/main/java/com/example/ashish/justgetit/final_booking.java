@@ -5,25 +5,36 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.util.ArrayList;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
 import java.util.List;
+
+//import com.squareup.picasso.Picasso;
 
 public class final_booking extends AppCompatActivity {
     List<car_services_types> services_types;
     android.support.v7.widget.Toolbar toolbar;
     Calendar current_date;
     int day, month, year;
+    private DatabaseReference databaseReference;
 
     private static final int Time_id = 1;
     EditText Schedule_ride, time_pick;
@@ -44,6 +55,8 @@ public class final_booking extends AppCompatActivity {
         setContentView(R.layout.activity_final_booking);
         toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
+        databaseReference.keepSynced(true);
         Schedule_ride = findViewById(R.id.schedule_ride);
         time_pick = findViewById(R.id.time_pick);
         next = findViewById(R.id.confirm_booking);
@@ -70,16 +83,17 @@ public class final_booking extends AppCompatActivity {
         /*
         ------------------------Recycler view-------------------------------------
          */
-        services_types = new ArrayList<>();
+        // services_types = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
 
-        services_types.add(new car_services_types(R.drawable.imini, "Mini"));
+      /*  services_types.add(new car_services_types(R.drawable.imini, "Mini"));
         services_types.add(new car_services_types(R.drawable.imicro, "Sedan"));
         services_types.add(new car_services_types(R.drawable.isuv, "SUV"));
         services_types.add(new car_services_types(R.drawable.innova, "SUV(Innova)"));
-        recyclerView.setAdapter(new programmingadapter(final_booking.this, services_types));
+        recyclerView.setAdapter(new programmingadapter(final_booking.this, services_types));*/
+
 
         Schedule_ride.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +118,31 @@ public class final_booking extends AppCompatActivity {
                 showDialog(Time_id);
             }
         });
+
+
+        FirebaseRecyclerOptions<car_services_types> options =
+                new FirebaseRecyclerOptions.Builder<car_services_types>()
+                        .setQuery(databaseReference, car_services_types.class)
+                        .build();
+
+        FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, int position, @NonNull car_services_types model) {
+                holder.setCar_name(model.getCar_name());
+                holder.setFare(model.getFare());
+            }
+
+            @NonNull
+            @Override
+            public car_services_typesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
+                return new car_services_typesViewHolder(view);
+            }
+        };
+        firebaseRecyclerAdapter.startListening();
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+        
+
     }
 
     protected Dialog onCreateDialog(int id) {
@@ -118,6 +157,31 @@ public class final_booking extends AppCompatActivity {
         // Open the timepicker dialog
         return new TimePickerDialog(final_booking.this, time_listener, hour,
                 minute, true);
+
     }
 
+    public static class car_services_typesViewHolder extends RecyclerView.ViewHolder {
+        View view;
+        ImageView car_image1;
+        TextView car_name1;
+        TextView fare1;
+
+        public car_services_typesViewHolder(View itemView) {
+            super(itemView);
+            car_image1 = itemView.findViewById(R.id.car_type);
+        }
+
+        public void setCar_name(String car_name) {
+            car_name1 = itemView.findViewById(R.id.car_name);
+            car_name1.setText(car_name.toString());
+        }
+
+        public void setFare(String fare) {
+            fare1 = itemView.findViewById(R.id.fare);
+            fare1.setText(fare.toString());
+        }
+
+    }
 }
+
+

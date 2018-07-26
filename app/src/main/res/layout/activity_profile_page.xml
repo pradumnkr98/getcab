@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bluebg2"
     android:orientation="vertical"
     tools:context=".profile_page">
 
@@ -36,22 +35,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:background="@color/transparent"
             android:drawableLeft="@drawable/profile"
-            android:text="Name                :"
+            android:text="Name"
             android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/my_name"
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:background="@color/transparent"
@@ -64,13 +62,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:background="@color/transparent"
             android:drawableLeft="@drawable/phone"
             android:text="Registered No.:"
             android:textSize="20dp"
@@ -78,7 +75,7 @@
 
         <TextView
             android:id="@+id/my_number"
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:background="@color/transparent"
@@ -91,13 +88,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:background="@color/transparent"
             android:drawableLeft="@drawable/email"
             android:text="Email ID            :"
             android:textSize="20dp"
@@ -105,7 +101,7 @@
 
         <TextView
             android:id="@+id/my_email"
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:background="@color/transparent"
@@ -117,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="280dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/button_style"
         android:backgroundTint="@color/black"
         android:text="Edit Details"

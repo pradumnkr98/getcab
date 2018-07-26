@@ -69,14 +69,18 @@ public class registerhere extends AppCompatActivity {
                 password = signup_password.getText().toString();
                 progressDialog.setMessage("Registering:Please Wait...");
                 progressDialog.show();
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(registerhere.this, "Enter your email ID", Toast.LENGTH_LONG).show();
-                } else if (TextUtils.isEmpty(password) || password.length() < 6) {
-                    Toast.makeText(registerhere.this, "Enter Password with atleast 6 charaters", Toast.LENGTH_LONG).show();
-                } else if (TextUtils.isEmpty(name)) {
+                if (TextUtils.isEmpty(name)) {
                     Toast.makeText(registerhere.this, "Enter Name", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 } else if (TextUtils.isEmpty(phone_no) || phone_no.length() < 10 || phone_no.length() > 10) {
                     Toast.makeText(registerhere.this, "Incorrect Phone No.", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                } else if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(registerhere.this, "Enter Your Email Id", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                } else if (TextUtils.isEmpty(password) || password.length() < 6) {
+                    Toast.makeText(registerhere.this, "Incorrect Password.", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 } else {
 
                     mAuth.createUserWithEmailAndPassword(email, password)
@@ -97,6 +101,7 @@ public class registerhere extends AppCompatActivity {
                                         Log.w("register_here", "signInWithEmail:failure", task.getException());
                                         Toast.makeText(registerhere.this, "Authentication failed." + task.getException(),
                                                 Toast.LENGTH_LONG).show();
+                                        progressDialog.dismiss();
                                         //   updateUI(null);
                                     }
 

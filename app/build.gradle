@@ -5,7 +5,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.example.ashish.justgetit"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -43,6 +43,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.jd-alexander:library:1.1.0'
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+    implementation 'com.firebaseui:firebase-ui-database:4.1.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
