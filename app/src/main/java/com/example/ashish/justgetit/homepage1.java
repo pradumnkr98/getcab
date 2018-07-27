@@ -497,11 +497,11 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         mgps = findViewById(R.id.ic_gps);
         drop_location = findViewById(R.id.drop_location);
         locals = findViewById(R.id.locals);
-        outstation = findViewById(R.id.outstation);
-        outstation.setOnClickListener(new View.OnClickListener() {
+        Button oneWay = (Button) findViewById(R.id.oneWay);
+        oneWay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(homepage1.this, outstation.class);
+                Intent intent = new Intent(homepage1.this, oneWay.class);
                 startActivity(intent);
             }
         });
