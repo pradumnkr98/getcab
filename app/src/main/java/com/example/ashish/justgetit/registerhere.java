@@ -96,6 +96,7 @@ public class registerhere extends AppCompatActivity {
                                         write_user_data(name, phone_no, email);
                                         Intent intent = new Intent(registerhere.this, login_page.class);
                                         startActivity(intent);
+                                        progressDialog.dismiss();
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("register_here", "signInWithEmail:failure", task.getException());

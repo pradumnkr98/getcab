@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,11 +25,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.List;
-
-//import com.squareup.picasso.Picasso;
 
 public class final_booking extends AppCompatActivity {
     List<car_services_types> services_types;
@@ -39,6 +40,8 @@ public class final_booking extends AppCompatActivity {
     private static final int Time_id = 1;
     EditText Schedule_ride, time_pick;
     Button next;
+    String pick_date, pick_time;
+    SharedPreferences.Editor editor;
     TimePickerDialog.OnTimeSetListener time_listener = new TimePickerDialog.OnTimeSetListener() {
 
         @Override
@@ -64,6 +67,13 @@ public class final_booking extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(final_booking.this, booking_summary.class);
+                pick_date = Schedule_ride.getText().toString();
+                pick_time = time_pick.getText().toString();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(final_booking.this);
+                editor = preferences.edit();
+                editor.putString("pickdate", pick_date);
+                editor.putString("picktime", pick_time);
+                editor.commit();
                 startActivity(intent);
             }
         });
@@ -127,9 +137,16 @@ public class final_booking extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, int position, @NonNull car_services_types model) {
+            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull car_services_types model) {
                 holder.setCar_name(model.getCar_name());
                 holder.setFare(model.getFare());
+                holder.setCar_image(model.getCar_image());
+                holder.parent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
             }
 
             @NonNull
@@ -141,7 +158,7 @@ public class final_booking extends AppCompatActivity {
         };
         firebaseRecyclerAdapter.startListening();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
-        
+
 
     }
 
@@ -165,10 +182,12 @@ public class final_booking extends AppCompatActivity {
         ImageView car_image1;
         TextView car_name1;
         TextView fare1;
+        View parent;
 
         public car_services_typesViewHolder(View itemView) {
             super(itemView);
-            car_image1 = itemView.findViewById(R.id.car_type);
+            parent = this.itemView;
+
         }
 
         public void setCar_name(String car_name) {
@@ -179,6 +198,11 @@ public class final_booking extends AppCompatActivity {
         public void setFare(String fare) {
             fare1 = itemView.findViewById(R.id.fare);
             fare1.setText(fare.toString());
+        }
+
+        public void setCar_image(String car_image) {
+            car_image1 = itemView.findViewById(R.id.car_type);
+            Picasso.with(itemView.getContext()).load(car_image).resize(80, 50).into(car_image1);
         }
 
     }

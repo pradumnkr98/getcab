@@ -61,7 +61,7 @@
         <activity android:name=".final_booking" />
         <activity android:name=".profile_page" />
         <activity android:name=".booking_summary" />
-        <activity android:name=".oneWay"/>
+        <activity android:name=".oneWay" />
         <activity android:name=".getting_nearby_driver"></activity>
     </application>
 

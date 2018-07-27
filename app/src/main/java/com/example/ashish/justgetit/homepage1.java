@@ -3,11 +3,13 @@ package com.example.ashish.justgetit;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -82,6 +84,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private AutoCompleteTextView drop_location;
     private Button confirm_booking;
     private TextView total_distance, total_time;
+    SharedPreferences.Editor editor;
 
 
 
@@ -313,8 +316,9 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             case R.id.log_out:
                 mAuth.signOut();
                 Intent intent8 = new Intent(homepage1.this, login_page.class);
-                startActivity(intent8);
                 Toast.makeText(homepage1.this, "logout successfully", Toast.LENGTH_SHORT).show();
+                startActivity(intent8);
+
 
             default:
                 return false;
@@ -497,21 +501,31 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         mgps = findViewById(R.id.ic_gps);
         drop_location = findViewById(R.id.drop_location);
         locals = findViewById(R.id.locals);
-        Button oneWay = (Button) findViewById(R.id.oneWay);
-        oneWay.setOnClickListener(new View.OnClickListener() {
+        Button oneWay = findViewById(R.id.oneWay);
+       /* oneWay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(homepage1.this, oneWay.class);
                 startActivity(intent);
             }
-        });
+        });*/
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(homepage1.this, final_booking.class);
+                String pickup, drop;
+                pickup = search.getText().toString();
+                drop = drop_location.getText().toString();
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
+                editor = preferences.edit();
+                editor.putString("pickup", pickup);
+                editor.putString("drop", drop);
+                editor.apply();
                 startActivity(intent);
             }
         });
+
 
 
        /* String str_from,end_to;
