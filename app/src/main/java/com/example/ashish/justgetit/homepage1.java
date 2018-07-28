@@ -509,6 +509,15 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 startActivity(intent);
             }
         });*/
+
+        Button roundway = findViewById(R.id.roundway);
+        roundway.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(homepage1.this, outstation_roundway.class);
+                startActivity(intent);
+            }
+        });
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -551,6 +560,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         int dist=Integer.parseInt(res[1])/1000;
         total_distance.setText("Duration= " + (int) (min / 60) + " hr " + (int) (min % 60) + " mins");
         total_time.setText("Distance= " + dist + " kilometers");
+
 
     }*/
 

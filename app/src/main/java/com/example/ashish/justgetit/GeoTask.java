@@ -49,7 +49,8 @@ public class GeoTask extends AsyncTask<String, Void, String> {
             geo1.setDouble(aDouble);
             pd.dismiss();
         } else
-            Toast.makeText(mContext, "Error4!Please Try Again wiht proper values", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Error4!Please Try Again with proper values", Toast.LENGTH_SHORT).show();
+        pd.dismiss();
     }
 
     @Override

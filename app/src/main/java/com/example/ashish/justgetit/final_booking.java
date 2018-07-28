@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 import java.util.List;
 
-public class final_booking extends AppCompatActivity {
+public class final_booking extends AppCompatActivity implements GeoTask.Geo {
     List<car_services_types> services_types;
     android.support.v7.widget.Toolbar toolbar;
     Calendar current_date;
@@ -41,6 +41,7 @@ public class final_booking extends AppCompatActivity {
     EditText Schedule_ride, time_pick;
     Button next;
     String pick_date, pick_time;
+    String pick_up_location, Drop_location;
     SharedPreferences.Editor editor;
     TimePickerDialog.OnTimeSetListener time_listener = new TimePickerDialog.OnTimeSetListener() {
 
@@ -56,6 +57,8 @@ public class final_booking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_booking);
+
+
         toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
@@ -77,6 +80,9 @@ public class final_booking extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(final_booking.this);
+        pick_up_location = pref.getString("pickup", "");
+        Drop_location = pref.getString("drop", "");
 
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
@@ -160,7 +166,21 @@ public class final_booking extends AppCompatActivity {
         recyclerView.setAdapter(firebaseRecyclerAdapter);
 
 
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver%20BC%7CSeattle&destinations=San%20Francisco%7CVictoria%20BC&language=fr-FR&key=AIzaSyDLTjecXyBP56lhqPpTIdxFtPeHoVAZvjE";
+        new GeoTask(final_booking.this).execute(url);
+
+
     }
+
+    public void setDouble(String result) {
+        TextView tv1 = findViewById(R.id.distance);
+        String res[] = result.split(",");
+        Double min = Double.parseDouble(res[0]) / 60;
+        int dist = Integer.parseInt(res[1]) / 1000;
+        tv1.setText("Distance= " + dist + " kilometers");
+
+    }
+
 
     protected Dialog onCreateDialog(int id) {
 

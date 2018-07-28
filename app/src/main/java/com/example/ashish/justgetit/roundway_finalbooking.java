@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -69,16 +68,16 @@ public class roundway_finalbooking extends AppCompatActivity {
         /*
         ------------------------Recycler view-------------------------------------
          */
-        services_types = new ArrayList<>();
+        // services_types = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
 
 
-        services_types.add(new car_services_types(R.drawable.imini, "Mini"));
+      /*  services_types.add(new car_services_types(R.drawable.imini, "Mini"));
         services_types.add(new car_services_types(R.drawable.imicro, "Sedan"));
         services_types.add(new car_services_types(R.drawable.isuv, "SUV"));
         services_types.add(new car_services_types(R.drawable.innova, "SUV(Innova)"));
-        recyclerView.setAdapter(new programmingadapter(roundway_finalbooking.this, services_types));
+        recyclerView.setAdapter(new programmingadapter(roundway_finalbooking.this, services_types));*/
 
         Schedule_ride.setOnClickListener(new View.OnClickListener() {
             @Override
