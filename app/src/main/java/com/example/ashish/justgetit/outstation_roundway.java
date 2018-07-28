@@ -15,7 +15,7 @@ public class outstation_roundway extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outstation_roundway);
 
-        confirm_booking = findViewById(R.id.next);
+        confirm_booking = findViewById(R.id.roundway);
 
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override

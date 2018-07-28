@@ -61,7 +61,8 @@ public class GeoTask extends AsyncTask<String, Void, String> {
             con.setRequestMethod("GET");
             con.connect();
             int statuscode = con.getResponseCode();
-            if (statuscode == HttpURLConnection.HTTP_OK) {
+            Log.e("status", statuscode + "");
+            if (statuscode == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
@@ -83,9 +84,9 @@ public class GeoTask extends AsyncTask<String, Void, String> {
                 JSONObject object_duration = object_elements.getJSONObject("duration");
                 JSONObject object_distance = object_elements.getJSONObject("distance");
 
-                Log.d("JSON", "object_duration:" + object_duration);
+                Log.d("onbject_duration", "object_duration:" + object_duration);
+                //  Log.d("onbject_duration",object_duration.getString("value")+"");
                 return object_duration.getString("value") + "," + object_distance.getString("value");
-
             }
         } catch (MalformedURLException e) {
             Log.d("error", "error1");
@@ -97,6 +98,7 @@ public class GeoTask extends AsyncTask<String, Void, String> {
 
 
         return null;
+
     }
 
     interface Geo {

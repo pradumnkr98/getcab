@@ -44,11 +44,11 @@ public class roundway_finalbooking extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Schedule_ride = findViewById(R.id.schedule_ride);
         time_pick = findViewById(R.id.time_pick);
-        next = findViewById(R.id.confirm_booking);
+        next = findViewById(R.id.roundway_next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(roundway_finalbooking.this, booking_summary.class);
+                Intent intent = new Intent(roundway_finalbooking.this, roundway_bookingsummary.class);
                 startActivity(intent);
             }
         });

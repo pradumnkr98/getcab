@@ -166,7 +166,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         recyclerView.setAdapter(firebaseRecyclerAdapter);
 
 
-        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver%20BC%7CSeattle&destinations=San%20Francisco%7CVictoria%20BC&language=fr-FR&key=AIzaSyDLTjecXyBP56lhqPpTIdxFtPeHoVAZvjE";
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver%20BC%7CSeattle&destinations=San%20Francisco%7CVictoria%20BC&language=fr-FR&key=AIzaSyBvHBcELlDeNZeKT8NH7zATiS40v1a102Y";
         new GeoTask(final_booking.this).execute(url);
 
 
