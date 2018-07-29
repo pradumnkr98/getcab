@@ -50,7 +50,7 @@
         <activity android:name=".navigation_drawer.account_details" />
         <activity android:name=".navigation_drawer.driver_incentives" />
         <activity android:name=".profile" />
-        <activity android:name=".recharge" />
+        <activity android:name=".navigation_drawer.recharge" />
         <activity android:name=".OTP_confirmation" />
         <activity android:name=".create_newpassword" />
         <activity android:name=".MainActivity" />

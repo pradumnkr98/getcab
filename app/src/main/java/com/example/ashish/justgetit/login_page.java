@@ -33,6 +33,7 @@ public class login_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
 
+        FirebaseUser user = mAuth.getCurrentUser();
 
         log_email = findViewById(R.id.number);
         log_password = findViewById(R.id.password);
@@ -42,7 +43,7 @@ public class login_page extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(login_page.this);
 
-        if (mAuth == null) {
+        if (user == null) {
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

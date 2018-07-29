@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -58,6 +60,11 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_booking);
+        DateFormat df = new SimpleDateFormat("HH:mm a");
+        String time = df.format(Calendar.getInstance().getTime());
+        DateFormat df1 = new SimpleDateFormat("d MM yyyy");
+        String date = df1.format(Calendar.getInstance().getTime());
+
 
 
         toolbar = findViewById(R.id.toolbar1);
@@ -65,7 +72,9 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
         databaseReference.keepSynced(true);
         Schedule_ride = findViewById(R.id.schedule_ride);
+        Schedule_ride.setText(date);
         time_pick = findViewById(R.id.time_pick);
+        time_pick.setText(time);
         next = findViewById(R.id.confirm_booking);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
