@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.ashish.justgetit.R;
+import com.example.ashish.justgetit.local_booking.getting_nearby_driver;
 
 public class roundway_bookingsummary extends AppCompatActivity {
     Toolbar toolbar;
@@ -34,7 +35,7 @@ public class roundway_bookingsummary extends AppCompatActivity {
         book_cab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(roundway_bookingsummary.this, roundway_gettingnearbydriver.class);
+                Intent intent = new Intent(roundway_bookingsummary.this, getting_nearby_driver.class);
                 startActivity(intent);
             }
         });
