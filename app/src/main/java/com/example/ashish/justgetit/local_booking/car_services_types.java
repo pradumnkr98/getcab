@@ -1,4 +1,4 @@
-package com.example.ashish.justgetit;
+package com.example.ashish.justgetit.local_booking;
 
 public class car_services_types {
     String car_image;

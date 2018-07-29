@@ -1,4 +1,4 @@
-package com.example.ashish.justgetit;
+package com.example.ashish.justgetit.navigation_drawer;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ashish.justgetit.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

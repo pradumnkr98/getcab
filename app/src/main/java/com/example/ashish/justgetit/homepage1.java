@@ -31,6 +31,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ashish.justgetit.local_booking.final_booking;
+import com.example.ashish.justgetit.navigation_drawer.account_details;
+import com.example.ashish.justgetit.navigation_drawer.available_booking;
+import com.example.ashish.justgetit.navigation_drawer.current_duty;
+import com.example.ashish.justgetit.navigation_drawer.driver_incentives;
+import com.example.ashish.justgetit.navigation_drawer.profile_page;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -514,7 +520,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         roundway.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(homepage1.this, outstation_roundway.class);
+                Intent intent = new Intent(homepage1.this, com.example.ashish.justgetit.outstation.outstation_roundway.class);
                 startActivity(intent);
             }
         });

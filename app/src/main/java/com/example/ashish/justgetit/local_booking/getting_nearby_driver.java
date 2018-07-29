@@ -1,8 +1,9 @@
-package com.example.ashish.justgetit;
+package com.example.ashish.justgetit.local_booking;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.ashish.justgetit.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

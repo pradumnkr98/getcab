@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".outstation_roundway">
+    tools:context=".outstation.outstation_roundway">
 
     <RelativeLayout
         android:id="@+id/rellayout"
@@ -65,7 +65,7 @@
         android:src="@drawable/ic_gps" />
 
     <Button
-        android:id="@+id/roundway"
+        android:id="@+id/roundway_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

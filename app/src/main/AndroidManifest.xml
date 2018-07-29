@@ -44,28 +44,24 @@
         <activity android:name=".homepage1" />
         <activity android:name=".registerhere" />
         <activity android:name=".forgetpassword" />
-        <activity android:name=".current_duty" />
-        <activity android:name=".available_booking" />
+        <activity android:name=".navigation_drawer.current_duty" />
+        <activity android:name=".navigation_drawer.available_booking" />
         <activity android:name=".future_duties" />
-        <activity android:name=".account_details" />
-        <activity android:name=".driver_incentives" />
+        <activity android:name=".navigation_drawer.account_details" />
+        <activity android:name=".navigation_drawer.driver_incentives" />
         <activity android:name=".profile" />
         <activity android:name=".recharge" />
         <activity android:name=".OTP_confirmation" />
         <activity android:name=".create_newpassword" />
-        <activity
-            android:name=".outstation"
-            android:label="@string/title_activity_outstation"
-            android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".final_booking" />
-        <activity android:name=".profile_page" />
-        <activity android:name=".booking_summary" />
-        <activity android:name=".outstation_roundway" />
-        <activity android:name=".roundway_finalbooking" />
-        <activity android:name=".roundway_bookingsummary" />
-        <activity android:name=".roundway_gettingnearbydriver" />
-        <activity android:name=".getting_nearby_driver"></activity>
+        <activity android:name=".local_booking.final_booking" />
+        <activity android:name=".navigation_drawer.profile_page" />
+        <activity android:name=".local_booking.booking_summary" />
+        <activity android:name=".outstation.outstation_roundway" />
+        <activity android:name=".outstation.roundway_finalbooking" />
+        <activity android:name=".outstation.roundway_bookingsummary" />
+        <activity android:name=".outstation.roundway_gettingnearbydriver" />
+        <activity android:name=".local_booking.getting_nearby_driver"></activity>
     </application>
 
 </manifest>
