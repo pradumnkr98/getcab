@@ -75,6 +75,8 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         Schedule_ride.setText(date);
         time_pick = findViewById(R.id.time_pick);
         time_pick.setText(time);
+
+
         next = findViewById(R.id.confirm_booking);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +92,8 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
                 startActivity(intent);
             }
         });
+
+
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(final_booking.this);
         pick_up_location = pref.getString("pickup", "");
         Drop_location = pref.getString("drop", "");
