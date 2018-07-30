@@ -3,15 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".oneWay">
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="433dp"
-        tools:context=".homepage1" />
+    tools:context=".one_way_layout">
 
     <RelativeLayout
         android:id="@+id/rellayout"
@@ -61,24 +53,6 @@
             android:textSize="15sp" />
 
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/ic_gps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/rellayout"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/rellayout"
-        android:layout_marginTop="123dp"
-        android:src="@drawable/ic_gps" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewOneWay"
-        android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/map" />
 
     <Button
         android:id="@+id/oneWayNextButton"
