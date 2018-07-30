@@ -54,6 +54,9 @@
         <activity android:name=".OTP_confirmation" />
         <activity android:name=".create_newpassword" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".one_way_layout" />
+        <activity android:name=".oneway_finalbooking" />
+        <activity android:name=".oneway_bookingsummary" />
         <activity android:name=".local_booking.final_booking" />
         <activity android:name=".navigation_drawer.profile_page" />
         <activity android:name=".local_booking.booking_summary" />
