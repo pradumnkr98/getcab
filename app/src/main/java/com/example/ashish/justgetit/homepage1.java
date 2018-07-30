@@ -518,15 +518,15 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         drop_location = findViewById(R.id.drop_location);
         locals = findViewById(R.id.locals);
         Button oneWay = findViewById(R.id.oneWay);
-       /* oneWay.setOnClickListener(new View.OnClickListener() {
+        oneWay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(homepage1.this, oneWay.class);
+                Intent intent = new Intent(homepage1.this, one_way_layout.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
-        Button roundway = findViewById(R.id.round_way);
+       Button roundway = findViewById(R.id.round_way);
         roundway.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -534,6 +534,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 startActivity(intent);
             }
         });
+
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
