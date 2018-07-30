@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -62,13 +64,23 @@ public class roundway_finalbooking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roundway_finalbooking);
 
+        DateFormat df = new SimpleDateFormat("HH:mm a");
+        String time = df.format(Calendar.getInstance().getTime());
+        DateFormat df1 = new SimpleDateFormat("d MM yyyy");
+        String date = df1.format(Calendar.getInstance().getTime());
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
         databaseReference.keepSynced(true);
 
         toolbar = findViewById(R.id.roundwaytoolbar1);
         setSupportActionBar(toolbar);
+
         Schedule_ride = findViewById(R.id.roundway_schedule_ride);
+        Schedule_ride.setText(date);
         time_pick = findViewById(R.id.roundway_time_pick);
+        time_pick.setText(time);
+
+
         next1 = findViewById(R.id.roundway_next2);
         next1.setOnClickListener(new View.OnClickListener() {
             @Override

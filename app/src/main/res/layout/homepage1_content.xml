@@ -22,7 +22,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
+                android:layout_marginLeft="-10dp"
                 android:background="@color/fadishwhite"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
@@ -31,8 +31,11 @@
                     android:id="@+id/locals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_style"
+                    android:background="@drawable/button_background"
+                    android:backgroundTint="@color/colorPrimary"
                     android:text="Locals"
+                    android:textColor="@color/green"
+                    android:textStyle="bold"
                     android:textAllCaps="false" />
 
                 <Button
@@ -40,8 +43,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/button_style"
+                    android:background="@drawable/button_background"
+                    android:backgroundTint="@color/colorPrimary"
                     android:text="One Way"
+                    android:textColor="@color/green"
+                    android:textStyle="bold"
                     android:textAllCaps="false" />
 
                 <Button
@@ -49,8 +55,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/button_style"
+                    android:background="@drawable/button_background"
+                    android:backgroundTint="@color/colorPrimary"
                     android:text="Round Way"
+                    android:textColor="@color/green"
+                    android:textStyle="bold"
                     android:textAllCaps="false" />
 
 

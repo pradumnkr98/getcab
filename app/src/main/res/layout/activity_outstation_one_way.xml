@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".oneWay">
+    tools:context=".outstation_one_way.outstation_one_way">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/summary_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="433dp"
-        tools:context=".homepage1" />
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:title="Select Your Location">
+
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:id="@+id/rellayout"
@@ -19,12 +21,12 @@
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/autocompletetextview"
         android:elevation="10dp">
 
         <AutoCompleteTextView
-            android:id="@+id/map_search"
+            android:id="@+id/pickup_location"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -44,7 +46,7 @@
         android:layout_below="@+id/rellayout"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="7dp"
         android:background="@drawable/autocompletetextview"
         android:elevation="10dp">
 
@@ -62,30 +64,12 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/ic_gps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/rellayout"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/rellayout"
-        android:layout_marginTop="123dp"
-        android:src="@drawable/ic_gps" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewOneWay"
-        android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/map" />
-
     <Button
-        android:id="@+id/oneWayNextButton"
+        android:id="@+id/roundway_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#000"
+        android:background="@color/colorPrimary"
         android:text="next"
         android:textColor="@color/green"
         android:textSize="20dp"

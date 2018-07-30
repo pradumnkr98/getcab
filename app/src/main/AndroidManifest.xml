@@ -61,7 +61,10 @@
         <activity android:name=".outstation.roundway_finalbooking" />
         <activity android:name=".outstation.roundway_bookingsummary" />
         <activity android:name=".outstation.roundway_gettingnearbydriver" />
-        <activity android:name=".local_booking.getting_nearby_driver"></activity>
+        <activity android:name=".local_booking.getting_nearby_driver" />
+        <activity android:name=".outstation_one_way.outstation_one_way" />
+        <activity android:name=".outstation_one_way.oneway_bookingsummary" />
+        <activity android:name=".outstation_one_way.oneway_finalbooking"></activity>
     </application>
 
 </manifest>

@@ -183,11 +183,9 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
     }
 
     public void setDouble(String result) {
-        TextView tv1 = findViewById(R.id.distance);
         String res[] = result.split(",");
         Double min = Double.parseDouble(res[0]) / 60;
         int dist = Integer.parseInt(res[1]) / 1000;
-        tv1.setText("Distance= " + dist + " kilometers");
 
     }
 
@@ -237,5 +235,3 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
 
     }
 }
-
-

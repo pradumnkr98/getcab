@@ -3,7 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".outstation.outstation_roundway">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/summary_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:title="Select Your Location">
+
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:id="@+id/rellayout"
@@ -11,7 +21,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/autocompletetextview"
         android:elevation="10dp">
 
@@ -29,30 +39,30 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rellayout1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/rellayout"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="1dp"
-        android:background="@drawable/autocompletetextview"
-        android:elevation="10dp">
+    <!-- <RelativeLayout
+         android:id="@+id/rellayout1"
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:layout_below="@+id/rellayout"
+         android:layout_marginLeft="30dp"
+         android:layout_marginRight="10dp"
+         android:layout_marginTop="1dp"
+         android:background="@drawable/autocompletetextview"
+         android:elevation="10dp">
 
-        <AutoCompleteTextView
-            android:id="@+id/drop_location"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:background="@drawable/autocompletetextview"
-            android:drawableLeft="@drawable/reddot"
-            android:hint="Drop Location"
-            android:imeOptions="actionSearch"
-            android:textColor="#000"
-            android:textSize="15sp" />
+         <AutoCompleteTextView
+             android:id="@+id/drop_location"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_centerVertical="true"
+             android:background="@drawable/autocompletetextview"
+             android:drawableLeft="@drawable/reddot"
+             android:hint="Drop Location"
+             android:imeOptions="actionSearch"
+             android:textColor="#000"
+             android:textSize="15sp" />
 
-    </RelativeLayout>
+     </RelativeLayout>-->
 
     <ImageView
         android:id="@+id/ic_gps"
@@ -69,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#000"
+        android:background="@color/colorPrimary"
         android:text="next"
         android:textColor="@color/green"
         android:textSize="20dp"

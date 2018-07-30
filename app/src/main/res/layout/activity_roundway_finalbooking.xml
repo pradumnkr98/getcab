@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbackground"
     tools:context=".outstation.roundway_finalbooking">
 
     <LinearLayout
@@ -64,10 +63,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@drawable/button_style"
-            android:backgroundTint="#000"
+            android:layout_marginBottom="5dp"
             android:text="Next"
             android:textColor="@color/green"
             android:textSize="15sp"
+            android:backgroundTint="@color/colorPrimary"
             android:textStyle="bold" />
 
 
