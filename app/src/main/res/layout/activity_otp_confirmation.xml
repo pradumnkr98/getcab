@@ -12,7 +12,10 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textAlignment="center"
-        app:title="OTP Confirmation"></android.support.v7.widget.Toolbar>
+        app:title="OTP Confirmation"
+        app:titleTextColor="@color/green">
+
+    </android.support.v7.widget.Toolbar>
 
 
     <android.support.v4.widget.Space
@@ -50,6 +53,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Next" />
+        android:text="Next"
+        android:textColor="@color/green"
+        android:textStyle="bold" />
 
 </LinearLayout>

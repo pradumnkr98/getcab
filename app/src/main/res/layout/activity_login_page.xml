@@ -69,8 +69,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_style"
-                android:backgroundTint="@color/blue"
-                android:text="log in" />
+                android:backgroundTint="@color/colorPrimary"
+                android:text="log in"
+                android:textColor="@color/green"
+                android:textStyle="bold" />
 
 
         </LinearLayout>

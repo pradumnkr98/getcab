@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             app:title="Select Your Ride"
-            app:titleTextColor="#000">
+            app:titleTextColor="@color/green">
 
         </android.support.v7.widget.Toolbar>
 
@@ -31,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_style"
                 android:backgroundTint="@color/transparent"
                 android:drawableLeft="@drawable/calender"
@@ -41,6 +42,7 @@
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_style"
                 android:backgroundTint="@color/transparent"
                 android:drawableLeft="@drawable/time"
@@ -52,7 +54,7 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="0dp">
+            android:layout_marginTop="10dp">
 
         </android.support.v7.widget.RecyclerView>
 

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ashish.justgetit.PlacesAutocompleteAdapter;
 import com.example.ashish.justgetit.PlacesInfo;
@@ -108,8 +109,12 @@ public class outstation_roundway extends AppCompatActivity implements GoogleApiC
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(outstation_roundway.this, roundway_finalbooking.class);
-                startActivity(intent);
+                if (search.getText().toString().length() == 0) {
+                    Toast.makeText(outstation_roundway.this, "Enter Your Pickup Location", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(outstation_roundway.this, roundway_finalbooking.class);
+                    startActivity(intent);
+                }
 
             }
         });

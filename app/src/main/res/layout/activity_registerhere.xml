@@ -13,7 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="Registration"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -74,8 +74,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_style"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Sign Up" />
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Sign Up"
+        android:textColor="@color/green"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Log in."
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/blue" />
     </LinearLayout>
 
 </LinearLayout>

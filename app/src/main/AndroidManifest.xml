@@ -49,11 +49,9 @@
         <activity android:name=".future_duties" />
         <activity android:name=".navigation_drawer.account_details" />
         <activity android:name=".navigation_drawer.driver_incentives" />
-        <activity android:name=".profile" />
         <activity android:name=".navigation_drawer.recharge" />
         <activity android:name=".OTP_confirmation" />
         <activity android:name=".create_newpassword" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".outstation_one_way.oneway_finalbooking" />
         <activity android:name=".oneway_bookingsummary" />
         <activity android:name=".local_booking.final_booking" />

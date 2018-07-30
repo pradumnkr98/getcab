@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/colorPrimary"
-        app:title="Select Your Location">
+        app:title="Select Your Location"
+        app:titleTextColor="@color/green">
 
     </android.support.v7.widget.Toolbar>
 
@@ -31,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:background="@drawable/autocompletetextview"
-            android:drawableLeft="@drawable/greendot"
+            android:drawableLeft="@drawable/pickup"
             android:hint="Pickup Location"
             android:imeOptions="actionSearch"
             android:textColor="#000"

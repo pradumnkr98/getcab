@@ -538,17 +538,23 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(homepage1.this, final_booking.class);
-                String pickup, drop;
-                pickup = search.getText().toString();
-                drop = drop_location.getText().toString();
+                if (search.getText().toString().length() == 0) {
+                    Toast.makeText(homepage1.this, "Enter Your Pickup Location", Toast.LENGTH_LONG).show();
+                } else if (drop_location.getText().toString().length() == 0) {
+                    Toast.makeText(homepage1.this, "Enter Drop Location", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(homepage1.this, final_booking.class);
+                    String pickup, drop;
+                    pickup = search.getText().toString();
+                    drop = drop_location.getText().toString();
 
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
-                editor = preferences.edit();
-                editor.putString("pickup", pickup);
-                editor.putString("drop", drop);
-                editor.apply();
-                startActivity(intent);
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
+                    editor = preferences.edit();
+                    editor.putString("pickup", pickup);
+                    editor.putString("drop", drop);
+                    editor.apply();
+                    startActivity(intent);
+                }
             }
         });
 

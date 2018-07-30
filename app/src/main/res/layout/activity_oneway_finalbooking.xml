@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             app:title="Select Your Ride"
-            app:titleTextColor="#000">
+            app:titleTextColor="@color/green">
 
         </android.support.v7.widget.Toolbar>
 
