@@ -2,7 +2,9 @@ package com.example.ashish.justgetit;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -29,6 +31,8 @@ public class registerhere extends AppCompatActivity {
     ProcessBuilder processBuilder;
     FirebaseDatabase firebaseDatabase;
     ProgressDialog progressDialog;
+    SharedPreferences.Editor editor;
+    SharedPreferences preferences;
     private DatabaseReference mreference;
     private FirebaseAuth mAuth;
 
@@ -94,6 +98,13 @@ public class registerhere extends AppCompatActivity {
                                                 Toast.LENGTH_LONG).show();
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         write_user_data(name, phone_no, email);
+
+                                        preferences = PreferenceManager.getDefaultSharedPreferences(registerhere.this);
+                                        editor = preferences.edit();
+                                        editor.putString("Phone No", phone_no);
+                                        editor.putString("Name", name);
+                                        editor.commit();
+
                                         Intent intent = new Intent(registerhere.this, login_page.class);
                                         startActivity(intent);
                                         progressDialog.dismiss();

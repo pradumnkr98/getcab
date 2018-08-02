@@ -37,6 +37,8 @@ import com.example.ashish.justgetit.navigation_drawer.available_booking;
 import com.example.ashish.justgetit.navigation_drawer.current_duty;
 import com.example.ashish.justgetit.navigation_drawer.driver_incentives;
 import com.example.ashish.justgetit.navigation_drawer.profile_page;
+import com.example.ashish.justgetit.navigation_drawer.recharge;
+import com.example.ashish.justgetit.outstation_one_way.outstation_one_way;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -64,7 +66,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransactionCallback,*/ NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
-    Button bt1, locals, outstation;
+    Button bt1, locals, outstation, one_way;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
 
@@ -226,7 +228,6 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 */
 
     /* ------------------------------------------------------------------------------------------------------------------- */
-
     /*
       -----------------------------code for displaying list of places matching with keyword------------------
       */
@@ -479,6 +480,15 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         setContentView(R.layout.activity_homepage1);
         mAuth = FirebaseAuth.getInstance();
 
+        one_way = findViewById(R.id.oneWay);
+        one_way.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(homepage1.this, outstation_one_way.class);
+                startActivity(intent);
+            }
+        });
+
         //SETTING UP NAVIGATION DRAWER
 
         drawerLayout = findViewById(R.id.drawer);
@@ -511,12 +521,12 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         oneWay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(homepage1.this, one_way_layout.class);
+                Intent intent = new Intent(homepage1.this, outstation_one_way.class);
                 startActivity(intent);
             }
         });
 
-       Button roundway = findViewById(R.id.round_way);
+        Button roundway = findViewById(R.id.round_way);
         roundway.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -528,17 +538,23 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(homepage1.this, final_booking.class);
-                String pickup, drop;
-                pickup = search.getText().toString();
-                drop = drop_location.getText().toString();
+                if (search.getText().toString().length() == 0) {
+                    Toast.makeText(homepage1.this, "Enter Your Pickup Location", Toast.LENGTH_LONG).show();
+                } else if (drop_location.getText().toString().length() == 0) {
+                    Toast.makeText(homepage1.this, "Enter Drop Location", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(homepage1.this, final_booking.class);
+                    String pickup, drop;
+                    pickup = search.getText().toString();
+                    drop = drop_location.getText().toString();
 
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
-                editor = preferences.edit();
-                editor.putString("pickup", pickup);
-                editor.putString("drop", drop);
-                editor.apply();
-                startActivity(intent);
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
+                    editor = preferences.edit();
+                    editor.putString("pickup", pickup);
+                    editor.putString("drop", drop);
+                    editor.apply();
+                    startActivity(intent);
+                }
             }
         });
 

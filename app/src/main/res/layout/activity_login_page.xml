@@ -57,7 +57,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Forget Password?"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/blue"
                 android:textSize="15sp"
                 android:visibility="visible" />
 
@@ -69,8 +69,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_style"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:text="log in" />
+                android:backgroundTint="@color/colorPrimary"
+                android:text="log in"
+                android:textColor="@color/green"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
@@ -94,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="Register Here"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/blue"
             android:textSize="15sp" />
 
     </LinearLayout>

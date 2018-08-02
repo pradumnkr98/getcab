@@ -1,4 +1,4 @@
-package com.example.ashish.justgetit;
+package com.example.ashish.justgetit.outstation_one_way;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -24,6 +24,7 @@ import android.widget.TimePicker;
 
 import com.example.ashish.justgetit.R;
 import com.example.ashish.justgetit.local_booking.car_services_types;
+import com.example.ashish.justgetit.oneway_bookingsummary;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +47,6 @@ public class oneway_finalbooking extends AppCompatActivity {
     Button next;
 
     EditText Schedule_ride, time_pick;
-    private DatabaseReference databaseReference;
     TimePickerDialog.OnTimeSetListener time_listener = new TimePickerDialog.OnTimeSetListener() {
 
         @Override
@@ -56,6 +56,7 @@ public class oneway_finalbooking extends AppCompatActivity {
             time_pick.setText(time1);
         }
     };
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

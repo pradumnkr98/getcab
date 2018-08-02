@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.ashish.justgetit.R;
 import com.example.ashish.justgetit.local_booking.getting_nearby_driver;
 
 public class oneway_bookingsummary extends AppCompatActivity {

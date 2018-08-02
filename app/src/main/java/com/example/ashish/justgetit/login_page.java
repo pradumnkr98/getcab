@@ -42,7 +42,6 @@ public class login_page extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(login_page.this);
 
-        if (mAuth == null) {
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,11 +84,6 @@ public class login_page extends AppCompatActivity {
                 }
 
             });
-        } else {
-            Intent intent = new Intent(login_page.this, homepage1.class);
-            startActivity(intent);
-        }
-
 
 
         forget_password.setOnClickListener(new View.OnClickListener() {

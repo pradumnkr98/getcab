@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbackground"
-    tools:context=".oneway_finalbooking">
+
+    tools:context=".outstation_one_way.oneway_finalbooking">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             app:title="Select Your Ride"
-            app:titleTextColor="#000">
+            app:titleTextColor="@color/green">
 
         </android.support.v7.widget.Toolbar>
 
@@ -35,6 +35,7 @@
                 android:background="@drawable/button_style"
                 android:backgroundTint="@color/transparent"
                 android:drawableLeft="@drawable/calender"
+                android:layout_marginTop="10dp"
                 android:hint="schedule your ride" />
 
             <EditText
@@ -45,6 +46,7 @@
                 android:background="@drawable/button_style"
                 android:backgroundTint="@color/transparent"
                 android:drawableLeft="@drawable/time"
+                android:layout_marginTop="10dp"
                 android:hint="Pick Up Time" />
         </LinearLayout>
 
@@ -53,7 +55,7 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="0dp">
+            android:layout_marginTop="10dp">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -64,7 +66,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@drawable/button_style"
-            android:backgroundTint="#000"
+            android:backgroundTint="@color/colorPrimary"
             android:text="Next"
             android:textColor="@color/green"
             android:textSize="15sp"

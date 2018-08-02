@@ -12,10 +12,6 @@ import android.util.Log;
 import android.widget.Button;
 
 import com.example.ashish.justgetit.R;
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQuery;
-import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -27,9 +23,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class getting_nearby_driver extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     GoogleMap mMap;
@@ -38,9 +31,25 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
     LocationRequest mLocationRequest;
     Button request_cab;
     ProgressDialog progressDialog;
-    private LatLng pickuplocation;
+    LatLng pickuplocation;
 
-    private int radius = 1;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_getting_nearby_driver);
+        progressDialog = new ProgressDialog(getting_nearby_driver.this);
+        progressDialog.show();
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.customer_map);
+        mapFragment.getMapAsync(this);
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // request_cab.setText("requesting cab nearby...");
+
+
+
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -69,6 +78,7 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         Log.e("location", latLng.toString());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.addMarker(new MarkerOptions().position(latLng).title("pickup here"));
 
 
     }
@@ -104,78 +114,4 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
     protected void onStop() {
         super.onStop();
     }
-
-    private Boolean driverfound = false;
-    private String driver_foundid;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_getting_nearby_driver);
-        progressDialog = new ProgressDialog(getting_nearby_driver.this);
-        progressDialog.show();
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.customer_map);
-        mapFragment.getMapAsync(this);
-
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Customer Request");
-        GeoFire geoFire = new GeoFire(ref);
-        geoFire.setLocation(userId, new GeoLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
-
-        pickuplocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(pickuplocation).title("pickup here"));
-        // request_cab.setText("requesting cab nearby...");
-
-        getclosestdriver();
-
-    }
-
-    private void getclosestdriver() {
-
-        DatabaseReference driverlocation = FirebaseDatabase.getInstance().getReference().child("Drivers Available");
-        GeoFire geoFire = new GeoFire(driverlocation);
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pickuplocation.longitude, pickuplocation.latitude), radius);
-        geoQuery.removeAllListeners();
-
-
-        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-            @Override
-            public void onKeyEntered(String key, GeoLocation location) {
-                if (!driverfound) {
-                    driverfound = true;
-                    driver_foundid = key;
-
-                }
-
-            }
-
-            @Override
-            public void onKeyExited(String key) {
-
-            }
-
-            @Override
-            public void onKeyMoved(String key, GeoLocation location) {
-
-            }
-
-            @Override
-            public void onGeoQueryReady() {
-                if (!driverfound) {
-                    radius++;
-                    getclosestdriver();
-                }
-
-            }
-
-            @Override
-            public void onGeoQueryError(DatabaseError error) {
-
-            }
-        });
-    }
-
-
 }

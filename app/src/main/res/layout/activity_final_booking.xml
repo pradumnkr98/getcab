@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbackground"
+
     tools:context=".local_booking.final_booking">
 
     <LinearLayout
@@ -18,15 +18,10 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             app:title="Select Your Ride"
-            app:titleTextColor="#000">
+            app:titleTextColor="@color/green">
 
         </android.support.v7.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="distance" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,6 +36,7 @@
                 android:background="@drawable/button_style"
                 android:backgroundTint="@color/transparent"
                 android:drawableLeft="@drawable/calender"
+                android:layout_marginTop="10dp"
                 android:hint="schedule your ride" />
 
             <EditText
@@ -48,6 +44,7 @@
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_style"
                 android:backgroundTint="@color/transparent"
                 android:drawableLeft="@drawable/time"
@@ -59,7 +56,7 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="0dp">
+            android:layout_marginTop="10dp">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -70,10 +67,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@drawable/button_style"
-            android:backgroundTint="#000"
+            android:layout_marginBottom="5dp"
             android:text="Next"
             android:textColor="@color/green"
             android:textSize="15sp"
+            android:backgroundTint="@color/colorPrimary"
             android:textStyle="bold" />
 
 
