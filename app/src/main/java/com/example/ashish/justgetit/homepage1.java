@@ -31,6 +31,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.directions.route.AbstractRouting;
+import com.directions.route.Route;
+import com.directions.route.RouteException;
+import com.directions.route.Routing;
+import com.directions.route.RoutingListener;
 import com.example.ashish.justgetit.local_booking.final_booking;
 import com.example.ashish.justgetit.navigation_drawer.account_details;
 import com.example.ashish.justgetit.navigation_drawer.available_booking;
@@ -57,18 +62,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransactionCallback,*/ NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
+public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransactionCallback,*/ NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, RoutingListener {
     Button bt1, locals, outstation, one_way;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
+
+    private static final int[] COLORS = new int[]{R.color.colorPrimaryDark};
 
 
     //Google maps utils
@@ -79,8 +89,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     public FusedLocationProviderClient mfusedlocationproviderclient;
     public GoogleMap mMap;
     LatLng pickup_location, drop_location2;
-    // private List<Polyline> polylines;
-    // private static final int[] COLORS = new int[]{R.color.colorPrimary,R.color.colorPrimaryDark,R.color.colorAccent,R.color.primary_dark_material_light};
+    HashMap<String, Double> pickupMap, dropMap;
+    List<Double> list1;
     // BottomNavigationView bottomNavigationView;
     AutoCompleteTextView search;
     ImageView mgps;
@@ -92,6 +102,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private AutoCompleteTextView drop_location;
     private Button confirm_booking;
     private TextView total_distance, total_time;
+    private List<Polyline> polylines;
     SharedPreferences.Editor editor;
 
 
@@ -287,7 +298,6 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -301,7 +311,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 startActivity(intent2);
                 return true;
 
-            case R.id.wallet://to be completed by aadil
+            case R.id.wallet:
                 Intent intent4 = new Intent(homepage1.this, recharge.class);
                 startActivity(intent4);
                 return true;
@@ -419,7 +429,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
 
     private void geolocate() {
-        Log.d("homepage1", "geolocate: geolocating");
+        //Log.d("homepage1", "geolocate: geolocating");
         String searchstring = search.getText().toString();
 
         Geocoder geocoder = new Geocoder(homepage1.this);
@@ -428,14 +438,18 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             list = geocoder.getFromLocationName(searchstring, 1);
 
         } catch (IOException e) {
-            Log.e("homepage1", "geolocate: IOException" + e.getMessage());
+            //Log.e("homepage1", "geolocate: IOException" + e.getMessage());
         }
         if (list.size() > 0) {
             Address address = list.get(0);
-            Log.d("homepage1", "geolocate: found a location:" + address.toString());
+            //Log.d("homepage1", "geolocate: found a location:" + address.toString());
             //  location=new LatLng(address.getLatitude(),address.getLongitude());
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
             search.setText(address.getAddressLine(0));
+            list1.add(address.getLatitude());
+            list1.add(address.getLongitude());
+            Log.e("List1", list1.get(0) + "");
+            Log.i("List2", list1.get(1) + "");
 
         }
     }
@@ -444,6 +458,8 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         getLocationPermission();
+        pickupMap = new HashMap<>();
+        dropMap = new HashMap<>();
         //turn on the my location layer and the related control on the map
         updateLocationUI();
         if (locatonpermissiongranted) {
@@ -452,6 +468,25 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         init();
+
+        Log.e("list1", list1.size() + "");
+
+        Log.i("Value", String.valueOf(pickupMap.get("latPick")));
+
+        if (list1.size() != 0) {
+            Log.i("latitude", String.valueOf(list1.get(0)));
+            Log.i("longitude", String.valueOf(list1.get(1)));
+        }
+        /*LatLng latLng = new LatLng(pickupMap.get("latPick"),pickupMap.get("lngPick"));
+        LatLng latLng1 = new LatLng(dropMap.get("latDrop"),dropMap.get("lngDrop"));
+
+        Routing routing = new Routing.Builder()
+                .travelMode(AbstractRouting.TravelMode.DRIVING)
+                .withListener(this)
+                .alternativeRoutes(true)
+                .waypoints(latLng, latLng1)
+                .build();
+        routing.execute();*/
 
     }
 
@@ -480,6 +515,12 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         setContentView(R.layout.activity_homepage1);
         mAuth = FirebaseAuth.getInstance();
 
+//        pickupMap=new HashMap<>();
+//        dropMap=new HashMap<>();
+
+
+        list1 = new ArrayList<Double>();
+
         one_way = findViewById(R.id.oneWay);
         one_way.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -488,6 +529,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 startActivity(intent);
             }
         });
+
 
         //SETTING UP NAVIGATION DRAWER
 
@@ -636,13 +678,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
             }
         });
-       /* Routing routing = new Routing.Builder()
-                .travelMode(AbstractRouting.TravelMode.DRIVING)
-                .withListener(this)
-                .alternativeRoutes(true)
-                .waypoints(pickup_location,drop_location2)
-                .build();
-        routing.execute();*/
+
     }
 
     //code for checking the granted permission is true or false
@@ -667,10 +703,6 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
     }
 
-   /* @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
 
     @Override
     public void onRoutingFailure(RouteException e) {
@@ -722,5 +754,23 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             line.remove();
         }
         polylines.clear();
-    }*/
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (list1.size() != 0) {
+            LatLng latLng = new LatLng(list1.get(0), list1.get(1));
+            LatLng latLng1 = new LatLng(list1.get(2), list1.get(2));
+
+            Routing routing = new Routing.Builder()
+                    .travelMode(AbstractRouting.TravelMode.DRIVING)
+                    .withListener(this)
+                    .alternativeRoutes(true)
+                    .waypoints(latLng, latLng1)
+                    .build();
+            routing.execute();
+        }
+
+    }
 }
