@@ -37,12 +37,12 @@ import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
 import com.example.ashish.justgetit.local_booking.final_booking;
-import com.example.ashish.justgetit.navigation_drawer.account_details;
-import com.example.ashish.justgetit.navigation_drawer.available_booking;
-import com.example.ashish.justgetit.navigation_drawer.current_duty;
-import com.example.ashish.justgetit.navigation_drawer.driver_incentives;
+import com.example.ashish.justgetit.navigation_drawer.completed_ride;
+import com.example.ashish.justgetit.navigation_drawer.current_ride;
+import com.example.ashish.justgetit.navigation_drawer.future_ride;
 import com.example.ashish.justgetit.navigation_drawer.profile_page;
-import com.example.ashish.justgetit.navigation_drawer.recharge;
+import com.example.ashish.justgetit.navigation_drawer.settings;
+import com.example.ashish.justgetit.navigation_drawer.wallet;
 import com.example.ashish.justgetit.outstation_one_way.outstation_one_way;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -302,27 +302,27 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.current_ride:
-                Intent intent1 = new Intent(homepage1.this, current_duty.class);
+                Intent intent1 = new Intent(homepage1.this, current_ride.class);
                 startActivity(intent1);
                 return true;
 
             case R.id.future_ride:
-                Intent intent2 = new Intent(homepage1.this, available_booking.class);
+                Intent intent2 = new Intent(homepage1.this, future_ride.class);
                 startActivity(intent2);
                 return true;
 
             case R.id.wallet:
-                Intent intent4 = new Intent(homepage1.this, recharge.class);
+                Intent intent4 = new Intent(homepage1.this, wallet.class);
                 startActivity(intent4);
                 return true;
 
             case R.id.completed_ride:
-                Intent intent5 = new Intent(homepage1.this, account_details.class);
+                Intent intent5 = new Intent(homepage1.this, completed_ride.class);
                 startActivity(intent5);
                 return true;
 
             case R.id.settings:
-                Intent intent6 = new Intent(homepage1.this, driver_incentives.class);
+                Intent intent6 = new Intent(homepage1.this, settings.class);
                 startActivity(intent6);
                 return true;
 
