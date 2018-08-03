@@ -6,7 +6,7 @@
     <color name="transparent">#11000000</color>
     <color name="fadishwhite">#FFE3DEE0</color>
     <color name="white">#ffffff</color>
-    <color name="black">#FF777274</color>
-    <color name="green">#FFBFF420</color>
+    <color name="black">#777274</color>
+    <color name="green">#bff420</color>
     <color name="blue">#FF52ABD8</color>
 </resources>

@@ -47,7 +47,7 @@
         <activity android:name=".navigation_drawer.current_duty" />
         <activity android:name=".navigation_drawer.available_booking" />
         <activity android:name=".future_duties" />
-        <activity android:name=".navigation_drawer.account_details" />
+        <activity android:name=".navigation_drawer.completed_rides" />
         <activity android:name=".navigation_drawer.driver_incentives" />
         <activity android:name=".navigation_drawer.recharge" />
         <activity android:name=".OTP_confirmation" />

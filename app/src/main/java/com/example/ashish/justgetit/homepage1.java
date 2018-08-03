@@ -32,8 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ashish.justgetit.local_booking.final_booking;
-import com.example.ashish.justgetit.navigation_drawer.account_details;
 import com.example.ashish.justgetit.navigation_drawer.available_booking;
+import com.example.ashish.justgetit.navigation_drawer.completed_rides;
 import com.example.ashish.justgetit.navigation_drawer.current_duty;
 import com.example.ashish.justgetit.navigation_drawer.driver_incentives;
 import com.example.ashish.justgetit.navigation_drawer.profile_page;
@@ -307,7 +307,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 return true;
 
             case R.id.completed_ride:
-                Intent intent5 = new Intent(homepage1.this, account_details.class);
+                Intent intent5 = new Intent(homepage1.this, completed_rides.class);
                 startActivity(intent5);
                 return true;
 
