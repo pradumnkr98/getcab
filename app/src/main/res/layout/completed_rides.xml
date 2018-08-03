@@ -9,15 +9,15 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="98dp"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="Your Trips"
-        app:titleTextColor="@color/green"
-        android:layout_alignParentLeft="true" />
+        app:titleTextColor="@color/green" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
