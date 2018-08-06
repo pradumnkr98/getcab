@@ -40,16 +40,16 @@
                     android:id="@+id/car_image"
                     android:layout_width="80dp"
                     android:layout_height="60dp"
+                    android:layout_marginLeft="15dp"
                     android:background="@drawable/image_button"
                     android:scaleType="centerCrop"
-                    android:layout_marginLeft="15dp"
                     android:src="@drawable/ic_launcher_background" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
                     android:text="car name" />
 
                 <TextView
@@ -65,11 +65,11 @@
                     android:id="@+id/Pick_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
                     android:background="@color/transparent"
-                    android:textSize="18dp"
-                    android:text="Pick up Location:" />
+                    android:text="Pick up Location:"
+                    android:textSize="18dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,8 +84,8 @@
                     android:id="@+id/drop_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
                     android:background="@color/transparent"
                     android:text="Drop Location"
                     android:textSize="18sp" />
@@ -103,8 +103,8 @@
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
                     android:background="@color/transparent"
                     android:text="Pick up time"
                     android:textSize="18sp" />
