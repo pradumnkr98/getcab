@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.ashish.justgetit.R;
 
-public class current_duty extends AppCompatActivity {
+public class completed_ride extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_current_duty);
+        setContentView(R.layout.completed_ride);
     }
 }

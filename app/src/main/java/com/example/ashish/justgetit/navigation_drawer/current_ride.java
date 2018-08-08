@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.ashish.justgetit.R;
 
-public class available_booking extends AppCompatActivity {
+public class current_ride extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_available_booking);
+        setContentView(R.layout.current_ride);
     }
 }

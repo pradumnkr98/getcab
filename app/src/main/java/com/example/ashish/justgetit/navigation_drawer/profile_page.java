@@ -7,18 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ashish.justgetit.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class profile_page extends AppCompatActivity {
     Button change_pic;
@@ -50,7 +46,7 @@ public class profile_page extends AppCompatActivity {
         });
 
 
-        mreference.addValueEventListener(new ValueEventListener() {
+       /* mreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -69,7 +65,7 @@ public class profile_page extends AppCompatActivity {
                 // Failed to read value
                 Log.w("error_oncancelled", "Failed to read value.", error.toException());
             }
-        });
+        });*/
 
     }
 

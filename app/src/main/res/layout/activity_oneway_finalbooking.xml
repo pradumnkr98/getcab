@@ -28,6 +28,7 @@
             android:orientation="horizontal">
 
             <EditText
+
                 android:id="@+id/oneway_schedule_ride"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
