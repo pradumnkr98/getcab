@@ -28,6 +28,8 @@ public class login_page extends AppCompatActivity {
     private EditText log_password;
     private EditText log_email;
 
+    FirebaseAuth.AuthStateListener firebasestatelistener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,48 +44,60 @@ public class login_page extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(login_page.this);
 
-            login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        firebasestatelistener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    Intent intent = new Intent(login_page.this, homepage1.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
 
-                    String email, password;
-                    email = log_email.getText().toString();
-                    password = log_password.getText().toString();
-                    progressDialog.setMessage("Loading...");
-                    progressDialog.show();
-                    if (TextUtils.isEmpty(email)) {
-                        Toast.makeText(login_page.this, "Enter your email ID", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    } else if (TextUtils.isEmpty(password)) {
-                        Toast.makeText(login_page.this, "Enter Password", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    } else {
-                        mAuth.signInWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(login_page.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
-                                            Log.d("login_page", "signInWithEmail:success");
-                                            Intent intent = new Intent(login_page.this, homepage1.class);
-                                            startActivity(intent);
-                                            FirebaseUser user = mAuth.getCurrentUser();
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                                        } else {
-                                            // If sign in fails, display a message to the user.
-                                            Log.w("login_page", "signInWithEmail:failure", task.getException());
-                                            Toast.makeText(login_page.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
-                                            progressDialog.dismiss();
-                                        }
+                String email, password;
+                email = log_email.getText().toString();
+                password = log_password.getText().toString();
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(login_page.this, "Enter your email ID", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(login_page.this, "Enter Password", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                } else {
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(login_page.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d("login_page", "signInWithEmail:success");
+                                        Intent intent = new Intent(login_page.this, homepage1.class);
+                                        startActivity(intent);
+                                        FirebaseUser user = mAuth.getCurrentUser();
+
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w("login_page", "signInWithEmail:failure", task.getException());
+                                        Toast.makeText(login_page.this, "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
                                     }
-                                });
-
-                    }
+                                }
+                            });
 
                 }
 
-            });
+            }
+
+        });
 
 
         forget_password.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +118,18 @@ public class login_page extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(firebasestatelistener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(firebasestatelistener);
     }
 }
 

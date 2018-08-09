@@ -1,21 +1,38 @@
 package com.example.ashish.justgetit.local_booking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ashish.justgetit.R;
 import com.example.ashish.justgetit.customer_booking_details;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.IOException;
+import java.util.List;
 
 public class booking_summary extends AppCompatActivity {
     Toolbar toolbar;
@@ -25,6 +42,11 @@ public class booking_summary extends AppCompatActivity {
 
     DatabaseReference reference;
     FirebaseAuth auth;
+
+    public int radius = 1;
+    public Boolean driverfound = false;
+    LatLng pickuplocation;
+    private String driverId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +77,32 @@ public class booking_summary extends AppCompatActivity {
         book_cab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(booking_summary.this, getting_nearby_driver.class);
+
                 writeuserdata(phoneno, name, pickup_location, drop_location, null, pickup_date, pick_time);
-                startActivity(intent);
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("cab_request");
+
+                LatLng location;
+                String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                location = getLocationFromAddress(booking_summary.this, pickup_location);
+                GeoFire geoFire = new GeoFire(ref);
+                Log.e("locationpickup", location.latitude + location.longitude + "");
+                geoFire.setLocation(userID, new GeoLocation(location.latitude, location.longitude), new
+                        GeoFire.CompletionListener() {
+                            @Override
+                            public void onComplete(String key, DatabaseError error) {
+
+                            }
+                        });
+
+                pickuplocation = new LatLng(location.latitude, location.latitude);
+                book_cab.setText("Getting Your Driver! Pls Wait..");
+                getdriveravailable();
+
+
             }
         });
+
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         pickup_location = preferences.getString("pickup", "NULL");
@@ -77,12 +120,124 @@ public class booking_summary extends AppCompatActivity {
         journey_date.setText(pickup_date);
     }
 
-
     public void writeuserdata(String phoneno, String name, String pickup, String drop, String fare, String journeyDate, String journeyTime) {
         FirebaseUser user = auth.getCurrentUser();
         String userID = user.getUid();
+
         customer_booking_details customer_booking_details = new customer_booking_details(phoneno, name, pickup, drop, fare, journeyDate, journeyTime);
         reference.child("Bookings Details").child(userID).setValue(customer_booking_details);
 
+
+    }
+
+    private void getdriveravailable() {
+        DatabaseReference driveravailable = FirebaseDatabase.getInstance().getReference().child("drivers_available");
+
+        GeoFire geoFire = new GeoFire(driveravailable);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pickuplocation.latitude, pickuplocation.longitude), radius);
+        geoQuery.removeAllListeners();
+
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                if (!driverfound) {
+                    driverfound = true;
+                    driverId = key;
+
+                    getdriverlocation();
+                }
+
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                if (!driverfound) {
+                    radius++;
+                    getdriveravailable();
+                } else {
+                    Toast.makeText(booking_summary.this, "Driver Not Found !! Try after some Time", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    public void getdriverlocation() {
+        DatabaseReference driverlocation = FirebaseDatabase.getInstance().getReference().child("drivers_available").child(driverId).child("l");
+        driverlocation.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    List<Object> map = (List<Object>) dataSnapshot.getValue();
+                    double latitude = 0;
+                    double longitude = 0;
+                    if (map.get(0) != null && map.get(1) != null) {
+                        latitude = Double.parseDouble(map.get(0).toString());
+                        longitude = Double.parseDouble(map.get(1).toString());
+                        Intent intent = new Intent(booking_summary.this, getting_nearby_driver.class);
+                        intent.putExtra("driverlat", latitude);
+                        intent.putExtra("driverlong", longitude);
+                        startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    //Converting string address to latlng
+
+    public LatLng getLocationFromAddress(Context context, String inputtedAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng resLatLng = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(inputtedAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            if (address.size() == 0) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            resLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        return resLatLng;
     }
 }

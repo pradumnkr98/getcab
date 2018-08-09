@@ -2,6 +2,7 @@ package com.example.ashish.justgetit;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -70,11 +71,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransactionCallback,*/ NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, RoutingListener {
-    Button bt1, locals, outstation, one_way;
+    Button bt1, locals, outstation, one_way, clickhere;
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
 
@@ -88,9 +88,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private static final LatLngBounds LAT_LNG_BOUNDS1 = new LatLngBounds(new LatLng(-60, -190), new LatLng(80, 145));
     public FusedLocationProviderClient mfusedlocationproviderclient;
     public GoogleMap mMap;
-    LatLng pickup_location, drop_location2;
-    HashMap<String, Double> pickupMap, dropMap;
-    List<Double> list1;
+
     // BottomNavigationView bottomNavigationView;
     AutoCompleteTextView search;
     ImageView mgps;
@@ -104,6 +102,9 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private TextView total_distance, total_time;
     private List<Polyline> polylines;
     SharedPreferences.Editor editor;
+
+    String str_from, end_to;
+
 
 
 
@@ -446,10 +447,6 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             //  location=new LatLng(address.getLatitude(),address.getLongitude());
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
             search.setText(address.getAddressLine(0));
-            list1.add(address.getLatitude());
-            list1.add(address.getLongitude());
-            Log.e("List1", list1.get(0) + "");
-            Log.i("List2", list1.get(1) + "");
 
         }
     }
@@ -458,8 +455,16 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         getLocationPermission();
-        pickupMap = new HashMap<>();
-        dropMap = new HashMap<>();
+        LatLng pickup, drop;
+
+        // str_from=search.getText().toString();
+        // end_to=drop_location.getText().toString();
+
+        Log.e("pickup", str_from + "");
+        Log.e("drop", end_to + "");
+
+        Toast.makeText(this, str_from + end_to, Toast.LENGTH_SHORT).show();
+
         //turn on the my location layer and the related control on the map
         updateLocationUI();
         if (locatonpermissiongranted) {
@@ -469,22 +474,17 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         mMap.getUiSettings().setZoomControlsEnabled(true);
         init();
 
-        Log.e("list1", list1.size() + "");
 
-        Log.i("Value", String.valueOf(pickupMap.get("latPick")));
 
-        if (list1.size() != 0) {
-            Log.i("latitude", String.valueOf(list1.get(0)));
-            Log.i("longitude", String.valueOf(list1.get(1)));
-        }
-        /*LatLng latLng = new LatLng(pickupMap.get("latPick"),pickupMap.get("lngPick"));
-        LatLng latLng1 = new LatLng(dropMap.get("latDrop"),dropMap.get("lngDrop"));
-
+       /* pickup=getLocationFromAddress(this,str_from);
+        drop=getLocationFromAddress(this,end_to);
+        Log.e("pickup",pickup+"");
+        Log.e("drop",drop+"");
         Routing routing = new Routing.Builder()
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
                 .withListener(this)
                 .alternativeRoutes(true)
-                .waypoints(latLng, latLng1)
+                .waypoints(pickup, drop)
                 .build();
         routing.execute();*/
 
@@ -515,11 +515,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         setContentView(R.layout.activity_homepage1);
         mAuth = FirebaseAuth.getInstance();
 
-//        pickupMap=new HashMap<>();
-//        dropMap=new HashMap<>();
-
-
-        list1 = new ArrayList<Double>();
+        polylines = new ArrayList<>();
 
         one_way = findViewById(R.id.oneWay);
         one_way.setOnClickListener(new View.OnClickListener() {
@@ -600,12 +596,41 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             }
         });
 
-
-
-       /* String str_from,end_to;
         str_from=search.getText().toString();
         end_to=drop_location.getText().toString();
-        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str_from + "&destinations=" + end_to + "&mode=driving&language=fr-FR&avoid=tolls&key=YOUR_API_KEY";
+
+        Log.e("pickup", str_from + "");
+        Log.e("drop", end_to + "");
+
+        clickhere = findViewById(R.id.clickhere);
+        clickhere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (search.getText().toString().length() == 0) {
+                    Toast.makeText(homepage1.this, "Enter Your Pickup Location", Toast.LENGTH_LONG).show();
+                } else if (drop_location.getText().toString().length() == 0) {
+                    Toast.makeText(homepage1.this, "Enter Drop Location", Toast.LENGTH_LONG).show();
+                } else {
+                    LatLng pickup, drop;
+                    str_from = search.getText().toString();
+                    end_to = drop_location.getText().toString();
+                    pickup = getLocationFromAddress(homepage1.this, str_from);
+                    drop = getLocationFromAddress(homepage1.this, end_to);
+                    Routing routing = new Routing.Builder()
+                            .travelMode(AbstractRouting.TravelMode.DRIVING)
+                            .withListener(homepage1.this)
+                            .alternativeRoutes(false)
+                            .waypoints(pickup, drop)
+                            .build();
+                    routing.execute();
+
+
+                }
+
+
+            }
+        });
+       /* String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str_from + "&destinations=" + end_to + "&mode=driving&language=fr-FR&avoid=tolls&key=YOUR_API_KEY";
         new GeoTask(homepage1.this).execute(url);*/
 
 
@@ -742,6 +767,11 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             polylines.add(polyline);
 
             Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
+            editor = preferences.edit();
+            editor.putString("distance", route.get(0).getDistanceValue() + "");
+            editor.commit();
+            editor.apply();
         }
     }
 
@@ -756,21 +786,38 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         polylines.clear();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (list1.size() != 0) {
-            LatLng latLng = new LatLng(list1.get(0), list1.get(1));
-            LatLng latLng1 = new LatLng(list1.get(2), list1.get(2));
 
-            Routing routing = new Routing.Builder()
-                    .travelMode(AbstractRouting.TravelMode.DRIVING)
-                    .withListener(this)
-                    .alternativeRoutes(true)
-                    .waypoints(latLng, latLng1)
-                    .build();
-            routing.execute();
+    //Converting string address to latlng
+
+    public LatLng getLocationFromAddress(Context context, String inputtedAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng resLatLng = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(inputtedAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            if (address.size() == 0) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            resLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
         }
 
+        return resLatLng;
     }
 }

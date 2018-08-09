@@ -52,7 +52,7 @@ public class splash extends AppCompatActivity {
         hideStatusBar();
         timer.start();
         if (isServicesOk()) {
-            Toast.makeText(this, "google working", Toast.LENGTH_LONG).show();
+            Log.e("google_service_check", "google working");
         }
 
     }

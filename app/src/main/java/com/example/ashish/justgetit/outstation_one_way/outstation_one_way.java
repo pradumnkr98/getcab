@@ -1,9 +1,11 @@
 package com.example.ashish.justgetit.outstation_one_way;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -44,6 +46,12 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
     private PlacesAutocompleteAdapter placesAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient, googleApiClient;
     private PlacesInfo mplace;
+
+    SharedPreferences.Editor editor;
+
+
+
+
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(@NonNull PlaceBuffer places) {
@@ -73,6 +81,8 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
 
         }
     };
+
+
     private AdapterView.OnItemClickListener mAutocompleteclicklistener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -82,6 +92,7 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +128,15 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
                     Toast.makeText(outstation_one_way.this, "Enter Drop Location", Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent(outstation_one_way.this, roundway_finalbooking.class);
+                    String pickup, drop;
+                    pickup = search.getText().toString();
+                    drop = drop_location.getText().toString();
+
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(outstation_one_way.this);
+                    editor = preferences.edit();
+                    editor.putString("pickup", pickup);
+                    editor.putString("drop", drop);
+                    editor.apply();
                     startActivity(intent);
                 }
 

@@ -1,21 +1,28 @@
 package com.example.ashish.justgetit.local_booking;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.directions.route.AbstractRouting;
+import com.directions.route.Route;
+import com.directions.route.RouteException;
+import com.directions.route.Routing;
+import com.directions.route.RoutingListener;
 import com.example.ashish.justgetit.R;
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQuery;
-import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -24,27 +31,29 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class getting_nearby_driver extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class getting_nearby_driver extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, RoutingListener {
     GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
     Button request_cab;
     ProgressDialog progressDialog;
-    LatLng pickuplocation;
+    private static final int[] COLORS = new int[]{R.color.colorPrimaryDark};
+    LatLng driverlocation, pickuplocation;
+    String pickup_location;
+    double latitude, longitude;
+    private List<Polyline> polylines;
 
 
     private int radius = 1;
@@ -57,7 +66,24 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
             return;
         }
         buildGoogleApiClient();
-        mMap.setMyLocationEnabled(true);
+        // mMap.setMyLocationEnabled(true);
+        mMap.addMarker(new MarkerOptions().position(driverlocation)).setIcon(BitmapDescriptorFactory.fromResource(R.drawable.caricon));
+
+        pickuplocation = getLocationFromAddress(getting_nearby_driver.this, pickup_location);
+        mMap.addMarker(new MarkerOptions().position(pickuplocation)).setTitle("Pickup Here..");
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pickuplocation));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+
+        Routing routing = new Routing.Builder()
+                .travelMode(AbstractRouting.TravelMode.DRIVING)
+                .withListener(this)
+                .alternativeRoutes(false)
+                .waypoints(pickuplocation, driverlocation)
+                .build();
+        routing.execute();
+
 
     }
 
@@ -76,7 +102,6 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         Log.e("location", latLng.toString());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        mMap.addMarker(new MarkerOptions().position(latLng).title("pickup here"));
 
 
     }
@@ -113,34 +138,40 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
         super.onStop();
     }
 
-    private boolean driverfound = false;
-    private String driverfoundid;
-    private Marker mdrivermarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getting_nearby_driver);
-        progressDialog = new ProgressDialog(getting_nearby_driver.this);
-        progressDialog.show();
+        // progressDialog = new ProgressDialog(getting_nearby_driver.this);
+        //progressDialog.show();
+
+
+        polylines = new ArrayList<>();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.customer_map);
         mapFragment.getMapAsync(this);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            latitude = extras.getDouble("driverlat");
+            longitude = extras.getDouble("driverlong");
 
-        // request_cab.setText("requesting cab nearby...");
+            driverlocation = new LatLng(latitude, longitude);
+        }
 
-        getclosestdriver();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        pickup_location = preferences.getString("pickup", "NULL");
 
 
     }
 
-    private void getclosestdriver() {
-        DatabaseReference driverlocation = FirebaseDatabase.getInstance().getReference().child("Driver Available");
-        GeoFire geoFire = new GeoFire(driverlocation);
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pickuplocation.longitude, pickuplocation.latitude), radius);
-        geoQuery.removeAllListeners();
+    // private void getclosestdriver() {
+    //    DatabaseReference driverlocation = FirebaseDatabase.getInstance().getReference().child("Driver Available");
+    //   GeoFire geoFire = new GeoFire(driverlocation);
+    //   GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pickuplocation.longitude, pickuplocation.latitude), radius);
+       /* geoQuery.removeAllListeners();
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
@@ -183,10 +214,10 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
             public void onGeoQueryError(DatabaseError error) {
 
             }
-        });
-    }
+        });*/
+    // }
 
-    private void getdriverlocation() {
+ /*   private void getdriverlocation() {
 
         DatabaseReference driverlocationref = FirebaseDatabase.getInstance().getReference().child("drivers working").child(driverfoundid).child("l");
         driverlocationref.addValueEventListener(new ValueEventListener() {
@@ -233,5 +264,95 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
 
             }
         });
+    }*/
+
+
+    //Converting string address to latlng
+
+    public LatLng getLocationFromAddress(Context context, String inputtedAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng resLatLng = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(inputtedAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            if (address.size() == 0) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            resLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        return resLatLng;
+    }
+
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+        if (e != null) {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void onRoutingStart() {
+
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> arrayList, int shortestRouteIndex) {
+        if (polylines.size() > 0) {
+            for (Polyline poly : polylines) {
+                poly.remove();
+            }
+        }
+
+        polylines = new ArrayList<>();
+        //add route(s) to the map.
+        for (int i = 0; i < arrayList.size(); i++) {
+
+            //In case of more than 5 alternative routes
+            int colorIndex = i % COLORS.length;
+
+            PolylineOptions polyOptions = new PolylineOptions();
+            polyOptions.color(getResources().getColor(COLORS[colorIndex]));
+            polyOptions.width(10 + i * 3);
+            polyOptions.addAll(arrayList.get(i).getPoints());
+            Polyline polyline = mMap.addPolyline(polyOptions);
+            polylines.add(polyline);
+
+            Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + arrayList.get(i).getDistanceValue() + ": duration - " + arrayList.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+
+    }
+
+    public void erasepolylines() {
+        for (Polyline line : polylines) {
+            line.remove();
+        }
+        polylines.clear();
     }
 }
