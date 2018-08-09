@@ -47,7 +47,6 @@
         <activity android:name=".navigation_drawer.current_ride" />
         <activity android:name=".navigation_drawer.future_ride" />
         <activity android:name=".future_duties" />
-        <activity android:name=".navigation_drawer.completed_ride" />
         <activity android:name=".navigation_drawer.settings" />
         <activity android:name=".navigation_drawer.wallet" />
         <activity android:name=".OTP_confirmation" />
