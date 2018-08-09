@@ -4,87 +4,118 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ashish.justgetit.R;
-import com.example.ashish.justgetit.local_booking.car_services_types;
-import com.example.ashish.justgetit.local_booking.final_booking;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 public class completed_rides extends AppCompatActivity{
+
+    private DatabaseReference databaseReference;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.completed_rides);
-    }
 
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("");  // Pradumn fill this from the database
+        databaseReference.keepSynced(true);
 
-    FirebaseRecyclerOptions<car_services_types> options =
-            new FirebaseRecyclerOptions.Builder<car_services_types>()
-                    .setQuery(databaseReference, car_services_types.class)
-                    .build();
+    /*------------------------------------------- Recycler View --------------------------------------------------------------*/
 
-    FirebaseRecyclerAdapter<car_services_types, final_booking.car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, final_booking.car_services_typesViewHolder>(options) {
-        @Override
-        protected void onBindViewHolder(@NonNull final_booking.car_services_typesViewHolder holder, final int position, @NonNull car_services_types model) {
-            holder.setCar_name(model.getCar_name());
-            holder.setFare(model.getFare());
-            holder.setCar_image(model.getCar_image());
-            holder.parent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewCompletedRides);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-                }
-            });
-        }
+        FirebaseRecyclerOptions<completed_rides_modelclass> options =
+                new FirebaseRecyclerOptions.Builder<completed_rides_modelclass>()
+                        .setQuery(databaseReference, completed_rides_modelclass.class)
+                        .build();
 
-        @NonNull
-        @Override
-        public final_booking.car_services_typesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
-            return new final_booking.car_services_typesViewHolder(view);
-        }
-    };
+        FirebaseRecyclerAdapter<completed_rides_modelclassViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<completed_rides_modelclass, completed_rides_modelclassViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
+
+                holder.setDate(model.getDate());
+                holder.setTime(model.getTime());
+                holder.setAmount(model.getAmount());
+                holder.setVehicle(model.getVehicle());
+                holder.setFrom(model.getFrom());
+                holder.setTo(model.getTo());
+                holder.setPayment(model.getPayment());
+
+                holder.parent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public completed_rides_modelclassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
+                return new completed_rides_modelclassViewHolder(view);
+            }
+        };
         firebaseRecyclerAdapter.startListening();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
 
+    }
 
-
-    public static class car_services_typesViewHolder extends RecyclerView.ViewHolder {
+    public static class completed_rides_modelclassViewHolder extends RecyclerView.ViewHolder {
         View view;
-        ImageView car_image1;
-        TextView car_name1;
-        TextView fare1;
+        TextView Date, Time, Amount, Vehicle, From, To, Payment;
         View parent;
 
-        public car_services_typesViewHolder(View itemView) {
+        public completed_rides_modelclassViewHolder(View itemView) {
             super(itemView);
             parent = this.itemView;
 
         }
 
-        public void setCar_name(String car_name) {
-            car_name1 = itemView.findViewById(R.id.car_name);
-            car_name1.setText(car_name.toString());
+        public void setDate(String date) {
+            Date = itemView.findViewById(R.id.Date);
+            Date.setText(date.toString());
         }
 
-        public void setFare(String fare) {
-            fare1 = itemView.findViewById(R.id.fare);
-            fare1.setText(fare.toString());
+        public void setTime(String time) {
+            Time = itemView.findViewById(R.id.Time);
+            Time.setText(time.toString());
         }
 
-        public void setCar_image(String car_image) {
-            car_image1 = itemView.findViewById(R.id.car_type);
-            Picasso.with(itemView.getContext()).load(car_image).resize(80, 50).into(car_image1);
+        public void setVehicle(String vehicle) {
+            Vehicle = itemView.findViewById(R.id.vehicleModel);
+            Vehicle.setText(vehicle.toString());
         }
 
+        public void setFrom(String from) {
+            From = itemView.findViewById(R.id.From);
+            From.setText(from.toString());
+        }
+
+        public void setTo(String to) {
+            To = itemView.findViewById(R.id.To);
+            To.setText(to.toString());
+        }
+
+        public void setPayment(String payment) {
+            Payment = itemView.findViewById(R.id.Amount);
+            Payment.setText(payment.toString());
+        }
+
+        public void setAmount(String amount) {
+            Amount = itemView.findViewById(R.id.Amount);
+            Amount.setText(amount.toString());
+        }
     }
 }

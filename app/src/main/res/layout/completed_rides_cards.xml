@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/dateTime"
+        android:layout_alignTop="@+id/Date"
         android:alpha=".8"
         app:srcCompat="@color/black" />
 
     <TextView
-        android:id="@+id/dateTime"
-        android:layout_width="200dp"
+        android:id="@+id/Date"
+        android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -24,10 +24,25 @@
         android:layout_marginTop="170dp"
         android:gravity="center"
         android:padding="2dp"
-        android:text="Date and Time"
+        android:text="Date"
         android:textColor="@color/green"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Time"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/null"
+        android:layout_marginTop="170dp"
+        android:layout_toEndOf="@+id/Date"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="Time"
+        android:textColor="@color/green"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/vehicleModel"
@@ -35,19 +50,19 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/dateTime"
+        android:layout_below="@+id/Date"
         android:gravity="center"
         android:padding="2dp"
         android:text="Vehicle Model Name"
         android:textColor="@color/green" />
 
     <TextView
-        android:id="@+id/amount"
+        android:id="@+id/Amount"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/dateTime"
+        android:layout_alignTop="@+id/Date"
         android:gravity="center"
         android:padding="2dp"
         android:text="Amount"
@@ -56,11 +71,11 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/payment"
+        android:id="@+id/Payment"
         android:layout_width="110dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/dateTime"
+        android:layout_below="@+id/Date"
         android:gravity="center"
         android:padding="2dp"
         android:text="Mode of Payment"
@@ -81,7 +96,7 @@
         android:id="@+id/To"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        android:layout_above="@+id/dateTime"
+        android:layout_above="@+id/Date"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="-170dp"
