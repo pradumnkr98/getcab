@@ -40,6 +40,8 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
     int day, month, year;
     private DatabaseReference databaseReference;
 
+    double distance;
+
     private static final int Time_id = 1;
     EditText Schedule_ride, time_pick;
     Button next;
@@ -97,6 +99,8 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(final_booking.this);
         pick_up_location = pref.getString("pickup", "");
         Drop_location = pref.getString("drop", "");
+        distance = Double.parseDouble(pref.getString("distance", ""));
+
 
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
@@ -158,8 +162,9 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull car_services_types model) {
+
                 holder.setCar_name(model.getCar_name());
-                holder.setFare(model.getFare());
+                holder.setFare(model.getFare() * distance);
                 holder.setCar_image(model.getCar_image());
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -178,10 +183,6 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         };
         firebaseRecyclerAdapter.startListening();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
-
-
-        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver%20BC%7CSeattle&destinations=San%20Francisco%7CVictoria%20BC&key=AIzaSyBvHBcELlDeNZeKT8NH7zATiS40v1a102Y";
-        new GeoTask(final_booking.this).execute(url);
 
 
     }
@@ -227,7 +228,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
             car_name1.setText(car_name.toString());
         }
 
-        public void setFare(String fare) {
+        public void setFare(Double fare) {
             fare1 = itemView.findViewById(R.id.fare);
             fare1.setText(fare.toString());
         }
