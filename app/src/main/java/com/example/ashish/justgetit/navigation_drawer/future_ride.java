@@ -43,20 +43,23 @@ public class future_ride extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull completed_rides.completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
 
-                holder.setDate(model.getJourneydate());
-                holder.setTime(model.getJourneytime());
-                holder.setAmount(model.getAmount());
-                holder.setVehicle(model.getVehicle());
-                holder.setFrom(model.getPickuplocation());
-                holder.setTo(model.getDroplocation());
-                holder.setPayment(model.getPayment());
+                if (mode1.getJourneydate())
+                {
+                    holder.setDate(model.getJourneydate());
+                    holder.setTime(model.getJourneytime());
+                    holder.setAmount(model.getAmount());
+                    holder.setVehicle(model.getVehicle());
+                    holder.setFrom(model.getPickuplocation());
+                    holder.setTo(model.getDroplocation());
+                    holder.setPayment(model.getPayment());
 
-                holder.parent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    holder.parent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
 
             @NonNull
