@@ -44,7 +44,6 @@
         <activity android:name=".homepage1" />
         <activity android:name=".registerhere" />
         <activity android:name=".forgetpassword" />
-        <activity android:name=".navigation_drawer.current_ride" />
         <activity android:name=".navigation_drawer.future_ride" />
         <activity android:name=".future_duties" />
         <activity android:name=".navigation_drawer.settings" />

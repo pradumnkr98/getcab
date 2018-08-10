@@ -16,7 +16,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 public class completed_rides extends AppCompatActivity{
 
@@ -27,7 +26,7 @@ public class completed_rides extends AppCompatActivity{
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.completed_rides);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("");  // Pradumn fill this from the database
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bookings Details");
         databaseReference.keepSynced(true);
 
     /*------------------------------------------- Recycler View --------------------------------------------------------------*/
@@ -40,16 +39,16 @@ public class completed_rides extends AppCompatActivity{
                         .setQuery(databaseReference, completed_rides_modelclass.class)
                         .build();
 
-        FirebaseRecyclerAdapter<completed_rides_modelclassViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<completed_rides_modelclass, completed_rides_modelclassViewHolder>(options) {
+       FirebaseRecyclerAdapter<completed_rides_modelclass,completed_rides_modelclassViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<completed_rides_modelclass, completed_rides_modelclassViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
 
-                holder.setDate(model.getDate());
-                holder.setTime(model.getTime());
+                holder.setDate(model.getJourneydate());
+                holder.setTime(model.getJourneytime());
                 holder.setAmount(model.getAmount());
                 holder.setVehicle(model.getVehicle());
-                holder.setFrom(model.getFrom());
-                holder.setTo(model.getTo());
+                holder.setFrom(model.getPickuplocation());
+                holder.setTo(model.getDroplocation());
                 holder.setPayment(model.getPayment());
 
                 holder.parent.setOnClickListener(new View.OnClickListener() {

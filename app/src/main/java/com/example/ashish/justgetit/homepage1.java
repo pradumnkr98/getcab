@@ -37,9 +37,9 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.ashish.justgetit.local_booking.booking_summary;
 import com.example.ashish.justgetit.local_booking.final_booking;
 import com.example.ashish.justgetit.navigation_drawer.completed_rides;
-import com.example.ashish.justgetit.navigation_drawer.current_ride;
 import com.example.ashish.justgetit.navigation_drawer.future_ride;
 import com.example.ashish.justgetit.navigation_drawer.profile_page;
 import com.example.ashish.justgetit.navigation_drawer.settings;
@@ -303,7 +303,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.current_ride:
-                Intent intent1 = new Intent(homepage1.this, current_ride.class);
+                Intent intent1 = new Intent(homepage1.this, booking_summary.class);
                 startActivity(intent1);
                 return true;
 

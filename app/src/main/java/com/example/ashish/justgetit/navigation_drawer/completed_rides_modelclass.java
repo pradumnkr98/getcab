@@ -2,75 +2,68 @@ package com.example.ashish.justgetit.navigation_drawer;
 
 public class completed_rides_modelclass {
 
-    private String date, time, amount, vehicle, from, to, payment;
+    private String journeydate, journeytime, amount, vehicle, pickuplocation, droplocation, payment;
 
-    public completed_rides_modelclass(String date, String time, String amount, String vehicle, String from, String to, String payment) {
-        this.date = date;
-        this.time = time;
+    public completed_rides_modelclass(String journeydate, String journeytime, String amount, String vehicle, String pickuplocation, String droplocation, String payment) {
+        this.journeydate = journeydate;
+        this.journeytime = journeytime;
         this.amount = amount;
         this.vehicle = vehicle;
-        this.from = from;
-        this.to = to;
+        this.pickuplocation = pickuplocation;
+        this.droplocation = droplocation;
         this.payment = payment;
-
     }
 
-    public String getDate() {
-
-        return date;
+    public String getJourneydate() {
+        return journeydate;
     }
 
-    public String getTime() {
+    public void setJourneydate(String journeydate) {
+        this.journeydate = journeydate;
+    }
 
-        return time;
+    public String getJourneytime() {
+        return journeytime;
+    }
+
+    public void setJourneytime(String journeytime) {
+        this.journeytime = journeytime;
     }
 
     public String getAmount() {
-
         return amount;
-    }
-
-    public String getVehicle() {
-
-        return vehicle;
-    }
-
-    public String getFrom() {
-
-        return from;
-    }
-
-    public String getTo() {
-
-        return to;
-    }
-
-    public String getPayment() {
-        return payment;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public void setAmount(String amount) {
         this.amount = amount;
     }
 
+    public String getVehicle() {
+        return vehicle;
+    }
+
     public void setVehicle(String vehicle) {
         this.vehicle = vehicle;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public String getPickuplocation() {
+        return pickuplocation;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setPickuplocation(String pickuplocation) {
+        this.pickuplocation = pickuplocation;
+    }
+
+    public String getDroplocation() {
+        return droplocation;
+    }
+
+    public void setDroplocation(String droplocation) {
+        this.droplocation = droplocation;
+    }
+
+    public String getPayment() {
+        return payment;
     }
 
     public void setPayment(String payment) {
