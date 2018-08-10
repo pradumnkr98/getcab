@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +100,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(final_booking.this);
         pick_up_location = pref.getString("pickup", "");
         Drop_location = pref.getString("drop", "");
-        distance = Double.parseDouble(pref.getString("distance", ""));
+        //  distance = Double.parseDouble(pref.getString("distance", ""));
 
 
 
@@ -164,7 +165,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
             protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull car_services_types model) {
 
                 holder.setCar_name(model.getCar_name());
-                holder.setFare(model.getFare() * distance);
+                holder.setFare(model.getFare() * distance / 1000);
                 holder.setCar_image(model.getCar_image());
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -183,6 +184,14 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         };
         firebaseRecyclerAdapter.startListening();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        // if(bundle!=null){
+        distance = Double.parseDouble(bundle.getString("distance"));
+        Log.e("distance", distance + "");
+        //}
 
 
     }

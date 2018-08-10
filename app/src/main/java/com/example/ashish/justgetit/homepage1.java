@@ -767,11 +767,15 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             polylines.add(polyline);
 
             Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
+            /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
             editor = preferences.edit();
             editor.putString("distance", route.get(0).getDistanceValue() + "");
             editor.commit();
-            editor.apply();
+            editor.apply();*/
+            Intent intent = new Intent(homepage1.this, final_booking.class);
+            intent.putExtra("distance", route.get(0).getDistanceValue() + "");
+            Log.i("Value", String.valueOf(route.get(0).getDistanceValue()));
+            startActivity(intent);
         }
     }
 
