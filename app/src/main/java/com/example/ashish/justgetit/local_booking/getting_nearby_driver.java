@@ -72,7 +72,8 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
     public void onLocationChanged(Location location) {
 
         mLastLocation = location;
-        com.google.android.gms.maps.model.LatLng latLng = new com.google.android.gms.maps.model.LatLng(location.getLatitude(), location.getLongitude());
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        //  com.google.android.gms.maps.model.LatLng latLng = new com.google.android.gms.maps.model.LatLng(location.getLatitude(), location.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         Log.e("location", latLng.toString());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
