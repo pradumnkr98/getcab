@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".navigation_drawer.Edit_Account">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="Edit Account"
+        app:titleTextColor="@color/green" />
+
+    <ImageView
+        android:id="@+id/settingsImageView"
+        android:layout_width="130dp"
+        android:layout_height="109dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="109dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/settingsImageView"
+        android:layout_marginTop="245dp"
+        android:padding="5dp"
+        android:text="Name"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/settingsImageView" />
+
+    <EditText
+        android:id="@+id/settingsName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/settingsImageView"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/settingsImageView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/settingsImageView"
+        android:layout_below="@+id/settingsName"
+        android:padding="5dp"
+        android:text="Phone Number"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/settingsImageView" />
+
+    <EditText
+        android:id="@+id/settingsPhone"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/settingsImageView"
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/settingsImageView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/settingsImageView"
+        android:layout_below="@+id/settingsPhone"
+        android:padding="5dp"
+        android:text="Email"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/settingsImageView" />
+
+    <EditText
+        android:id="@+id/settingsEmail"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/settingsImageView"
+        android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/settingsImageView" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/settingsImageView"
+        android:layout_below="@+id/settingsEmail"
+        android:padding="5dp"
+        android:text="Password"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/settingsImageView" />
+
+    <EditText
+        android:id="@+id/settingsPassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/settingsImageView"
+        android:layout_below="@+id/textView4"
+        android:layout_alignLeft="@+id/settingsImageView" />
+
+</RelativeLayout>

@@ -43,7 +43,7 @@ public class roundway_finalbooking extends AppCompatActivity {
     int day, month, year;
 
     String pick_date, pick_time;
-    String pick_up_location, Drop_location;
+    String pick_up_location;
     SharedPreferences.Editor editor;
     Button next1;
 
@@ -99,7 +99,6 @@ public class roundway_finalbooking extends AppCompatActivity {
         });
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(roundway_finalbooking.this);
         pick_up_location = pref.getString("pickup", "");
-        Drop_location = pref.getString("drop", "");
 
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
