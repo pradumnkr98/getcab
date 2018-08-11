@@ -1,5 +1,6 @@
 package com.example.ashish.justgetit.outstation_one_way;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
@@ -18,10 +19,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.directions.route.AbstractRouting;
+import com.directions.route.Route;
+import com.directions.route.RouteException;
+import com.directions.route.Routing;
+import com.directions.route.RoutingListener;
 import com.example.ashish.justgetit.PlacesAutocompleteAdapter;
 import com.example.ashish.justgetit.PlacesInfo;
 import com.example.ashish.justgetit.R;
-import com.example.ashish.justgetit.outstation.roundway_finalbooking;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -32,12 +37,14 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class outstation_one_way extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class outstation_one_way extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, RoutingListener {
 
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
     android.support.v7.widget.Toolbar toolbar;
@@ -46,6 +53,8 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
     private PlacesAutocompleteAdapter placesAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient, googleApiClient;
     private PlacesInfo mplace;
+    private static final int[] COLORS = new int[]{R.color.colorPrimaryDark};
+    private List<Polyline> polylines;
 
     SharedPreferences.Editor editor;
 
@@ -93,7 +102,6 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +111,8 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
         toolbar = findViewById(R.id.summary_toolbar);
         search = findViewById(R.id.pickup_location);
         drop_location = findViewById(R.id.drop_location);
+
+        polylines = new ArrayList<>();
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
         setSupportActionBar(toolbar);
@@ -127,8 +137,8 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
                 } else if (drop_location.getText().toString().length() == 0) {
                     Toast.makeText(outstation_one_way.this, "Enter Drop Location", Toast.LENGTH_LONG).show();
                 } else {
-                    Intent intent = new Intent(outstation_one_way.this, roundway_finalbooking.class);
                     String pickup, drop;
+                    LatLng pick, drop1;
                     pickup = search.getText().toString();
                     drop = drop_location.getText().toString();
 
@@ -137,7 +147,16 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
                     editor.putString("pickup", pickup);
                     editor.putString("drop", drop);
                     editor.apply();
-                    startActivity(intent);
+                    pick = getLocationFromAddress(outstation_one_way.this, pickup);
+                    drop1 = getLocationFromAddress(outstation_one_way.this, drop);
+
+                    Routing routing = new Routing.Builder()
+                            .travelMode(AbstractRouting.TravelMode.DRIVING)
+                            .withListener(outstation_one_way.this)
+                            .alternativeRoutes(false)
+                            .waypoints(pick, drop1)
+                            .build();
+                    routing.execute();
                 }
 
             }
@@ -182,13 +201,7 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
                 return false;
             }
         });
-       /* Routing routing = new Routing.Builder()
-                .travelMode(AbstractRouting.TravelMode.DRIVING)
-                .withListener(this)
-                .alternativeRoutes(true)
-                .waypoints(pickup_location,drop_location2)
-                .build();
-        routing.execute();*/
+
     }
 
     private void geolocate() {
@@ -215,5 +228,95 @@ public class outstation_one_way extends AppCompatActivity implements GoogleApiCl
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+        if (e != null) {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void onRoutingStart() {
+
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> route, int starting_index) {
+        if (polylines.size() > 0) {
+            for (Polyline poly : polylines) {
+                poly.remove();
+            }
+        }
+
+        polylines = new ArrayList<>();
+        //add route(s) to the map.
+        for (int i = 0; i < route.size(); i++) {
+
+            //In case of more than 5 alternative routes
+            int colorIndex = i % COLORS.length;
+
+            PolylineOptions polyOptions = new PolylineOptions();
+            polyOptions.color(getResources().getColor(COLORS[colorIndex]));
+            polyOptions.width(10 + i * 3);
+            polyOptions.addAll(route.get(i).getPoints());
+            //Polyline polyline = mMap.addPolyline(polyOptions);
+            //polylines.add(polyline);
+
+            Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
+            /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
+            editor = preferences.edit();
+            editor.putString("distance", route.get(0).getDistanceValue() + "");
+            editor.commit();
+            editor.apply();*/
+            Intent intent = new Intent(outstation_one_way.this, oneway_finalbooking.class);
+            intent.putExtra("distance", route.get(0).getDistanceValue() + "");
+            Log.i("Value", String.valueOf(route.get(0).getDistanceValue()));
+            startActivity(intent);
+        }
+
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+
+    }
+
+    //Converting string address to latlng
+
+    public LatLng getLocationFromAddress(Context context, String inputtedAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng resLatLng = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(inputtedAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            if (address.size() == 0) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            resLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        return resLatLng;
     }
 }

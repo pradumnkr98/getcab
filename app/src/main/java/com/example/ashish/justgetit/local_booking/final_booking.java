@@ -162,7 +162,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
 
         FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull car_services_types model) {
+            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull final car_services_types model) {
 
                 holder.setCar_name(model.getCar_name());
                 holder.setFare(model.getFare() * distance / 1000);
@@ -170,6 +170,18 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(final_booking.this, booking_summary.class);
+                        intent.putExtra("fare", model.getFare() * distance / 1000);
+                        intent.putExtra("carname", model.car_name);
+                        intent.putExtra("carimage", model.getCar_image());
+                        pick_date = Schedule_ride.getText().toString();
+                        pick_time = time_pick.getText().toString();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(final_booking.this);
+                        editor = preferences.edit();
+                        editor.putString("pickdate", pick_date);
+                        editor.putString("picktime", pick_time);
+                        editor.commit();
+                        startActivity(intent);
 
                     }
                 });
@@ -188,10 +200,10 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        // if(bundle!=null){
+        if (bundle != null) {
         distance = Double.parseDouble(bundle.getString("distance"));
         Log.e("distance", distance + "");
-        //}
+        }
 
 
     }

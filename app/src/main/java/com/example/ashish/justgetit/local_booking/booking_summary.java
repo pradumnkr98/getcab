@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +40,8 @@ public class booking_summary extends AppCompatActivity {
     Toolbar toolbar;
     Button book_cab;
     String pickup_location, drop_location, pick_time, pickup_date, phoneno, name, fare;
-    TextView pick_location, drop_location0, journey_time, journey_date;
+    TextView pick_location, drop_location0, journey_time, journey_date, carname;
+    ImageView car_image;
 
     DatabaseReference reference;
     FirebaseAuth auth;
@@ -62,6 +65,8 @@ public class booking_summary extends AppCompatActivity {
         drop_location0 = findViewById(R.id.drop_location);
         journey_time = findViewById(R.id.time);
         journey_date = findViewById(R.id.date);
+        carname = findViewById(R.id.carname);
+        car_image = findViewById(R.id.car_image);
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
         setSupportActionBar(toolbar);
@@ -103,6 +108,18 @@ public class booking_summary extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            String car_name = bundle.getString("carname");
+            carname.setText(car_name);
+            Log.e("carname", car_name);
+            String carimage = bundle.getString("carimage");
+            Log.e("carimage", carimage);
+            Picasso.with(this).load(carimage).resize(80, 50).into(car_image);
+
+        }
+
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         pickup_location = preferences.getString("pickup", "NULL");
@@ -111,6 +128,7 @@ public class booking_summary extends AppCompatActivity {
         pick_time = preferences.getString("picktime", "NULL");
         phoneno = preferences.getString("Phone No", "");
         name = preferences.getString("Name", "");
+        Log.e("drop_location", drop_location);
 
 
 
