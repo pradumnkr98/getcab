@@ -203,7 +203,7 @@ public class oneway_finalbooking extends AppCompatActivity {
             car_name1.setText(car_name.toString());
         }
 
-        public void setFare(String fare) {
+        public void setFare(Double fare) {
             fare1 = itemView.findViewById(R.id.fare);
             fare1.setText(fare.toString());
         }

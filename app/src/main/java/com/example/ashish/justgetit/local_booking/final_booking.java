@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
     Calendar current_date;
     int day, month, year;
     private DatabaseReference databaseReference;
+
+    double distance;
 
     private static final int Time_id = 1;
     EditText Schedule_ride, time_pick;
@@ -97,6 +100,8 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(final_booking.this);
         pick_up_location = pref.getString("pickup", "");
         Drop_location = pref.getString("drop", "");
+        //  distance = Double.parseDouble(pref.getString("distance", ""));
+
 
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
@@ -158,8 +163,9 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull car_services_types model) {
+
                 holder.setCar_name(model.getCar_name());
-                holder.setFare(model.getFare());
+                holder.setFare(model.getFare() * distance / 1000);
                 holder.setCar_image(model.getCar_image());
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -179,9 +185,13 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         firebaseRecyclerAdapter.startListening();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
 
-        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver%20BC%7CSeattle&destinations=San%20Francisco%7CVictoria%20BC&key=AIzaSyBvHBcELlDeNZeKT8NH7zATiS40v1a102Y";
-        new GeoTask(final_booking.this).execute(url);
+        // if(bundle!=null){
+        distance = Double.parseDouble(bundle.getString("distance"));
+        Log.e("distance", distance + "");
+        //}
 
 
     }
@@ -227,7 +237,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
             car_name1.setText(car_name.toString());
         }
 
-        public void setFare(String fare) {
+        public void setFare(Double fare) {
             fare1 = itemView.findViewById(R.id.fare);
             fare1.setText(fare.toString());
         }

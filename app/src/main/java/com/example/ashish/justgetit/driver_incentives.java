@@ -1,9 +1,7 @@
-package com.example.ashish.justgetit.navigation_drawer;
+package com.example.ashish.justgetit;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
-import com.example.ashish.justgetit.R;
 
 public class driver_incentives extends AppCompatActivity {
 
