@@ -21,7 +21,7 @@ public class settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.accouontSettingsLayout);
+        RelativeLayout relativeLayout = findViewById(R.id.accouontSettingsLayout);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,7 +30,7 @@ public class settings extends AppCompatActivity {
             }
         });
 
-        TextView signout = (TextView)findViewById(R.id.signoutTextView);
+        TextView signout = findViewById(R.id.signoutTextView);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

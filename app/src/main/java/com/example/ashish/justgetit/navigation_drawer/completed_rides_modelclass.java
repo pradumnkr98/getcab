@@ -2,16 +2,15 @@ package com.example.ashish.justgetit.navigation_drawer;
 
 public class completed_rides_modelclass {
 
-    private String journeydate, journeytime, amount, vehicle, pickuplocation, droplocation, payment;
+    private String journeydate, journeytime, fare, pickuplocation, droplocation;
 
-    public completed_rides_modelclass(String journeydate, String journeytime, String amount, String vehicle, String pickuplocation, String droplocation, String payment) {
+    public completed_rides_modelclass(String journeydate, String journeytime, String fare, String pickuplocation, String droplocation) {
         this.journeydate = journeydate;
         this.journeytime = journeytime;
-        this.amount = amount;
-        this.vehicle = vehicle;
+        this.fare = fare;
         this.pickuplocation = pickuplocation;
         this.droplocation = droplocation;
-        this.payment = payment;
+
     }
 
     public String getJourneydate() {
@@ -30,20 +29,13 @@ public class completed_rides_modelclass {
         this.journeytime = journeytime;
     }
 
-    public String getAmount() {
-        return amount;
+    public completed_rides_modelclass() {
+
+
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public String getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(String vehicle) {
-        this.vehicle = vehicle;
+    public String getFare() {
+        return fare;
     }
 
     public String getPickuplocation() {
@@ -62,11 +54,8 @@ public class completed_rides_modelclass {
         this.droplocation = droplocation;
     }
 
-    public String getPayment() {
-        return payment;
+    public void setFare(String fare) {
+        this.fare = fare;
     }
 
-    public void setPayment(String payment) {
-        this.payment = payment;
-    }
 }

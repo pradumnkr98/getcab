@@ -43,13 +43,11 @@ public class completed_rides extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
 
-                holder.setDate(model.getJourneydate());
-                holder.setTime(model.getJourneytime());
-                holder.setAmount(model.getAmount());
-                holder.setVehicle(model.getVehicle());
-                holder.setFrom(model.getPickuplocation());
-                holder.setTo(model.getDroplocation());
-                holder.setPayment(model.getPayment());
+                holder.setJourneydate(model.getJourneydate());
+                holder.setJourneytime(model.getJourneytime());
+                holder.setFare(model.getFare());
+                holder.setPickuplocation(model.getPickuplocation());
+                holder.setDroplocation(model.getDroplocation());
 
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -62,7 +60,7 @@ public class completed_rides extends AppCompatActivity {
             @NonNull
             @Override
             public completed_rides_modelclassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.completed_rides_cards, parent, false);
                 return new completed_rides_modelclassViewHolder(view);
             }
         };
@@ -73,7 +71,7 @@ public class completed_rides extends AppCompatActivity {
 
     public static class completed_rides_modelclassViewHolder extends RecyclerView.ViewHolder {
         View view;
-        TextView Date, Time, Amount, Vehicle, From, To, Payment;
+        TextView Date, Time, Amount, From, To;
         View parent;
 
         public completed_rides_modelclassViewHolder(View itemView) {
@@ -82,39 +80,29 @@ public class completed_rides extends AppCompatActivity {
 
         }
 
-        public void setDate(String date) {
+        public void setJourneydate(String journeydate) {
             Date = itemView.findViewById(R.id.Date);
-            Date.setText(date.toString());
+            Date.setText(journeydate.toString());
         }
 
-        public void setTime(String time) {
+        public void setJourneytime(String journeytime) {
             Time = itemView.findViewById(R.id.Time);
-            Time.setText(time.toString());
+            Time.setText(journeytime.toString());
         }
 
-        public void setVehicle(String vehicle) {
-            Vehicle = itemView.findViewById(R.id.vehicleModel);
-            Vehicle.setText(vehicle.toString());
-        }
-
-        public void setFrom(String from) {
+        public void setPickuplocation(String pickuplocation) {
             From = itemView.findViewById(R.id.From);
-            From.setText(from.toString());
+            From.setText(pickuplocation.toString());
         }
 
-        public void setTo(String to) {
+        public void setDroplocation(String droplocation) {
             To = itemView.findViewById(R.id.To);
-            To.setText(to.toString());
+            To.setText(droplocation.toString());
         }
 
-        public void setPayment(String payment) {
-            Payment = itemView.findViewById(R.id.Amount);
-            Payment.setText(payment.toString());
-        }
-
-        public void setAmount(String amount) {
+        public void setFare(String fare) {
             Amount = itemView.findViewById(R.id.Amount);
-            Amount.setText(amount.toString());
+            Amount.setText(fare);
         }
     }
 }

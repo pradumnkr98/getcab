@@ -42,6 +42,7 @@ public class booking_summary extends AppCompatActivity {
     String pickup_location, drop_location, pick_time, pickup_date, phoneno, name, fare;
     TextView pick_location, drop_location0, journey_time, journey_date, carname;
     ImageView car_image;
+    String fare1;
 
     DatabaseReference reference;
     FirebaseAuth auth;
@@ -79,11 +80,25 @@ public class booking_summary extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            fare1 = bundle.getString("fare");
+            Log.e("fare", fare1);
+            String car_name = bundle.getString("carname");
+            carname.setText(car_name);
+            Log.e("carname", car_name);
+            String carimage = bundle.getString("carimage");
+            Log.e("carimage", carimage);
+            Picasso.with(this).load(carimage).resize(80, 50).into(car_image);
+
+        }
         book_cab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                writeuserdata(phoneno, name, pickup_location, drop_location, null, pickup_date, pick_time);
+                writeuserdata(phoneno, name, pickup_location, drop_location, fare1, pickup_date, pick_time);
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("cab_request");
 
                 LatLng location;
@@ -108,17 +123,7 @@ public class booking_summary extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            String car_name = bundle.getString("carname");
-            carname.setText(car_name);
-            Log.e("carname", car_name);
-            String carimage = bundle.getString("carimage");
-            Log.e("carimage", carimage);
-            Picasso.with(this).load(carimage).resize(80, 50).into(car_image);
 
-        }
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);

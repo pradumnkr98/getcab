@@ -171,7 +171,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(final_booking.this, booking_summary.class);
-                        intent.putExtra("fare", model.getFare() * distance / 1000);
+                        intent.putExtra("fare", model.getFare() * distance / 1000 + "");
                         intent.putExtra("carname", model.car_name);
                         intent.putExtra("carimage", model.getCar_image());
                         pick_date = Schedule_ride.getText().toString();
