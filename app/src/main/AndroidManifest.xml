@@ -47,7 +47,6 @@
         <activity android:name=".navigation_drawer.current_ride" />
         <activity android:name=".navigation_drawer.future_ride" />
         <activity android:name=".future_duties" />
-        <activity android:name=".navigation_drawer.completed_ride" />
         <activity android:name=".navigation_drawer.settings" />
         <activity android:name=".navigation_drawer.wallet" />
         <activity android:name=".OTP_confirmation" />
@@ -64,6 +63,7 @@
         <activity android:name=".local_booking.getting_nearby_driver" />
         <activity android:name=".outstation_one_way.outstation_one_way" />
         <activity android:name=".outstation_one_way.oneway_bookingsummary" />
+        <activity android:name=".navigation_drawer.Edit_Account"></activity>
     </application>
 
 </manifest>

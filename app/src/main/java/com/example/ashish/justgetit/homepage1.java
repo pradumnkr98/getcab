@@ -38,7 +38,7 @@ import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
 import com.example.ashish.justgetit.local_booking.final_booking;
-import com.example.ashish.justgetit.navigation_drawer.completed_ride;
+import com.example.ashish.justgetit.navigation_drawer.completed_rides;
 import com.example.ashish.justgetit.navigation_drawer.current_ride;
 import com.example.ashish.justgetit.navigation_drawer.future_ride;
 import com.example.ashish.justgetit.navigation_drawer.profile_page;
@@ -318,7 +318,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 return true;
 
             case R.id.completed_ride:
-                Intent intent5 = new Intent(homepage1.this, completed_ride.class);
+                Intent intent5 = new Intent(homepage1.this, completed_rides.class);
                 startActivity(intent5);
                 return true;
 

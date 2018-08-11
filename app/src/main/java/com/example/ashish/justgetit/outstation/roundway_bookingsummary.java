@@ -21,8 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class roundway_bookingsummary extends AppCompatActivity {
     Toolbar toolbar;
     Button book_cab;
-    String pickup_location, drop_location, pick_time, pickup_date, phoneno, name, fare;
-    TextView pick_location, drop_location0, journey_time, journey_date;
+    String pickup_location, pick_time, pickup_date, phoneno, name, fare;
+    TextView pick_location, journey_time, journey_date;
 
     DatabaseReference reference;
     FirebaseAuth auth;
@@ -38,7 +38,6 @@ public class roundway_bookingsummary extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         pick_location = findViewById(R.id.Pick_up);
-        drop_location0 = findViewById(R.id.drop_location);
         journey_time = findViewById(R.id.time);
         journey_date = findViewById(R.id.date);
 
@@ -57,14 +56,13 @@ public class roundway_bookingsummary extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(roundway_bookingsummary.this, getting_nearby_driver.class);
-                writeuserdata(phoneno, name, pickup_location, drop_location, null, pickup_date, pick_time);
+                //writeuserdata(phoneno, name, pickup_location, null, pickup_date, pick_time);
                 startActivity(intent);
             }
         });
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         pickup_location = preferences.getString("pickup", "NULL");
-        drop_location = preferences.getString("drop", "NULL");
         pickup_date = preferences.getString("pickdate", "NULL");
         pick_time = preferences.getString("picktime", "NULL");
         phoneno = preferences.getString("Phone No", "");
@@ -72,7 +70,6 @@ public class roundway_bookingsummary extends AppCompatActivity {
 
 
         pick_location.setText(pickup_location);
-        drop_location0.setText(drop_location);
         journey_time.setText(pick_time);
         journey_date.setText(pickup_date);
     }
