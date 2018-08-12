@@ -1,9 +1,8 @@
 package com.example.ashish.justgetit.navigation_drawer;
 
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,14 +16,15 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class completed_rides extends AppCompatActivity {
+public class completed_ride extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        setContentView(R.layout.completed_rides);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_completed_ride);
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Bookings Details");
         databaseReference.keepSynced(true);
@@ -39,9 +39,9 @@ public class completed_rides extends AppCompatActivity {
                         .setQuery(databaseReference, completed_rides_modelclass.class)
                         .build();
 
-        FirebaseRecyclerAdapter<completed_rides_modelclass, completed_rides_modelclassViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<completed_rides_modelclass, completed_rides_modelclassViewHolder>(options) {
+        FirebaseRecyclerAdapter<completed_rides_modelclass, completed_ride.completed_rides_modelclassViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<completed_rides_modelclass, completed_ride.completed_rides_modelclassViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
+            protected void onBindViewHolder(@NonNull completed_ride.completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
 
                 holder.setJourneydate(model.getJourneydate());
                 holder.setJourneytime(model.getJourneytime());
@@ -59,14 +59,13 @@ public class completed_rides extends AppCompatActivity {
 
             @NonNull
             @Override
-            public completed_rides_modelclassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public completed_ride.completed_rides_modelclassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.completed_rides_cards, parent, false);
-                return new completed_rides_modelclassViewHolder(view);
+                return new completed_ride.completed_rides_modelclassViewHolder(view);
             }
         };
         firebaseRecyclerAdapter.startListening();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
-
     }
 
     public static class completed_rides_modelclassViewHolder extends RecyclerView.ViewHolder {
@@ -102,7 +101,7 @@ public class completed_rides extends AppCompatActivity {
 
         public void setFare(String fare) {
             Amount = itemView.findViewById(R.id.Amount);
-            Amount.setText(fare);
+            Amount.setText("Rs." + fare);
         }
     }
 }

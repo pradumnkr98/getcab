@@ -12,9 +12,7 @@
         android:layout_height="98dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:background="@color/colorPrimary"
         app:title="Upcoming Rides"
         app:titleTextColor="@color/green"
         android:layout_alignParentLeft="true" />
