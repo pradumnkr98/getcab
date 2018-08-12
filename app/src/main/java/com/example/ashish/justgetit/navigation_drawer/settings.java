@@ -24,7 +24,6 @@ import java.util.Map;
 
 public class settings extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
     android.support.v7.widget.Toolbar toolbar;
     TextView name, email, phone_no;
     DatabaseReference reference;
