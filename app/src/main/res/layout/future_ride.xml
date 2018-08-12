@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".navigation_drawer.future_ride">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="Upcoming Rides"
+        app:titleTextColor="@color/green"
+        android:layout_alignParentLeft="true" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewCompletedRides"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
+        android:layout_height="482dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/toolbar3"
+        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>
