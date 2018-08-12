@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ashish.justgetit.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
+import java.util.Map;
 
 public class profile_page extends AppCompatActivity {
     Uri imageuri;
@@ -42,21 +41,11 @@ public class profile_page extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 if (dataSnapshot.exists()) {
-                    List<Object> details = (List<Object>) dataSnapshot.getValue();
-                    if (details.get(0) != null && details.get(1) != null && details.get(2) != null) {
-                        String name = details.get(1).toString();
-                        Log.e("name", details.get(1) + "");
-                        String email = details.get(0).toString();
-                        Log.e("email", details.get(0) + "");
-                        String phoneno = details.get(2).toString();
-                        Log.e("phoneno", details.get(2) + "");
+                    Map<String, String> details1 = (Map) dataSnapshot.getValue();
+                    name1.setText(details1.get("name"));
+                    email1.setText(details1.get("email"));
+                    phone_no1.setText(details1.get("phone_no"));
 
-                        email1.setText(email);
-                        name1.setText(name);
-                        phone_no1.setText(phoneno);
-                    } else {
-                        Toast.makeText(profile_page.this, "No details Found", Toast.LENGTH_SHORT).show();
-                    }
 
                 }
             }
