@@ -54,16 +54,17 @@
         android:id="@+id/Amount"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignEnd="@+id/From"
         android:layout_alignTop="@+id/Date"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         android:gravity="center_vertical"
-        android:padding="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingTop="3dp"
         android:text="Fare"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignRight="@+id/From" />
 
     <ImageView
         android:id="@+id/imageView5"
