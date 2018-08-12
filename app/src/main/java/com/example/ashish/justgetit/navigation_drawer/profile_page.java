@@ -7,14 +7,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ashish.justgetit.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 public class profile_page extends AppCompatActivity {
     Button change_pic;
@@ -30,7 +37,8 @@ public class profile_page extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
         change_pic = findViewById(R.id.change_image);
         user_img = findViewById(R.id.user_img);
-        mreference = FirebaseDatabase.getInstance().getReference().child("Customers");
+        String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mreference = FirebaseDatabase.getInstance().getReference().child("Customers").child(userid);
         name1 = findViewById(R.id.my_name);
         email1 = findViewById(R.id.my_email);
         phone_no1 = findViewById(R.id.my_number);
@@ -46,18 +54,25 @@ public class profile_page extends AppCompatActivity {
         });
 
 
-       /* mreference.addValueEventListener(new ValueEventListener() {
+        mreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String email = dataSnapshot.getValue(String.class);
-                String name = dataSnapshot.getValue(String.class);
-                String phone_no = dataSnapshot.getValue(String.class);
-                //Log.d(, "Value is: " + value);
-                email1.setText(email);
-                name1.setText(name);
-                phone_no1.setText(phone_no);
+                if (dataSnapshot.exists()) {
+                    List<Object> details = (List<Object>) dataSnapshot.getValue();
+                    String name = details.get(1).toString();
+                    Log.e("name", details.get(1) + "");
+                    String email = details.get(0).toString();
+                    Log.e("email", details.get(0) + "");
+                    String phoneno = details.get(2).toString();
+                    Log.e("phoneno", details.get(2) + "");
+
+                    email1.setText(email);
+                    name1.setText(name);
+                    phone_no1.setText(phoneno);
+
+                }
             }
 
             @Override
@@ -65,7 +80,8 @@ public class profile_page extends AppCompatActivity {
                 // Failed to read value
                 Log.w("error_oncancelled", "Failed to read value.", error.toException());
             }
-        });*/
+        });
+
 
     }
 

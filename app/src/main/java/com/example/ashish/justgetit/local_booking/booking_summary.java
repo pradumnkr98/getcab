@@ -217,6 +217,11 @@ public class booking_summary extends AppCompatActivity {
                         Intent intent = new Intent(booking_summary.this, getting_nearby_driver.class);
                         intent.putExtra("driverlat", latitude);
                         intent.putExtra("driverlong", longitude);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(booking_summary.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("driverlat", latitude + "");
+                        editor.putString("driverlong", longitude + "");
+                        Log.e("driverlat", latitude + "");
                         startActivity(intent);
                     }
                 }
