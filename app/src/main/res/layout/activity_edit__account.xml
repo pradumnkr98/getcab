@@ -7,7 +7,7 @@
     tools:context=".navigation_drawer.Edit_Account">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/settingsToolbar"
         android:layout_width="match_parent"
         android:layout_height="99dp"
         android:layout_alignParentLeft="true"
