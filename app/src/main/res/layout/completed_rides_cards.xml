@@ -16,7 +16,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="14dp"
-        app:srcCompat="@drawable/cab" />
+        android:src="@drawable/cab" />
 
     <TextView
         android:id="@+id/Date"
@@ -123,6 +123,6 @@
         android:layout_height="106dp"
         android:layout_alignStart="@+id/imageView5"
         android:layout_below="@+id/VehicleNumber"
-        app:srcCompat="@drawable/dot"
-        android:layout_alignLeft="@+id/imageView5" />
+        android:layout_alignLeft="@+id/imageView5"
+        android:src="@drawable/dot" />
 </RelativeLayout>

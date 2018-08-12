@@ -38,8 +38,8 @@ import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
 import com.example.ashish.justgetit.local_booking.final_booking;
-import com.example.ashish.justgetit.navigation_drawer.completed_ride;
-import com.example.ashish.justgetit.navigation_drawer.current_ride;
+import com.example.ashish.justgetit.local_booking.getting_nearby_driver;
+import com.example.ashish.justgetit.navigation_drawer.completed_rides;
 import com.example.ashish.justgetit.navigation_drawer.future_ride;
 import com.example.ashish.justgetit.navigation_drawer.profile_page;
 import com.example.ashish.justgetit.navigation_drawer.settings;
@@ -303,8 +303,15 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.current_ride:
-                Intent intent1 = new Intent(homepage1.this, current_ride.class);
-                startActivity(intent1);
+                SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
+                double latitude = Double.parseDouble(preference.getString("driverlat", "0"));
+                if (latitude == 0) {
+                    Toast.makeText(this, "No Ride Found", Toast.LENGTH_LONG).show();
+                    Log.e("driverlocation", latitude + "");
+                } else {
+                    Intent intent = new Intent(homepage1.this, getting_nearby_driver.class);
+                    startActivity(intent);
+                }
                 return true;
 
             case R.id.future_ride:
@@ -318,7 +325,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 return true;
 
             case R.id.completed_ride:
-                Intent intent5 = new Intent(homepage1.this, completed_ride.class);
+                Intent intent5 = new Intent(homepage1.this, completed_rides.class);
                 startActivity(intent5);
                 return true;
 

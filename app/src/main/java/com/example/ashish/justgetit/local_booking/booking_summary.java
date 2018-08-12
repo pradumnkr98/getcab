@@ -146,6 +146,7 @@ public class booking_summary extends AppCompatActivity {
     public void writeuserdata(String phoneno, String name, String pickup, String drop, String fare, String journeyDate, String journeyTime) {
         FirebaseUser user = auth.getCurrentUser();
         String userID = user.getUid();
+        Log.e("userid", userID);
 
         customer_booking_details customer_booking_details = new customer_booking_details(phoneno, name, pickup, drop, fare, journeyDate, journeyTime);
         reference.child("Bookings Details").child(userID).setValue(customer_booking_details);
@@ -217,6 +218,11 @@ public class booking_summary extends AppCompatActivity {
                         Intent intent = new Intent(booking_summary.this, getting_nearby_driver.class);
                         intent.putExtra("driverlat", latitude);
                         intent.putExtra("driverlong", longitude);
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(booking_summary.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("driverlat", latitude + "");
+                        editor.putString("driverlong", longitude + "");
+                        Log.e("driverlat", latitude + "");
                         startActivity(intent);
                     }
                 }
