@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class profile_page extends AppCompatActivity {
-    Button change_pic;
     Uri imageuri;
     ImageView user_img;
     private int PICK_IMAGE = 100;
@@ -28,22 +27,14 @@ public class profile_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
-        change_pic = findViewById(R.id.change_image);
         user_img = findViewById(R.id.user_img);
         mreference = FirebaseDatabase.getInstance().getReference().child("Customers");
         name1 = findViewById(R.id.my_name);
         email1 = findViewById(R.id.my_email);
         phone_no1 = findViewById(R.id.my_number);
+    }
+}
 
-
-        change_pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(intent, PICK_IMAGE);
-
-            }
-        });
 
 
        /* mreference.addValueEventListener(new ValueEventListener() {
@@ -67,25 +58,5 @@ public class profile_page extends AppCompatActivity {
             }
         });*/
 
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-            imageuri = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-            Cursor cursor = getContentResolver().query(imageuri,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            user_img.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
-        }
-    }
-}

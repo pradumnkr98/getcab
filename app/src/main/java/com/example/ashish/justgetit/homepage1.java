@@ -581,7 +581,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                 } else if (drop_location.getText().toString().length() == 0) {
                     Toast.makeText(homepage1.this, "Enter Drop Location", Toast.LENGTH_LONG).show();
                 } else {
-                    Intent intent = new Intent(homepage1.this, final_booking.class);
+                    //Intent intent = new Intent(homepage1.this, final_booking.class);
                     String pickup, drop;
                     pickup = search.getText().toString();
                     drop = drop_location.getText().toString();
@@ -590,8 +590,22 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                     editor = preferences.edit();
                     editor.putString("pickup", pickup);
                     editor.putString("drop", drop);
+                    editor.commit();
                     editor.apply();
-                    startActivity(intent);
+                    LatLng pickup1, drop1;
+                    str_from = search.getText().toString();
+                    end_to = drop_location.getText().toString();
+                    pickup1 = getLocationFromAddress(homepage1.this, str_from);
+                    drop1 = getLocationFromAddress(homepage1.this, end_to);
+                    Routing routing = new Routing.Builder()
+                            .travelMode(AbstractRouting.TravelMode.DRIVING)
+                            .withListener(homepage1.this)
+                            .alternativeRoutes(false)
+                            .waypoints(pickup1, drop1)
+                            .build();
+                    routing.execute();
+
+                    //startActivity(intent);
                 }
             }
         });
@@ -602,7 +616,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         Log.e("pickup", str_from + "");
         Log.e("drop", end_to + "");
 
-        clickhere = findViewById(R.id.clickhere);
+       /* clickhere = findViewById(R.id.clickhere);
         clickhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -629,7 +643,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
 
 
             }
-        });
+        });*/
        /* String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str_from + "&destinations=" + end_to + "&mode=driving&language=fr-FR&avoid=tolls&key=YOUR_API_KEY";
         new GeoTask(homepage1.this).execute(url);*/
 

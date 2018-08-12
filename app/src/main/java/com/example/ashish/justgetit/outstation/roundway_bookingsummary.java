@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class roundway_bookingsummary extends AppCompatActivity {
     Toolbar toolbar;
     Button book_cab;
-    String pickup_location, pick_time, pickup_date, phoneno, name, fare;
+    String pickup_location, drop_location = null, pick_time, pickup_date, phoneno, name, fare;
     TextView pick_location, journey_time, journey_date;
 
     DatabaseReference reference;
@@ -56,13 +57,14 @@ public class roundway_bookingsummary extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(roundway_bookingsummary.this, getting_nearby_driver.class);
-                //writeuserdata(phoneno, name, pickup_location, null, pickup_date, pick_time);
+                writeuserdata(phoneno, name, pickup_location, drop_location, null, pickup_date, pick_time);
                 startActivity(intent);
             }
         });
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         pickup_location = preferences.getString("pickup", "NULL");
+        drop_location = preferences.getString("drop", "NULL");
         pickup_date = preferences.getString("pickdate", "NULL");
         pick_time = preferences.getString("picktime", "NULL");
         phoneno = preferences.getString("Phone No", "");
@@ -72,6 +74,12 @@ public class roundway_bookingsummary extends AppCompatActivity {
         pick_location.setText(pickup_location);
         journey_time.setText(pick_time);
         journey_date.setText(pickup_date);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            Log.e("fare", bundle.getDouble("fare") + "");
+        }
     }
 
     public void writeuserdata(String phoneno, String name, String pickup, String drop, String fare, String journeyDate, String journeyTime) {

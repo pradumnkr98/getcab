@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,33 +10,33 @@
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="83dp"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="Account Settings"
-        app:titleTextColor="@color/green"
-        android:layout_alignParentLeft="true" />
+        app:titleTextColor="@color/green" />
 
     <RelativeLayout
         android:id="@+id/accouontSettingsLayout"
         android:layout_width="match_parent"
         android:layout_height="132dp"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar2"
-        android:layout_alignParentLeft="true">
+        android:layout_below="@+id/toolbar2">
 
         <ImageView
             android:id="@+id/UserImage"
             android:layout_width="90dp"
             android:layout_height="90dp"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="26dp"
             android:layout_marginStart="26dp"
-            app:srcCompat="@mipmap/ic_launcher_round"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="26dp" />
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/textView"
@@ -54,51 +53,51 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:layout_alignLeft="@+id/textView"
             android:layout_alignStart="@+id/textView"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:padding="5dp"
             android:text="Mobile Number"
-            android:textSize="16sp"
-            android:layout_alignLeft="@+id/textView" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:layout_alignLeft="@+id/textView"
             android:layout_alignStart="@+id/textView"
             android:layout_below="@+id/textView2"
             android:gravity="center_vertical"
             android:padding="5dp"
             android:text="E-mail Id"
-            android:textSize="16sp"
-            android:layout_alignLeft="@+id/textView" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="25dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="247dp"
         android:gravity="center_vertical"
         android:padding="5dp"
         android:text="Favourites"
-        android:textSize="18sp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="226dp"
-        app:srcCompat="@color/black"
-        android:layout_alignParentLeft="true" />
+        app:srcCompat="@color/black" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -106,7 +105,8 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView4"
-        android:layout_marginBottom="234dp"
+        android:layout_marginBottom="233dp"
+        android:layout_marginTop="260dp"
         app:srcCompat="@drawable/home"
         android:layout_alignLeft="@+id/textView4" />
 
@@ -114,98 +114,99 @@
         android:id="@+id/imageView8"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_alignLeft="@+id/textView4"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView4"
         android:layout_marginBottom="173dp"
-        app:srcCompat="@drawable/work"
-        android:layout_alignLeft="@+id/textView4" />
+        app:srcCompat="@drawable/work" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/imageView7"
+        android:layout_marginLeft="93dp"
         android:layout_marginStart="93dp"
         android:padding="1dp"
-        android:text="Home"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="93dp" />
+        android:text="Home" />
 
     <TextView
         android:id="@+id/homeLocationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView8"
         android:layout_alignStart="@+id/textView8"
         android:layout_below="@+id/textView8"
         android:padding="1dp"
-        android:text="User home location"
-        android:layout_alignLeft="@+id/textView8" />
+        android:text="User home location" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView8"
         android:layout_alignStart="@+id/textView8"
         android:layout_alignTop="@+id/imageView8"
         android:padding="1dp"
-        android:text="Work"
-        android:layout_alignLeft="@+id/textView8" />
+        android:text="Work" />
 
     <TextView
         android:id="@+id/WorkLocationTextView"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_alignBottom="@+id/imageView8"
+        android:layout_alignLeft="@+id/textView8"
         android:layout_alignStart="@+id/textView8"
         android:padding="1dp"
-        android:text="User workplace location"
-        android:layout_alignLeft="@+id/textView8" />
+        android:text="User workplace location" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="124dp"
-        app:srcCompat="@color/black"
-        android:layout_alignParentLeft="true" />
+        app:srcCompat="@color/black" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView4"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView4"
         android:layout_marginBottom="138dp"
         android:text="More Saved Places"
-        android:textColor="@color/blue"
-        android:layout_alignLeft="@+id/textView4" />
+        android:textColor="@color/blue" />
 
     <TextView
-        android:id="@+id/signoutTextView"
+        android:id="@+id/editAccountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView4"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView4"
         android:layout_marginBottom="70dp"
         android:padding="5dp"
-        android:text="Sign Out"
-        android:textSize="16sp"
-        android:layout_alignLeft="@+id/textView4" />
+        android:text="Edit Acccount"
+        android:textColor="@color/blue"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/DeleteAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView4"
         android:layout_alignStart="@+id/textView4"
-        android:layout_below="@+id/signoutTextView"
+        android:layout_below="@+id/editAccountTextView"
         android:layout_marginTop="-70dp"
         android:padding="5dp"
         android:text="Delete Your Account"
         android:textColor="@android:color/holo_red_light"
-        android:textSize="16sp"
-        android:layout_alignLeft="@+id/textView4" />
+        android:textSize="16sp" />
 
 </RelativeLayout>

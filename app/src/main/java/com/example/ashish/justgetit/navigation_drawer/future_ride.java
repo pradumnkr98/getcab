@@ -13,11 +13,14 @@ import android.widget.TextView;
 import com.example.ashish.justgetit.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class future_ride extends AppCompatActivity {
 
+    FirebaseAuth auth;
     private DatabaseReference databaseReference;
 
     @Override
@@ -25,6 +28,9 @@ public class future_ride extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.future_ride);
 
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        String userid = user.getUid();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Bookings Details");
         databaseReference.keepSynced(true);
@@ -39,20 +45,18 @@ public class future_ride extends AppCompatActivity {
                         .setQuery(databaseReference, completed_rides_modelclass.class)
                         .build();
 
-        FirebaseRecyclerAdapter<completed_rides_modelclass,completed_rides.completed_rides_modelclassViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<completed_rides_modelclass, completed_rides.completed_rides_modelclassViewHolder>(options) {
+        FirebaseRecyclerAdapter<completed_rides_modelclass, completed_rides_modelclassViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<completed_rides_modelclass, completed_rides_modelclassViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull completed_rides.completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
+            protected void onBindViewHolder(@NonNull completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
 
                 // to get details of a particular customer only
                 // get a if condition to get info for future bookings
                 {
-                    holder.setDate(model.getJourneydate());
-                    holder.setTime(model.getJourneytime());
-                    holder.setAmount(model.getAmount());
-                    holder.setVehicle(model.getVehicle());
-                    holder.setFrom(model.getPickuplocation());
-                    holder.setTo(model.getDroplocation());
-                    holder.setPayment(model.getPayment());
+                    holder.setJourneydate(model.getJourneydate());
+                    holder.setJourneytime(model.getJourneytime());
+                    holder.setFare(model.getFare());
+                    holder.setPickuplocation(model.getPickuplocation());
+                    holder.setDroplocation(model.getDroplocation());
 
                     holder.parent.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -65,9 +69,9 @@ public class future_ride extends AppCompatActivity {
 
             @NonNull
             @Override
-            public completed_rides.completed_rides_modelclassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
-                return new completed_rides.completed_rides_modelclassViewHolder(view);
+            public completed_rides_modelclassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.completed_rides_cards, parent, false);
+                return new completed_rides_modelclassViewHolder(view);
             }
         };
         firebaseRecyclerAdapter.startListening();
@@ -86,39 +90,31 @@ public class future_ride extends AppCompatActivity {
 
         }
 
-        public void setDate(String date) {
+        public void setJourneydate(String journeydate) {
             Date = itemView.findViewById(R.id.Date);
-            Date.setText(date.toString());
+            Date.setText(journeydate.toString());
         }
 
-        public void setTime(String time) {
+        public void setJourneytime(String journeytime) {
             Time = itemView.findViewById(R.id.Time);
-            Time.setText(time.toString());
+            Time.setText(journeytime.toString());
         }
 
-        public void setVehicle(String vehicle) {
-            Vehicle = itemView.findViewById(R.id.vehicleModel);
-            Vehicle.setText(vehicle.toString());
-        }
 
-        public void setFrom(String from) {
+        public void setPickuplocation(String pickuplocation) {
             From = itemView.findViewById(R.id.From);
-            From.setText(from.toString());
+            From.setText(pickuplocation.toString());
         }
 
-        public void setTo(String to) {
+        public void setDroplocation(String droplocation) {
             To = itemView.findViewById(R.id.To);
-            To.setText(to.toString());
+            To.setText(droplocation.toString());
         }
 
-        public void setPayment(String payment) {
-            Payment = itemView.findViewById(R.id.Amount);
-            Payment.setText(payment.toString());
-        }
 
-        public void setAmount(String amount) {
+        public void setFare(String fare) {
             Amount = itemView.findViewById(R.id.Amount);
-            Amount.setText(amount.toString());
+            Amount.setText(fare);
         }
     }
 }

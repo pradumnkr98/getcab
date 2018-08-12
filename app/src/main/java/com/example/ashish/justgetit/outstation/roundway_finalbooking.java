@@ -157,13 +157,18 @@ public class roundway_finalbooking extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull car_services_types model) {
+            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull final car_services_types model) {
                 holder.setCar_name(model.getCar_name());
                 holder.setFare(model.getFare());
                 holder.setCar_image(model.getCar_image());
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(roundway_finalbooking.this, roundway_bookingsummary.class);
+                        intent.putExtra("fare", model.getFare());
+                        intent.putExtra("carname", model.getCar_name());
+                        intent.putExtra("carimage", model.getCar_image());
+                        startActivity(intent);
 
                     }
                 });
