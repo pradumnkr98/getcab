@@ -114,7 +114,7 @@ public class future_ride extends AppCompatActivity {
 
         public void setFare(String fare) {
             Amount = itemView.findViewById(R.id.Amount);
-            Amount.setText(fare);
+            Amount.setText("Rs." + fare);
         }
     }
 }

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.ashish.justgetit.R;
 import com.example.ashish.justgetit.customer_booking_details;
-import com.example.ashish.justgetit.local_booking.getting_nearby_driver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +30,7 @@ public class roundway_bookingsummary extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking_summary);
+        setContentView(R.layout.activity_roundway_bookingsummary);
         toolbar = findViewById(R.id.summary_toolbar);
         book_cab = findViewById(R.id.book_cab);
 
@@ -56,7 +55,7 @@ public class roundway_bookingsummary extends AppCompatActivity {
         book_cab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(roundway_bookingsummary.this, getting_nearby_driver.class);
+                Intent intent = new Intent(roundway_bookingsummary.this, roundway_gettingnearbydriver.class);
                 writeuserdata(phoneno, name, pickup_location, drop_location, null, pickup_date, pick_time);
                 startActivity(intent);
             }
