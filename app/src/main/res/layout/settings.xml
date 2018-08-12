@@ -103,11 +103,12 @@
         android:id="@+id/imageView7"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignLeft="@+id/textView4"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView4"
-        android:layout_marginBottom="234dp"
-        app:srcCompat="@drawable/home" />
+        android:layout_marginBottom="233dp"
+        android:layout_marginTop="260dp"
+        app:srcCompat="@drawable/home"
+        android:layout_alignLeft="@+id/textView4" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -183,7 +184,7 @@
         android:textColor="@color/blue" />
 
     <TextView
-        android:id="@+id/signoutTextView"
+        android:id="@+id/editAccountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView4"
@@ -191,7 +192,8 @@
         android:layout_alignStart="@+id/textView4"
         android:layout_marginBottom="70dp"
         android:padding="5dp"
-        android:text="Sign Out"
+        android:text="Edit Acccount"
+        android:textColor="@color/blue"
         android:textSize="16sp" />
 
     <TextView
@@ -200,7 +202,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView4"
         android:layout_alignStart="@+id/textView4"
-        android:layout_below="@+id/signoutTextView"
+        android:layout_below="@+id/editAccountTextView"
         android:layout_marginTop="-70dp"
         android:padding="5dp"
         android:text="Delete Your Account"

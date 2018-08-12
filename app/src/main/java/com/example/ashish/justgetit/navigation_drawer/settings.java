@@ -30,15 +30,12 @@ public class settings extends AppCompatActivity {
             }
         });
 
-        TextView signout = findViewById(R.id.signoutTextView);
-        signout.setOnClickListener(new View.OnClickListener() {
+        TextView editAccount = findViewById(R.id.editAccountTextView);
+        editAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
-                Intent intentSignout = new Intent(settings.this, login_page.class);
-                startActivity(intentSignout);
-                Toast.makeText(settings.this, "logout successfully", Toast.LENGTH_SHORT).show();
-                finish();
+                Intent intent = new Intent(settings.this, Edit_Account.class);
+                startActivity(intent);
             }
         });
     }
