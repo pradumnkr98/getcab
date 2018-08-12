@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import com.example.ashish.justgetit.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,9 +28,8 @@ public class future_ride extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.future_ride);
 
-        auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        String userid = user.getUid();
+        String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.e("userid", userid);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Bookings Details");
         databaseReference.keepSynced(true);

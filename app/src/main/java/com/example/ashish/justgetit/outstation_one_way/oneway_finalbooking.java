@@ -24,14 +24,16 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.ashish.justgetit.R;
+import com.example.ashish.justgetit.local_booking.booking_summary;
 import com.example.ashish.justgetit.local_booking.car_services_types;
-import com.example.ashish.justgetit.oneway_bookingsummary;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -65,29 +67,21 @@ public class oneway_finalbooking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oneway_finalbooking);
 
+        DateFormat df = new SimpleDateFormat("HH:mm a");
+        String time = df.format(Calendar.getInstance().getTime());
+        DateFormat df1 = new SimpleDateFormat("d MM yyyy");
+        String date = df1.format(Calendar.getInstance().getTime());
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
         databaseReference.keepSynced(true);
 
         toolbar = findViewById(R.id.onewaytoolbar);
         setSupportActionBar(toolbar);
         Schedule_ride = findViewById(R.id.oneway_schedule_ride);
+        Schedule_ride.setText(date);
         time_pick = findViewById(R.id.oneway_pickupTime);
+        time_pick.setText(time);
         next = findViewById(R.id.oneway_next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(oneway_finalbooking.this, oneway_bookingsummary.class);
-                pick_date = Schedule_ride.getText().toString();
-                pick_time = time_pick.getText().toString();
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(oneway_finalbooking.this);
-                editor = preferences.edit();
-                editor.putString("pickdate", pick_date);
-                editor.putString("picktime", pick_time);
-                editor.commit();
-
-                startActivity(intent);
-            }
-        });
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(oneway_finalbooking.this);
         pick_up_location = pref.getString("pickup", "");
         Drop_location = pref.getString("drop", "");
@@ -149,13 +143,25 @@ public class oneway_finalbooking extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull car_services_types model) {
+            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull final car_services_types model) {
                 holder.setCar_name(model.getCar_name());
                 holder.setFare(model.getFare() * distance / 1000);
                 holder.setCar_image(model.getCar_image());
                 holder.parent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(oneway_finalbooking.this, booking_summary.class);
+                        intent.putExtra("fare", model.getFare() * distance / 1000 + "");
+                        intent.putExtra("carname", model.getCar_name());
+                        intent.putExtra("carimage", model.getCar_image());
+                        pick_date = Schedule_ride.getText().toString();
+                        pick_time = time_pick.getText().toString();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(oneway_finalbooking.this);
+                        editor = preferences.edit();
+                        editor.putString("pickdate", pick_date);
+                        editor.putString("picktime", pick_time);
+                        editor.commit();
+                        startActivity(intent);
 
                     }
                 });
