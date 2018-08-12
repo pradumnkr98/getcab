@@ -1,21 +1,14 @@
 package com.example.ashish.justgetit.navigation_drawer;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.ashish.justgetit.R;
 import com.example.ashish.justgetit.homepage1;
-import com.example.ashish.justgetit.login_page;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class settings extends AppCompatActivity {

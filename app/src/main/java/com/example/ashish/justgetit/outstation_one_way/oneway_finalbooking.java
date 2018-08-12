@@ -81,7 +81,7 @@ public class oneway_finalbooking extends AppCompatActivity {
         Schedule_ride.setText(date);
         time_pick = findViewById(R.id.oneway_pickupTime);
         time_pick.setText(time);
-        next = findViewById(R.id.oneway_next);
+
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(oneway_finalbooking.this);
         pick_up_location = pref.getString("pickup", "");
         Drop_location = pref.getString("drop", "");
