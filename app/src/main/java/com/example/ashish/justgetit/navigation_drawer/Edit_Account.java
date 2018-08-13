@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Edit_Account extends AppCompatActivity {
@@ -37,10 +38,7 @@ public class Edit_Account extends AppCompatActivity {
     EditText settingsName, settingsEmail, settingsPhone, settingsPassword;
     DatabaseReference reference;
     FirebaseAuth mAuth;
-    ProgressDialog progressDialog;
-    DatabaseReference mreference;
-    SharedPreferences.Editor editor;
-    SharedPreferences preferences;
+    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +48,10 @@ public class Edit_Account extends AppCompatActivity {
         settingsName = findViewById(R.id.settingsName);
         settingsEmail = findViewById(R.id.settingsEmail);
         settingsPhone = findViewById(R.id.settingsPhone);
-        settingsPassword = findViewById(R.id.settingsPassword);
+        //settingsPassword = findViewById(R.id.settingsPassword);
 
         // getting current details in EditTexts
-        String userid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String userid=FirebaseAuth.getInstance().getCurrentUser().getUid();
         reference= FirebaseDatabase.getInstance().getReference().child("Customers").child(userid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -73,45 +71,19 @@ public class Edit_Account extends AppCompatActivity {
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(Edit_Account.this);
-        mreference = FirebaseDatabase.getInstance().getReference();
+
 
         Button save = (Button)findViewById(R.id.saveEditAccount);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
-                if(settingsPassword.getText().toString().trim().length() > 0) {
-                    mAuth.createUserWithEmailAndPassword(settingsEmail.getText().toString(), settingsPassword.getText().toString())
-                            .addOnCompleteListener(Edit_Account.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("Update", "details updated");
-                                        Toast.makeText(Edit_Account.this, "Account Details Updated",
-                                                Toast.LENGTH_LONG).show();
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        write_user_data(settingsName.getText().toString(), settingsPhone.getText().toString(), settingsEmail.getText().toString());
 
-                                        preferences = PreferenceManager.getDefaultSharedPreferences(Edit_Account.this);
-                                        editor = preferences.edit();
-                                        editor.putString("Phone No", settingsPhone.getText().toString());
-                                        editor.putString("Name", settingsName.getText().toString());
-                                        editor.commit();
+                // Updating user details
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child("Customers").child(userid).child("name").setValue(settingsName.getText().toString());
+                mDatabase.child("Customers").child(userid).child("phone_no").setValue(settingsPhone.getText().toString());
+                mDatabase.child("Customers").child(userid).child("email").setValue(settingsEmail.getText().toString());
 
-                                        progressDialog.dismiss();
-                                    } else {
-                                        // If updation fails, display a message to the user.
-                                        Log.w("Update", "details were not updated", task.getException());
-                                        Toast.makeText(Edit_Account.this, "Updation Failed" + task.getException(),
-                                                Toast.LENGTH_LONG).show();
-                                        progressDialog.dismiss();
-                                    }
-                                }
-                            });
-                }
-*/
 
                 Intent intent = new Intent(Edit_Account.this,homepage1.class);
                 startActivity(intent);
@@ -119,10 +91,7 @@ public class Edit_Account extends AppCompatActivity {
         });
     }
 
-    public void write_user_data(String name, String phone_no, String email_id) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user.getUid();
-        user_registration_details user_registration_details = new user_registration_details(name, phone_no, email_id);
-        mreference.child("Customers").child(userId).setValue(user_registration_details);
-    }
+
+
+
 }
