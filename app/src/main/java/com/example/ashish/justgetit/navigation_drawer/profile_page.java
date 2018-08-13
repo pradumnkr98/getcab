@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -92,11 +91,11 @@ public class profile_page extends AppCompatActivity {
 
             }
         });
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(profile_page.this);
+        /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(profile_page.this);
         String picturePath1 = preferences.getString("picture_path", "");
         ImageView imageView = findViewById(R.id.user_img);
         Log.e("picture1", picturePath1 + "");
-        imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath1));
+        im0ageView.setImageBitmap(BitmapFactory.decodeFile(picturePath1));*/
     }
 
     @Override

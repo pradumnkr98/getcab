@@ -13,11 +13,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="88dp"
+            android:layout_height="84dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/userimage" />
 
 
     </LinearLayout>
@@ -28,7 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:padding="3dp"
         android:text="USER NAME"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
 </LinearLayout>

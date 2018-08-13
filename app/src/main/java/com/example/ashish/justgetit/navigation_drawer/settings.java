@@ -10,10 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ashish.justgetit.R;
-import com.example.ashish.justgetit.homepage1;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,15 +35,15 @@ public class settings extends AppCompatActivity {
         phone_no = findViewById(R.id.Mobile);
 
 
-        String userid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference= FirebaseDatabase.getInstance().getReference().child("Customers").child(userid);
+        String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        reference = FirebaseDatabase.getInstance().getReference().child("Customers").child(userid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     Map<String, String> details = (Map) dataSnapshot.getValue();
                     name.setText(details.get("name"));
-                    Log.e("name",details.get("name")+"");
+                    Log.e("name", details.get("name") + "");
                     email.setText(details.get("email"));
                     phone_no.setText(details.get("phone_no"));
                 }
@@ -54,7 +51,7 @@ public class settings extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("error","account not found");
+                Log.e("error", "account not found");
 
             }
         });

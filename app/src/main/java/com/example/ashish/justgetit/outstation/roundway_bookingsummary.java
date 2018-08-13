@@ -99,7 +99,7 @@ public class roundway_bookingsummary extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                writeuserdata(phoneno, name, pickup_location, drop_location, fare1, pickup_date, pick_time);
+                writeuserdata(phoneno, name, pickup_location, "Null", fare1, pickup_date, pick_time);
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("cab_request");
 
                 LatLng location;
