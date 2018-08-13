@@ -86,13 +86,7 @@ public class roundway_finalbooking extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(roundway_finalbooking.this, roundway_bookingsummary.class);
-                pick_date = Schedule_ride.getText().toString();
-                pick_time = time_pick.getText().toString();
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(roundway_finalbooking.this);
-                editor = preferences.edit();
-                editor.putString("pickdate", pick_date);
-                editor.putString("picktime", pick_time);
-                editor.commit();
+
 
                 startActivity(intent);
             }
@@ -168,6 +162,13 @@ public class roundway_finalbooking extends AppCompatActivity {
                         intent.putExtra("fare", model.getFare());
                         intent.putExtra("carname", model.getCar_name());
                         intent.putExtra("carimage", model.getCar_image());
+                        pick_date = Schedule_ride.getText().toString();
+                        pick_time = time_pick.getText().toString();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(roundway_finalbooking.this);
+                        editor = preferences.edit();
+                        editor.putString("pickdate", pick_date);
+                        editor.putString("picktime", pick_time);
+                        editor.commit();
                         startActivity(intent);
 
                     }
@@ -177,7 +178,7 @@ public class roundway_finalbooking extends AppCompatActivity {
             @NonNull
             @Override
             public car_services_typesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.roundway_recyclerview_layout, parent, false);
                 return new car_services_typesViewHolder(view);
             }
         };

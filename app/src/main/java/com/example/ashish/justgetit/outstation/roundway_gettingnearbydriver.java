@@ -43,13 +43,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class roundway_gettingnearbydriver extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, RoutingListener {
+    private static final int[] COLORS = new int[]{R.color.colorPrimaryDark};
     GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
     Button request_cab;
     ProgressDialog progressDialog;
-    private static final int[] COLORS = new int[]{R.color.colorPrimaryDark};
     LatLng driverlocation, pickuplocation;
     String pickup_location;
     double latitude, longitude;

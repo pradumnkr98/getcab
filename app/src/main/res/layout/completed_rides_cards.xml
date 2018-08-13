@@ -57,14 +57,14 @@
         android:layout_alignEnd="@+id/From"
         android:layout_alignTop="@+id/Date"
         android:gravity="center_vertical"
+        android:layout_alignRight="@+id/From"
         android:paddingBottom="3dp"
         android:paddingLeft="1dp"
         android:paddingRight="1dp"
-        android:paddingTop="3dp"
         android:text="Fare"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_alignRight="@+id/From" />
+        android:paddingTop="3dp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imageView5"

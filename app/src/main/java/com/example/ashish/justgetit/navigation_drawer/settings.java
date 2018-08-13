@@ -1,49 +1,63 @@
 package com.example.ashish.justgetit.navigation_drawer;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.ashish.justgetit.R;
 import com.example.ashish.justgetit.homepage1;
-import com.example.ashish.justgetit.login_page;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class settings extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
     android.support.v7.widget.Toolbar toolbar;
+    TextView name, email, phone_no;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        // Back Button in toolbar
-        toolbar = findViewById(R.id.settingsToolbar);
-        setSupportActionBar(toolbar);
+        name = findViewById(R.id.customerName);
+        email = findViewById(R.id.Email);
+        phone_no = findViewById(R.id.Mobile);
 
-        toolbar.setNavigationIcon(R.drawable.back_icon);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
+        String userid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        reference= FirebaseDatabase.getInstance().getReference().child("Customers").child(userid);
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(settings.this, homepage1.class);
-                startActivity(intent);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, String> details = (Map) dataSnapshot.getValue();
+                    name.setText(details.get("name"));
+                    Log.e("name",details.get("name")+"");
+                    email.setText(details.get("email"));
+                    phone_no.setText(details.get("phone_no"));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("error","account not found");
+
             }
         });
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
 
         RelativeLayout relativeLayout = findViewById(R.id.accouontSettingsLayout);
