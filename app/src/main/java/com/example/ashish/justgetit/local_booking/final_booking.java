@@ -70,6 +70,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
 
 
 
+
         toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
@@ -79,6 +80,11 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         time_pick = findViewById(R.id.time_pick);
         time_pick.setText(time);
 
+
+        final Calendar cal = Calendar.getInstance();
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
 
         next = findViewById(R.id.confirm_booking);
         next.setOnClickListener(new View.OnClickListener() {
