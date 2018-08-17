@@ -6,40 +6,68 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.ashish.justgetit.R;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.example.ashish.justgetit.programmingadapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class future_ride extends AppCompatActivity {
 
     FirebaseAuth auth;
     private DatabaseReference databaseReference;
+    List<completed_rides_modelclass> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.future_ride);
+        arrayList = new ArrayList<>();
+
 
         String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.e("userid", userid);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bookings Details");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bookings Details").child(userid);
         databaseReference.keepSynced(true);
 
         /*------------------------------------------- Recycler View --------------------------------------------------------------*/
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewCompletedRides);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String, String> ridesdetails = (Map) dataSnapshot.getValue();
+                String journeydate, journeytime, fare, pickuplocation, droplocation;
+                journeydate = ridesdetails.get("journeydate").toString();
+                journeytime = ridesdetails.get("journeytime").toString();
+                fare = ridesdetails.get("fare").toString();
+                pickuplocation = ridesdetails.get("pickuplocation").toString();
+                droplocation = ridesdetails.get("droplocation").toString();
 
-        FirebaseRecyclerOptions<completed_rides_modelclass> options =
+                arrayList.add(new completed_rides_modelclass(journeydate + "", journeytime + "", fare + "", pickuplocation + "", droplocation + ""));
+                RecyclerView recyclerView = findViewById(R.id.recyclerViewCompletedRides);
+                recyclerView.setLayoutManager(new LinearLayoutManager(future_ride.this, LinearLayoutManager.VERTICAL, false));
+                recyclerView.setAdapter(new programmingadapter(future_ride.this, arrayList));
+                Log.e("journeydate", arrayList.get(0).getJourneydate().toString() + "");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+       /* FirebaseRecyclerOptions<completed_rides_modelclass> options =
                 new FirebaseRecyclerOptions.Builder<completed_rides_modelclass>()
                         .setQuery(databaseReference, completed_rides_modelclass.class)
                         .build();
@@ -74,11 +102,11 @@ public class future_ride extends AppCompatActivity {
             }
         };
         firebaseRecyclerAdapter.startListening();
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+        recyclerView.setAdapter(firebaseRecyclerAdapter);*/
 
     }
 
-    public static class completed_rides_modelclassViewHolder extends RecyclerView.ViewHolder {
+  /*  public static class completed_rides_modelclassViewHolder extends RecyclerView.ViewHolder {
         View view;
         TextView Date, Time, Amount, Vehicle, From, To, Payment;
         View parent;
@@ -115,6 +143,6 @@ public class future_ride extends AppCompatActivity {
             Amount = itemView.findViewById(R.id.Amount);
             Amount.setText("Rs." + fare);
         }
-    }
+    }*/
 }
 

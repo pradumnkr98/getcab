@@ -47,6 +47,7 @@
         android:paddingRight="3dp"
         android:paddingTop="3dp"
         android:text="HH:mm"
+        android:layout_marginLeft="25sp"
         android:textSize="16sp"
         android:textStyle="bold" />
 
