@@ -5,103 +5,64 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.util.Log;
 
 import com.example.ashish.justgetit.R;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.example.ashish.justgetit.programmingadapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class completed_ride extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
+    List<completed_rides_modelclass> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completed_ride);
+        arrayList = new ArrayList<>();
 
-
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bookings Details");
+        String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bookings Details").child(userid);
         databaseReference.keepSynced(true);
 
         /*------------------------------------------- Recycler View --------------------------------------------------------------*/
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewCompletedRides);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        FirebaseRecyclerOptions<completed_rides_modelclass> options =
-                new FirebaseRecyclerOptions.Builder<completed_rides_modelclass>()
-                        .setQuery(databaseReference, completed_rides_modelclass.class)
-                        .build();
-
-        FirebaseRecyclerAdapter<completed_rides_modelclass, completed_ride.completed_rides_modelclassViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<completed_rides_modelclass, completed_ride.completed_rides_modelclassViewHolder>(options) {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            protected void onBindViewHolder(@NonNull completed_ride.completed_rides_modelclassViewHolder holder, final int position, @NonNull completed_rides_modelclass model) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String, String> ridesdetails = (Map) dataSnapshot.getValue();
+                String journeydate, journeytime, fare, pickuplocation, droplocation;
+                journeydate = ridesdetails.get("journeydate").toString();
+                journeytime = ridesdetails.get("journeytime").toString();
+                fare = ridesdetails.get("fare").toString();
+                pickuplocation = ridesdetails.get("pickuplocation").toString();
+                droplocation = ridesdetails.get("droplocation").toString();
 
-                holder.setJourneydate(model.getJourneydate());
-                holder.setJourneytime(model.getJourneytime());
-                holder.setFare(model.getFare());
-                holder.setPickuplocation(model.getPickuplocation());
-                holder.setDroplocation(model.getDroplocation());
-
-                holder.parent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
+                arrayList.add(new completed_rides_modelclass(journeydate + "", journeytime + "", fare + "", pickuplocation + "", droplocation + ""));
+                //arrayList.add(new completed_rides_modelclass("20 03 2018","20:30","40","delhi","mumbai"));
+                RecyclerView recyclerView = findViewById(R.id.recyclerViewCompletedRides);
+                recyclerView.setLayoutManager(new LinearLayoutManager(completed_ride.this, LinearLayoutManager.VERTICAL, false));
+                recyclerView.setAdapter(new programmingadapter(completed_ride.this, arrayList));
+                Log.e("journeydate", arrayList.get(0).getJourneydate().toString() + "");
+                arrayList.clear();
             }
 
-            @NonNull
             @Override
-            public completed_ride.completed_rides_modelclassViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.completed_rides_cards, parent, false);
-                return new completed_ride.completed_rides_modelclassViewHolder(view);
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
-        };
-        firebaseRecyclerAdapter.startListening();
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
-    }
+        });
 
-    public static class completed_rides_modelclassViewHolder extends RecyclerView.ViewHolder {
-        View view;
-        TextView Date, Time, Amount, From, To;
-        View parent;
-
-        public completed_rides_modelclassViewHolder(View itemView) {
-            super(itemView);
-            parent = this.itemView;
-
-        }
-
-        public void setJourneydate(String journeydate) {
-            Date = itemView.findViewById(R.id.Date);
-            Date.setText(journeydate.toString());
-        }
-
-        public void setJourneytime(String journeytime) {
-            Time = itemView.findViewById(R.id.Time);
-            Time.setText(journeytime.toString());
-        }
-
-        public void setPickuplocation(String pickuplocation) {
-            From = itemView.findViewById(R.id.From);
-            From.setText(pickuplocation.toString());
-        }
-
-        public void setDroplocation(String droplocation) {
-            To = itemView.findViewById(R.id.To);
-            To.setText(droplocation.toString());
-        }
-
-        public void setFare(String fare) {
-            Amount = itemView.findViewById(R.id.Amount);
-            Amount.setText("Rs." + fare);
-        }
     }
 }

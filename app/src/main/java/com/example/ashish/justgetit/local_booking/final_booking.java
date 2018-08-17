@@ -64,7 +64,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         DateFormat df = new SimpleDateFormat("HH:mm a");
         String time = df.format(Calendar.getInstance().getTime());
         DateFormat df1 = new SimpleDateFormat("d MM yyyy");
-        String date = df1.format(Calendar.getInstance().getTime());
+        final String date = df1.format(Calendar.getInstance().getTime());
 
 
 
@@ -123,6 +123,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
 
                     }
                 }, year, month, day);
+                datePickerDialog.getDatePicker().setMinDate(current_date.getTimeInMillis());
                 datePickerDialog.show();
             }
         });
