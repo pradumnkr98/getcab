@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -64,7 +66,11 @@
         <activity android:name=".outstation_one_way.outstation_one_way" />
         <activity android:name=".outstation_one_way.oneway_bookingsummary" />
         <activity android:name=".navigation_drawer.Edit_Account" />
-        <activity android:name=".navigation_drawer.completed_ride"></activity>
+        <activity android:name=".navigation_drawer.completed_ride" />
+        <activity
+            android:name=".navigation_drawer.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,13 +14,21 @@
         android:background="@drawable/linearlayout"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <!--<de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_img"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_launcher_background" />-->
+        <ImageView
             android:id="@+id/user_img"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/userimage" />
+
 
     </LinearLayout>
 
@@ -33,10 +42,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:drawableLeft="@drawable/profile"
             android:gravity="center_vertical"
             android:text="Name"
+            android:layout_marginLeft="30dp"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -44,7 +53,7 @@
             android:id="@+id/my_name"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
             android:background="@color/transparent"
             android:gravity="center"
             android:text="my name"
@@ -61,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
             android:drawableLeft="@drawable/phone"
             android:text="Registered No."
             android:textSize="20dp"
@@ -71,7 +80,7 @@
             android:id="@+id/my_number"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
             android:background="@color/transparent"
             android:gravity="center"
             android:text="my number"
@@ -88,7 +97,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
             android:drawableLeft="@drawable/email"
             android:gravity="center"
             android:text="Email ID"
@@ -99,12 +108,21 @@
             android:id="@+id/my_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
             android:background="@color/transparent"
             android:gravity="center"
             android:text="my emailid"
             android:textSize="20dp" />
     </LinearLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
 </LinearLayout>

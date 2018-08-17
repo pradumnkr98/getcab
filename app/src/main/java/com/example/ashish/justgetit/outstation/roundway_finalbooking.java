@@ -81,16 +81,6 @@ public class roundway_finalbooking extends AppCompatActivity {
         time_pick.setText(time);
 
 
-        next1 = findViewById(R.id.roundway_next2);
-        next1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(roundway_finalbooking.this, roundway_bookingsummary.class);
-
-
-                startActivity(intent);
-            }
-        });
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(roundway_finalbooking.this);
         pick_up_location = pref.getString("pickup", "");
 

@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,7 +44,6 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
 
     private static final int Time_id = 1;
     EditText Schedule_ride, time_pick;
-    Button next;
     String pick_date, pick_time;
     String pick_up_location, Drop_location;
     SharedPreferences.Editor editor;
@@ -70,7 +68,6 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
 
 
 
-
         toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
@@ -80,27 +77,6 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
         time_pick = findViewById(R.id.time_pick);
         time_pick.setText(time);
 
-
-        final Calendar cal = Calendar.getInstance();
-        year = cal.get(Calendar.YEAR);
-        month = cal.get(Calendar.MONTH);
-        day = cal.get(Calendar.DAY_OF_MONTH);
-
-        next = findViewById(R.id.confirm_booking);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(final_booking.this, booking_summary.class);
-                pick_date = Schedule_ride.getText().toString();
-                pick_time = time_pick.getText().toString();
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(final_booking.this);
-                editor = preferences.edit();
-                editor.putString("pickdate", pick_date);
-                editor.putString("picktime", pick_time);
-                editor.commit();
-                startActivity(intent);
-            }
-        });
 
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(final_booking.this);

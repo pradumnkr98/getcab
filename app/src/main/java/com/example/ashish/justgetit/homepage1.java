@@ -109,7 +109,10 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
     private List<Polyline> polylines;
     SharedPreferences.Editor editor;
 
+    DatabaseReference reference1;
+
     String str_from, end_to;
+    TextView email1;
 
     /*
       -----------------------------code for displaying list of places matching with keyword------------------
@@ -494,34 +497,33 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
         Log.e("pickup", str_from + "");
         Log.e("drop", end_to + "");
 
-       /* clickhere = findViewById(R.id.clickhere);
-        clickhere.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (search.getText().toString().length() == 0) {
-                    Toast.makeText(homepage1.this, "Enter Your Pickup Location", Toast.LENGTH_LONG).show();
-                } else if (drop_location.getText().toString().length() == 0) {
-                    Toast.makeText(homepage1.this, "Enter Drop Location", Toast.LENGTH_LONG).show();
-                } else {
-                    LatLng pickup, drop;
-                    str_from = search.getText().toString();
-                    end_to = drop_location.getText().toString();
-                    pickup = getLocationFromAddress(homepage1.this, str_from);
-                    drop = getLocationFromAddress(homepage1.this, end_to);
-                    Routing routing = new Routing.Builder()
-                            .travelMode(AbstractRouting.TravelMode.DRIVING)
-                            .withListener(homepage1.this)
-                            .alternativeRoutes(false)
-                            .waypoints(pickup, drop)
-                            .build();
-                    routing.execute();
 
+        String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        reference1 = FirebaseDatabase.getInstance().getReference().child("Customers").child(userid);
+        reference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, String> getemail = (Map) dataSnapshot.getValue();
+                    String email = getemail.get("email");
+                    TextView username = findViewById(R.id.usernameDrawer);
+                    Log.e("username", email + "");
+                    username.setText(email);
 
                 }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
+      /*  SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(this);
+        String imagepath=preferences.getString("picture_path","");
+        ImageView imageView=findViewById(R.id.user_img);
+        imageView.setImageBitmap(BitmapFactory.decodeFile(imagepath));*/
+
+
        /* String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str_from + "&destinations=" + end_to + "&mode=driving&language=fr-FR&avoid=tolls&key=YOUR_API_KEY";
         new GeoTask(homepage1.this).execute(url);*/
 
