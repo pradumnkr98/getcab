@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f7f7f8"
+        android:elevation="4dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_dot"
+            android:gravity="center_vertical"
+            android:text=" Only one stop for meals is permitted."
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_dot"
+            android:gravity="center_vertical"
+            android:text=" AC will be switched off in hilly areas."
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_dot"
+            android:text=" Driver details will be shared 2 hours prior to
+ departure. If booking is made within 6 hours of
+ departure time, then driver details will be shared
+ upto 1 hr before departure"
+            android:textColor="#000" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_dot"
+            android:gravity="center_vertical"
+            android:text=" 15% penalty of the booking amount for
+ cancellation between 0-6 hours before departure."
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_dot"
+
+            android:text=" You need to collect the receipts from driver
+ for any toll tax,state tax, night charges or extra KM paid
+ directly to the driver during the trip.MMT is not liable to
+ provide the invoice for such amount."
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_dot"
+            android:gravity="center_vertical"
+            android:text=" Any grievances or claims related to the cab
+ travel should be reported to MMT within 48 hours of
+ travel time."
+            android:textColor="#000" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
