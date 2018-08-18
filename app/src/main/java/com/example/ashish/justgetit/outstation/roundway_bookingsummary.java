@@ -78,7 +78,6 @@ public class roundway_bookingsummary extends AppCompatActivity {
         journey_date = findViewById(R.id.date);
         carname = findViewById(R.id.carname);
         car_image = findViewById(R.id.car_image);
-        totalfare.findViewById(R.id.totalfare);
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
         setSupportActionBar(toolbar);
@@ -96,7 +95,6 @@ public class roundway_bookingsummary extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             fare1 = bundle.getString("fare");
-            totalfare.setText(fare1);
             Log.e("fare", fare1 + "");
             String car_name = bundle.getString("carname");
             carname.setText(car_name);
