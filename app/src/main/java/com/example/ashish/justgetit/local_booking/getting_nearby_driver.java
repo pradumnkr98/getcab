@@ -2,6 +2,7 @@ package com.example.ashish.justgetit.local_booking;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -23,6 +24,7 @@ import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
 import com.example.ashish.justgetit.R;
+import com.example.ashish.justgetit.homepage1;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -354,5 +356,11 @@ public class getting_nearby_driver extends AppCompatActivity implements OnMapRea
             line.remove();
         }
         polylines.clear();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getting_nearby_driver.this, homepage1.class);
+        startActivity(intent);
     }
 }

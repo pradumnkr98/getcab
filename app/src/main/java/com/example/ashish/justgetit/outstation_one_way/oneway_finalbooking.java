@@ -11,13 +11,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +28,6 @@ import com.example.ashish.justgetit.local_booking.booking_summary;
 import com.example.ashish.justgetit.local_booking.car_services_types;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -63,7 +60,7 @@ public class oneway_finalbooking extends AppCompatActivity {
             time_pick.setText(time1);
         }
     };
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference, databaseReference1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +73,7 @@ public class oneway_finalbooking extends AppCompatActivity {
         String date = df1.format(Calendar.getInstance().getTime());
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
+        databaseReference1 = FirebaseDatabase.getInstance().getReference().child("outstation_vehicles").child("one_way");
         databaseReference.keepSynced(true);
 
         toolbar = findViewById(R.id.onewaytoolbar);
@@ -138,58 +136,90 @@ public class oneway_finalbooking extends AppCompatActivity {
                 showDialog(Time_id);
             }
         });
+        if (distance > 150) {
 
-        FirebaseRecyclerOptions<car_services_types> options =
-                new FirebaseRecyclerOptions.Builder<car_services_types>()
-                        .setQuery(databaseReference, car_services_types.class)
-                        .build();
+            FirebaseRecyclerOptions<car_services_types> options =
+                    new FirebaseRecyclerOptions.Builder<car_services_types>()
+                            .setQuery(databaseReference, car_services_types.class)
+                            .build();
 
-        FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull final car_services_typesViewHolder holder, final int position, @NonNull final car_services_types model) {
-                holder.layout1.collapse();
-                holder.layout2.collapse();
-                holder.setCar_name(model.getCar_name());
-                holder.setFare(model.getFare() * distance / 1000);
-                holder.setCar_image(model.getCar_image());
-                holder.parent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(oneway_finalbooking.this, booking_summary.class);
-                        intent.putExtra("fare", model.getFare() * distance / 1000 + "");
-                        intent.putExtra("carname", model.getCar_name());
-                        intent.putExtra("carimage", model.getCar_image());
-                        pick_date = Schedule_ride.getText().toString();
-                        pick_time = time_pick.getText().toString();
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(oneway_finalbooking.this);
-                        editor = preferences.edit();
-                        editor.putString("pickdate", pick_date);
-                        editor.putString("picktime", pick_time);
-                        editor.commit();
-                        startActivity(intent);
-                        finish();
+            FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
+                @Override
+                protected void onBindViewHolder(@NonNull final car_services_typesViewHolder holder, final int position, @NonNull final car_services_types model) {
+                    holder.setCar_name(model.getCar_name());
+                    holder.setFare(Math.round(model.getFare() * distance / 1000));
+                    holder.setCar_image(model.getCar_image());
+                    holder.parent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(oneway_finalbooking.this, booking_summary.class);
+                            intent.putExtra("fare", Math.round(model.getFare() * distance / 1000) + "");
+                            intent.putExtra("carname", model.getCar_name());
+                            intent.putExtra("carimage", model.getCar_image());
+                            pick_date = Schedule_ride.getText().toString();
+                            pick_time = time_pick.getText().toString();
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(oneway_finalbooking.this);
+                            editor = preferences.edit();
+                            editor.putString("pickdate", pick_date);
+                            editor.putString("picktime", pick_time);
+                            editor.commit();
+                            startActivity(intent);
 
-                    }
-                });
-                holder.listener = new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        holder.toggle(compoundButton);
-                    }
-                };
-                holder.switch1.setOnCheckedChangeListener(holder.listener);
-                holder.switch2.setOnCheckedChangeListener(holder.listener);
-            }
+                        }
+                    });
+                }
 
-            @NonNull
-            @Override
-            public car_services_typesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
-                return new car_services_typesViewHolder(view);
-            }
-        };
-        firebaseRecyclerAdapter.startListening();
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+                @NonNull
+                @Override
+                public car_services_typesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
+                    return new car_services_typesViewHolder(view);
+                }
+            };
+            firebaseRecyclerAdapter.startListening();
+            recyclerView.setAdapter(firebaseRecyclerAdapter);
+        } else {
+            FirebaseRecyclerOptions<car_services_types> options =
+                    new FirebaseRecyclerOptions.Builder<car_services_types>()
+                            .setQuery(databaseReference1, car_services_types.class)
+                            .build();
+
+            FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
+                @Override
+                protected void onBindViewHolder(@NonNull final car_services_typesViewHolder holder, final int position, @NonNull final car_services_types model) {
+                    holder.setCar_name(model.getCar_name());
+                    holder.setFare(model.getFare());
+                    holder.setCar_image(model.getCar_image());
+                    holder.parent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(oneway_finalbooking.this, booking_summary.class);
+                            intent.putExtra("fare", model.getFare() + "");
+                            intent.putExtra("carname", model.getCar_name());
+                            intent.putExtra("carimage", model.getCar_image());
+                            pick_date = Schedule_ride.getText().toString();
+                            pick_time = time_pick.getText().toString();
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(oneway_finalbooking.this);
+                            editor = preferences.edit();
+                            editor.putString("pickdate", pick_date);
+                            editor.putString("picktime", pick_time);
+                            editor.commit();
+                            startActivity(intent);
+
+                        }
+                    });
+                }
+
+                @NonNull
+                @Override
+                public car_services_typesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
+                    return new car_services_typesViewHolder(view);
+                }
+            };
+            firebaseRecyclerAdapter.startListening();
+            recyclerView.setAdapter(firebaseRecyclerAdapter);
+        }
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -221,38 +251,20 @@ public class oneway_finalbooking extends AppCompatActivity {
         ImageView car_image1;
         TextView car_name1;
         TextView fare1;
-        ExpandableRelativeLayout layout1, layout2;
-
-        SwitchCompat switch1, switch2;
-        private CompoundButton.OnCheckedChangeListener listener;
 
         public car_services_typesViewHolder(View itemView) {
             super(itemView);
             parent = this.itemView;
-            layout1 = itemView.findViewById(R.id.expandableLayout1);
-            //layout1.collapse();
-            layout2 = itemView.findViewById(R.id.expandableLayout2);
-            //layout2.collapse();
-            switch1 = itemView.findViewById(R.id.switch_button1);
-            switch1.setOnCheckedChangeListener(listener);
-            switch2 = itemView.findViewById(R.id.switch_button2);
 
         }
 
-        private void toggle(View v) {
-            if (v.getId() == R.id.switch_button1) {
-                layout1.toggle();
-            } else if (v.getId() == R.id.switch_button2) {
-                layout2.toggle();
-            }
-        }
 
         public void setCar_name(String car_name) {
             car_name1 = itemView.findViewById(R.id.car_name);
             car_name1.setText(car_name.toString());
         }
 
-        public void setFare(Double fare) {
+        public void setFare(Long fare) {
             fare1 = itemView.findViewById(R.id.fare);
             fare1.setText(fare.toString());
         }
