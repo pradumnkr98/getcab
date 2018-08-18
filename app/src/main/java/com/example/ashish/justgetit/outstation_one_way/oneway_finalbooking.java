@@ -162,6 +162,7 @@ public class oneway_finalbooking extends AppCompatActivity {
                         editor.putString("picktime", pick_time);
                         editor.commit();
                         startActivity(intent);
+                        finish();
 
                     }
                 });
