@@ -141,7 +141,6 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
             }
         });
 
-
         FirebaseRecyclerOptions<car_services_types> options =
                 new FirebaseRecyclerOptions.Builder<car_services_types>()
                         .setQuery(databaseReference, car_services_types.class)
@@ -185,6 +184,7 @@ public class final_booking extends AppCompatActivity implements GeoTask.Geo {
 
 
             }
+
 
             @NonNull
             @Override

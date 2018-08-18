@@ -146,10 +146,11 @@ public class booking_summary extends AppCompatActivity {
     public void writeuserdata(String phoneno, String name, String pickup, String drop, String fare, String journeyDate, String journeyTime) {
         FirebaseUser user = auth.getCurrentUser();
         String userID = user.getUid();
+        String key = reference.push().getKey();
         Log.e("userid", userID);
 
         customer_booking_details customer_booking_details = new customer_booking_details(phoneno, name, pickup, drop, fare, journeyDate, journeyTime);
-        reference.child("Bookings Details").child(userID).setValue(customer_booking_details);
+        reference.child("Customer Booking").child(userID).child("Booking Details").child(key).setValue(customer_booking_details);
 
 
     }
@@ -224,6 +225,7 @@ public class booking_summary extends AppCompatActivity {
                         editor.putString("driverlong", longitude + "");
                         Log.e("driverlat", latitude + "");
                         startActivity(intent);
+                        finish();
                     }
                 }
             }
