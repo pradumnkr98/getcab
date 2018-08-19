@@ -508,7 +508,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
                     String email = getemail.get("email");
                     TextView username = findViewById(R.id.usernameDrawer);
                     Log.e("username", email + "");
-                    username.setText(email);
+//                    username.setText(email);
 
                 }
             }
@@ -660,7 +660,7 @@ public class homepage1 extends AppCompatActivity implements /*PaytmPaymentTransa
             Polyline polyline = mMap.addPolyline(polyOptions);
             polylines.add(polyline);
 
-            Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + (route.get(i).getDistanceValue()) / 1000 + ": duration - " + (route.get(i).getDurationValue()) / 3600 + " Hr", Toast.LENGTH_SHORT).show();
             /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(homepage1.this);
             editor = preferences.edit();
             editor.putString("distance", route.get(0).getDistanceValue() + "");

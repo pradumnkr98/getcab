@@ -64,7 +64,6 @@
                             android:layout_marginLeft="150dp"
                             android:layout_marginRight="15dp"
                             android:background="@drawable/image_button"
-                            android:scaleType="centerCrop"
                             android:src="@drawable/ic_launcher_background" />
                     </LinearLayout>
 

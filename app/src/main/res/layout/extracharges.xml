@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="31dp"
+        android:text="Fare after 150 km" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginTop="65dp"
+        android:text="Waiting charges" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginTop="99dp"
+        android:text="Night charges (9pm to 6am)" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginTop="136dp"
+        android:text="Parking charges" />
+
+    <TextView
+        android:id="@+id/after150km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textView"
+        android:layout_marginEnd="67dp"
+        android:layout_marginRight="67dp"
+        android:text="after150"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/waitingcharges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/after150km"
+        android:layout_alignRight="@+id/after150km"
+        android:layout_alignTop="@+id/textView2"
+        android:text="waiting charges"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/nightcharges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/after150km"
+        android:layout_alignRight="@+id/after150km"
+        android:layout_alignTop="@+id/textView3"
+        android:text="nightcharges"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/after150km"
+        android:layout_alignStart="@+id/after150km"
+        android:layout_alignTop="@+id/textView11"
+        android:text="As applicable"
+        android:textColor="#000" />
+</RelativeLayout>

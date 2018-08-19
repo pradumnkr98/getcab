@@ -50,9 +50,9 @@ public class booking_summary extends AppCompatActivity {
     DatabaseReference reference;
     FirebaseAuth auth;
 
-    ExpandableRelativeLayout layout1, layout2;
+    ExpandableRelativeLayout layout1, layout2, layout3;
 
-    SwitchCompat switch1, switch2;
+    SwitchCompat switch1, switch2, switch3;
     private CompoundButton.OnCheckedChangeListener listener;
 
     public int radius = 1;
@@ -154,10 +154,13 @@ public class booking_summary extends AppCompatActivity {
         //layout1.collapse();
         layout2 = findViewById(R.id.expandableLayout2);
         //layout2.collapse();
+        layout3 = findViewById(R.id.expandableLayout3);
         switch1 = findViewById(R.id.switch_button1);
         switch2 = findViewById(R.id.switch_button2);
+        switch3 = findViewById(R.id.switch_button3);
         layout1.collapse();
         layout2.collapse();
+        layout3.collapse();
 
         listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -168,6 +171,7 @@ public class booking_summary extends AppCompatActivity {
 
         switch1.setOnCheckedChangeListener(listener);
         switch2.setOnCheckedChangeListener(listener);
+        switch3.setOnCheckedChangeListener(listener);
     }
 
     private void toggle(View v) {
@@ -175,7 +179,11 @@ public class booking_summary extends AppCompatActivity {
             layout1.toggle();
         } else if (v.getId() == R.id.switch_button2) {
             layout2.toggle();
+        } else if (v.getId() == R.id.switch_button3) {
+            layout3.toggle();
         }
+
+
     }
 
     public void writeuserdata(String phoneno, String name, String pickup, String drop, String fare, String journeyDate, String journeyTime) {
