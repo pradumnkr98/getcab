@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,7 +48,13 @@ public class roundway_bookingsummary extends AppCompatActivity {
     public int radius = 1;
     public Boolean driverfound = false;
     String pickup_location, drop_location, pick_time, pickup_date, phoneno, name, fare;
-    TextView pick_location, drop_location0, journey_time, journey_date, carname;
+    TextView pick_location, drop_location0, journey_time, journey_date, carname, totalfare;
+
+
+    ExpandableRelativeLayout layout1, layout2;
+
+    SwitchCompat switch1, switch2;
+    private CompoundButton.OnCheckedChangeListener listener;
 
     DatabaseReference reference;
     FirebaseAuth auth;
@@ -133,19 +142,49 @@ public class roundway_bookingsummary extends AppCompatActivity {
         name = preferences.getString("Name", "");
 
 
-
         pick_location.setText(pickup_location);
         journey_time.setText(pick_time);
         journey_date.setText(pickup_date);
+
+
+        layout1 = findViewById(R.id.expandableLayout1);
+        //layout1.collapse();
+        layout2 = findViewById(R.id.expandableLayout2);
+        //layout2.collapse();
+        switch1 = findViewById(R.id.switch_button1);
+        switch2 = findViewById(R.id.switch_button2);
+        layout1.collapse();
+        layout2.collapse();
+
+        listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                toggle(compoundButton);
+            }
+        };
+
+        switch1.setOnCheckedChangeListener(listener);
+        switch2.setOnCheckedChangeListener(listener);
+    }
+
+    private void toggle(View v) {
+        if (v.getId() == R.id.switch_button1) {
+            layout1.toggle();
+        } else if (v.getId() == R.id.switch_button2) {
+            layout2.toggle();
+        }
     }
 
     public void writeuserdata(String phoneno, String name, String pickup, String drop, String fare, String journeyDate, String journeyTime) {
         FirebaseUser user = auth.getCurrentUser();
         String userID = user.getUid();
+        String key = reference.push().getKey();
         Log.e("userid", userID);
 
         customer_booking_details customer_booking_details = new customer_booking_details(phoneno, name, pickup, drop, fare, journeyDate, journeyTime);
-        reference.child("Bookings Details").child(userID).setValue(customer_booking_details);
+        reference.child("Customer Booking").child(userID).child("Booking Details").child(key).setValue(customer_booking_details);
+        reference.child("Admin").child(userID).child(key).setValue(customer_booking_details);
+
 
 
     }
@@ -181,12 +220,9 @@ public class roundway_bookingsummary extends AppCompatActivity {
 
             @Override
             public void onGeoQueryReady() {
-                if (!driverfound) {
                     radius++;
                     getdriveravailable();
-                } else {
-                    Toast.makeText(roundway_bookingsummary.this, "Driver Not Found !! Try after some Time", Toast.LENGTH_LONG).show();
-                }
+
 
             }
 

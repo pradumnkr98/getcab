@@ -141,7 +141,8 @@ public class roundway_finalbooking extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<car_services_types, car_services_typesViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull car_services_typesViewHolder holder, final int position, @NonNull final car_services_types model) {
+            protected void onBindViewHolder(@NonNull final car_services_typesViewHolder holder, final int position, @NonNull final car_services_types model) {
+
                 holder.setCar_name(model.getCar_name());
                 holder.setFare(model.getFare());
                 holder.setCar_image(model.getCar_image());
@@ -163,6 +164,7 @@ public class roundway_finalbooking extends AppCompatActivity {
 
                     }
                 });
+
             }
 
             @NonNull
@@ -198,18 +200,21 @@ public class roundway_finalbooking extends AppCompatActivity {
         TextView car_name1;
         TextView fare1;
 
+
         public car_services_typesViewHolder(View itemView) {
             super(itemView);
             parent = this.itemView;
 
+
         }
+
 
         public void setCar_name(String car_name) {
             car_name1 = itemView.findViewById(R.id.car_name);
             car_name1.setText(car_name.toString());
         }
 
-        public void setFare(Double fare) {
+        public void setFare(Long fare) {
             fare1 = itemView.findViewById(R.id.fare);
             fare1.setText(fare.toString());
         }

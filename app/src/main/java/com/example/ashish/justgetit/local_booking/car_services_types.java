@@ -3,9 +3,9 @@ package com.example.ashish.justgetit.local_booking;
 public class car_services_types {
     String car_image;
     String car_name;
-    Double fare;
+    Long fare;
 
-    public car_services_types(String car_image, String car_name, Double fare) {
+    public car_services_types(String car_image, String car_name, Long fare) {
         this.car_image = car_image;
         this.car_name = car_name;
         this.fare = fare;
@@ -31,11 +31,11 @@ public class car_services_types {
         this.car_name = car_name;
     }
 
-    public Double getFare() {
+    public Long getFare() {
         return fare;
     }
 
-    public void setFare(Double fare) {
+    public void setFare(Long fare) {
         this.fare = fare;
     }
 }
