@@ -39,6 +39,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class oneway_bookingsummary extends AppCompatActivity {
     public int radius = 1;
@@ -59,6 +60,8 @@ public class oneway_bookingsummary extends AppCompatActivity {
     FirebaseAuth auth;
     LatLng pickuplocation;
     private String driverId;
+    Double d_fare1, fare2;
+    private TextView discount, netfare, n_fare, d_fare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,11 @@ public class oneway_bookingsummary extends AppCompatActivity {
         carname = findViewById(R.id.carname);
         car_image = findViewById(R.id.car_image);
         totalfare = findViewById(R.id.totalfare);
+        discount = findViewById(R.id.discount);
+        netfare = findViewById(R.id.netfare);
+        n_fare = findViewById(R.id.n_fare);
+        d_fare = findViewById(R.id.d_fare);
+
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
         setSupportActionBar(toolbar);
@@ -103,6 +111,26 @@ public class oneway_bookingsummary extends AppCompatActivity {
             String carimage = bundle.getString("carimage");
             Log.e("carimage", carimage);
             Picasso.with(this).load(carimage).resize(80, 50).into(car_image);
+
+            DatabaseReference discountref = FirebaseDatabase.getInstance().getReference("wallet").child("value");
+            discountref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map<String, String> discount_value = (Map) dataSnapshot.getValue();
+                    d_fare1 = Double.parseDouble(discount_value.get("value"));
+                    fare2 = Double.parseDouble(fare1);
+                    double discount_fare = fare2 - d_fare1;
+                    n_fare.setText(Double.toString(discount_fare));
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            d_fare.setText(Double.toString(d_fare1));
+
 
         }
         book_cab.setOnClickListener(new View.OnClickListener() {
@@ -302,4 +330,6 @@ public class oneway_bookingsummary extends AppCompatActivity {
 
         return resLatLng;
     }
+
+
 }
