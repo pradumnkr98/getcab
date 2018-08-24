@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,7 @@ public class roundway_finalbooking extends AppCompatActivity {
         DateFormat df1 = new SimpleDateFormat("d MM yyyy");
         String date = df1.format(Calendar.getInstance().getTime());
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("available vehicles");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("outstation_vehicles").child("round_way");
         databaseReference.keepSynced(true);
 
         toolbar = findViewById(R.id.roundwaytoolbar1);
@@ -150,9 +151,15 @@ public class roundway_finalbooking extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(roundway_finalbooking.this, roundway_bookingsummary.class);
-                        intent.putExtra("fare", model.getFare());
-                        intent.putExtra("carname", model.getCar_name());
-                        intent.putExtra("carimage", model.getCar_image());
+                        if (model.getCar_name().equals("SUV ertiga")) {
+                            intent.putExtra("fare", (model.getFare() + 900) + "");
+                        } else if (model.getCar_name().equals("SUV innova")) {
+                            intent.putExtra("fare", (model.getFare() + 1000) + "");
+                        } else
+                            intent.putExtra("fare", (model.getFare()) + "");
+                        Log.e("fare3", model.getFare() + "");
+                        intent.putExtra("carname", model.getCar_name() + "");
+                        intent.putExtra("carimage", model.getCar_image() + "");
                         pick_date = Schedule_ride.getText().toString();
                         pick_time = time_pick.getText().toString();
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(roundway_finalbooking.this);
@@ -170,7 +177,7 @@ public class roundway_finalbooking extends AppCompatActivity {
             @NonNull
             @Override
             public car_services_typesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.roundway_recyclerview_layout, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlayout, parent, false);
                 return new car_services_typesViewHolder(view);
             }
         };

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Getcab</string>
+    <string name="app_name">Justcab</string>
     <string name="title_activity_homepage2">Map</string>
     <string name="title_activity_homepage1">homepage1</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

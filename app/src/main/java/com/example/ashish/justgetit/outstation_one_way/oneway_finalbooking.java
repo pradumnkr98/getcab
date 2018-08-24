@@ -194,7 +194,11 @@ public class oneway_finalbooking extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(oneway_finalbooking.this, booking_summary.class);
-                            intent.putExtra("fare", model.getFare() + "");
+                            if (model.getCar_name().equals("Hatchback") || model.getCar_name().equals("Sedan")) {
+                                intent.putExtra("fare", (model.getFare() + 500) + "");
+                            } else {
+                                intent.putExtra("fare", (model.getFare() + 1000) + "");
+                            }
                             intent.putExtra("carname", model.getCar_name());
                             intent.putExtra("carimage", model.getCar_image());
                             pick_date = Schedule_ride.getText().toString();

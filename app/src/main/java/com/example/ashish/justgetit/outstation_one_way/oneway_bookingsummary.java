@@ -60,7 +60,7 @@ public class oneway_bookingsummary extends AppCompatActivity {
     FirebaseAuth auth;
     LatLng pickuplocation;
     private String driverId;
-    Double d_fare1, fare2;
+    Long d_fare1, fare2;
     private TextView discount, netfare, n_fare, d_fare;
 
     @Override
@@ -80,7 +80,7 @@ public class oneway_bookingsummary extends AppCompatActivity {
         journey_date = findViewById(R.id.date);
         carname = findViewById(R.id.carname);
         car_image = findViewById(R.id.car_image);
-        totalfare = findViewById(R.id.totalfare);
+        totalfare = findViewById(R.id.fare);
         discount = findViewById(R.id.discount);
         netfare = findViewById(R.id.netfare);
         n_fare = findViewById(R.id.n_fare);
@@ -105,22 +105,24 @@ public class oneway_bookingsummary extends AppCompatActivity {
             fare1 = bundle.getString("fare");
             totalfare.setText(fare1);
             Log.e("fare", fare1);
-            String car_name = bundle.getString("carname");
+            final String car_name = bundle.getString("carname");
             carname.setText(car_name);
             Log.e("carname", car_name);
             String carimage = bundle.getString("carimage");
             Log.e("carimage", carimage);
             Picasso.with(this).load(carimage).resize(80, 50).into(car_image);
 
-            DatabaseReference discountref = FirebaseDatabase.getInstance().getReference("wallet").child("value");
+            DatabaseReference discountref = FirebaseDatabase.getInstance().getReference("Redeem wallet").child("Oneway");
             discountref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Map<String, String> discount_value = (Map) dataSnapshot.getValue();
-                    d_fare1 = Double.parseDouble(discount_value.get("value"));
-                    fare2 = Double.parseDouble(fare1);
-                    double discount_fare = fare2 - d_fare1;
-                    n_fare.setText(Double.toString(discount_fare));
+                    Map<String, Long> discount_value = (Map) dataSnapshot.getValue();
+
+
+                    fare2 = Long.parseLong(fare1);
+                    d_fare.setText(Long.toString(d_fare1));
+                    Long discount_fare = fare2 - d_fare1;
+                    n_fare.setText(Long.toString(discount_fare));
 
                 }
 
@@ -129,7 +131,6 @@ public class oneway_bookingsummary extends AppCompatActivity {
 
                 }
             });
-            d_fare.setText(Double.toString(d_fare1));
 
 
         }

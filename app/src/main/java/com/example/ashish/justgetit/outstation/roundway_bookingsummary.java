@@ -39,6 +39,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class roundway_bookingsummary extends AppCompatActivity {
 
@@ -59,9 +60,12 @@ public class roundway_bookingsummary extends AppCompatActivity {
     DatabaseReference reference;
     FirebaseAuth auth;
     ImageView car_image;
-    String fare1;
+    String fare1, car_name;
     LatLng pickuplocation;
     private String driverId;
+
+    Long d_fare1, fare2;
+    private TextView discount, netfare, n_fare, d_fare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,12 @@ public class roundway_bookingsummary extends AppCompatActivity {
         journey_date = findViewById(R.id.date);
         carname = findViewById(R.id.carname);
         car_image = findViewById(R.id.car_image);
+        totalfare = findViewById(R.id.fare);
+        discount = findViewById(R.id.discount);
+        netfare = findViewById(R.id.netfare);
+        n_fare = findViewById(R.id.n_fare);
+        d_fare = findViewById(R.id.d_fare);
+
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
         setSupportActionBar(toolbar);
@@ -95,15 +105,42 @@ public class roundway_bookingsummary extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             fare1 = bundle.getString("fare");
+            fare2 = Long.parseLong(fare1);
+            Log.e("fare", fare2 + "");
+            totalfare.setText(fare1);
             Log.e("fare", fare1 + "");
-            String car_name = bundle.getString("carname");
+            car_name = bundle.getString("carname");
             carname.setText(car_name);
             Log.e("carname", car_name);
             String carimage = bundle.getString("carimage");
             Log.e("carimage", carimage);
             Picasso.with(this).load(carimage).resize(80, 50).into(car_image);
 
+
         }
+        DatabaseReference discountref = FirebaseDatabase.getInstance().getReference("Redeem wallet").child("Roundway");
+        discountref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String, Long> discount_value = (Map) dataSnapshot.getValue();
+                if (car_name.equals("SUV ertiga")) {
+                    d_fare1 = discount_value.get("Suv ertiga");
+                } else if (car_name.equals("SUV innova")) {
+                    d_fare1 = discount_value.get("Suv innova");
+                } else
+                    d_fare1 = discount_value.get("Sedan");
+                // fare2=Long.parseLong(fare1);
+                d_fare.setText(Long.toString(d_fare1));
+                Long discount_fare = fare2 - d_fare1;
+                n_fare.setText(Long.toString(discount_fare));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         book_cab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
